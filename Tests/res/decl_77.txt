@@ -1,0 +1,22 @@
+syn_fn_def(
+  name: fn_symbol(keys),
+  params: [
+    (
+      type: map_type(value_type: type_var(t2), key_type: type_var(t1)),
+      var: var(map)
+    )
+  ],
+  local_fns: [],
+  expr: set_comp(
+    sel_exprs: [],
+    source: [
+      map_in_clause(
+        src: const_or_var(map),
+        value_ptrn: type_ptrn(type_any),
+        key_ptrn: var_ptrn(name: var(k))
+      )
+    ],
+    expr: const_or_var(k)
+  ),
+  res_type: set_type(nonempty: false, elem_type: type_var(t1))
+)

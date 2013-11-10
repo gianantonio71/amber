@@ -1,0 +1,86 @@
+syn_fn_def(
+  name: fn_symbol(has_top_level_break),
+  params: [
+    (
+      type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(synstmt))),
+      var: var(stmts)
+    )
+  ],
+  local_fns: [],
+  expr: do_expr(
+    [
+      for_stmt(
+        body: [
+          if_stmt(
+            else: [],
+            branches: [
+              (
+                cond: eq(left: const_or_var(s), right: object(break_stmt)),
+                body: [return_stmt(object(true))]
+              )
+            ]
+          ),
+          if_stmt(
+            else: [],
+            branches: [
+              (
+                cond: membership(
+                  type: union_type(
+                    {
+                      tag_type(
+                        obj_type: type_ref(type_symbol(any)),
+                        tag_type: symb_type(object(if_stmt))
+                      )
+                    }
+                  ),
+                  obj: const_or_var(s)
+                ),
+                body: [
+                  for_stmt(
+                    body: [
+                      if_stmt(
+                        else: [],
+                        branches: [
+                          (
+                            cond: fn_call(
+                              name: fn_symbol(has_top_level_break),
+                              params: [accessor(expr: const_or_var(b), field: object(body))],
+                              named_params: []
+                            ),
+                            body: [return_stmt(object(true))]
+                          )
+                        ]
+                      )
+                    ],
+                    loops: [
+                      seq_iter(
+                        var: var(b),
+                        values: accessor(expr: const_or_var(s), field: object(branches))
+                      )
+                    ]
+                  ),
+                  if_stmt(
+                    else: [],
+                    branches: [
+                      (
+                        cond: fn_call(
+                          name: fn_symbol(has_top_level_break),
+                          params: [accessor(expr: const_or_var(s), field: object(else))],
+                          named_params: []
+                        ),
+                        body: [return_stmt(object(true))]
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
+        ],
+        loops: [seq_iter(var: var(s), values: const_or_var(stmts))]
+      ),
+      return_stmt(object(false))
+    ]
+  ),
+  res_type: type_ref(type_symbol(bool))
+)

@@ -1,0 +1,4 @@
+typedef(
+  type: union_type({symb_type(object(true))}),
+  name: type_symbol(tautology)
+)

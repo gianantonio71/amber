@@ -1,0 +1,59 @@
+syn_fn_def(
+  name: fn_symbol(cls_scope),
+  params: [
+    (
+      type: union_type(
+        {
+          tag_type(
+            obj_type: type_ref(type_symbol(atom)),
+            tag_type: symb_type(object(named_par))
+          )
+        }
+      ),
+      var: var(var)
+    ),
+    (type: type_ref(type_symbol(int)), var: var(arity)),
+    (
+      type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(var))),
+      var: var(env)
+    ),
+    (
+      type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(instr))),
+      var: var(cls_body)
+    ),
+    (
+      type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(instr))),
+      var: var(body)
+    )
+  ],
+  local_fns: [],
+  expr: do_expr(
+    [
+      assignment_stmt(
+        value: tag_obj_expr(
+          obj: map_expr(
+            {
+              (value: const_or_var(cls_body), key: object(body)),
+              (value: const_or_var(arity), key: object(arity))
+            }
+          ),
+          tag: object(cls_def)
+        ),
+        var: var(cls)
+      ),
+      return_stmt(
+        fn_call(
+          name: fn_symbol(cls_scope),
+          params: [
+            const_or_var(var),
+            const_or_var(env),
+            const_or_var(cls),
+            const_or_var(body)
+          ],
+          named_params: []
+        )
+      )
+    ]
+  ),
+  res_type: type_ref(type_symbol(instr))
+)

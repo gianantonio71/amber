@@ -1,0 +1,81 @@
+syn_fn_def(
+  name: fn_symbol(intersection),
+  params: [
+    (
+      type: set_type(
+        nonempty: false,
+        elem_type: set_type(nonempty: false, elem_type: type_var(t))
+      ),
+      var: var(sets)
+    )
+  ],
+  local_fns: [],
+  expr: do_expr(
+    [
+      if_stmt(
+        else: [],
+        branches: [
+          (
+            cond: eq(left: const_or_var(sets), right: set_expr({})),
+            body: [return_stmt(set_expr({}))]
+          )
+        ]
+      ),
+      assignment_stmt(
+        value: fn_call(
+          name: fn_symbol(rand_sort),
+          params: [const_or_var(sets)],
+          named_params: []
+        ),
+        var: var(ss)
+      ),
+      assignment_stmt(
+        value: fn_call(
+          name: op_symbol(brackets),
+          params: [const_or_var(ss), object(0)],
+          named_params: []
+        ),
+        var: var(int)
+      ),
+      for_stmt(
+        body: [
+          assignment_stmt(
+            value: fn_call(
+              name: fn_symbol(intersection),
+              params: [
+                const_or_var(int),
+                fn_call(
+                  name: op_symbol(brackets),
+                  params: [const_or_var(ss), const_or_var(i)],
+                  named_params: []
+                )
+              ],
+              named_params: []
+            ),
+            var: var(int)
+          )
+        ],
+        loops: [
+          range_iter(
+            var: var(i),
+            end_val: fn_call(
+              name: op_symbol(minus),
+              params: [
+                fn_call(
+                  name: fn_symbol(length),
+                  params: [const_or_var(ss)],
+                  named_params: []
+                ),
+                object(1)
+              ],
+              named_params: []
+            ),
+            start_val: object(1)
+          )
+        ]
+      ),
+      return_stmt(const_or_var(int))
+    ]
+  ),
+  res_type: set_type(nonempty: false, elem_type: type_var(t))
+)

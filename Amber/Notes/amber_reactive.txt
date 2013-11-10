@@ -1,0 +1,12 @@
+discrete input Byte rec_byte;
+
+[Byte] buffer = [],
+		if is_complete(buffer) then [rec_byte] else buffer & [rec_byte] end on rec_byte;
+
+String msg_txt = strip(utf8_to_string(buffer)) when is_complete(buffer);
+
+
+
+
+
+		

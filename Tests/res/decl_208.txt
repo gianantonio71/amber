@@ -1,0 +1,13 @@
+typedef(
+  type: union_type(
+    {
+      type_ref(type_symbol(intvar)),
+      type_ref(type_symbol(objvar)),
+      type_ref(type_symbol(vecvar)),
+      type_ref(type_symbol(boolvar)),
+      type_ref(type_symbol(streamvar)),
+      type_ref(type_symbol(itvar))
+    }
+  ),
+  name: type_symbol(anyvar)
+)

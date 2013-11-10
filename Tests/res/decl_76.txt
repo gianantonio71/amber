@@ -1,0 +1,29 @@
+syn_fn_def(
+  name: op_symbol(brackets),
+  params: [
+    (
+      type: map_type(value_type: type_var(t2), key_type: type_var(t1)),
+      var: var(map)
+    ),
+    (type: type_var(t1), var: var(key))
+  ],
+  local_fns: [],
+  expr: fn_call(
+    name: fn_symbol(only_element),
+    params: [
+      set_comp(
+        sel_exprs: [],
+        source: [
+          map_in_clause(
+            src: const_or_var(map),
+            value_ptrn: var_ptrn(name: var(val)),
+            key_ptrn: ext_var_ptrn(var(key))
+          )
+        ],
+        expr: const_or_var(val)
+      )
+    ],
+    named_params: []
+  ),
+  res_type: type_var(t2)
+)

@@ -1,0 +1,119 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(expr)),
+              optional: false,
+              label: object(src)
+            ),
+            (
+              type: type_ref(type_symbol(pattern)),
+              optional: false,
+              label: object(ptrn)
+            )
+          }
+        ),
+        tag_type: symb_type(object(in_clause))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(expr)),
+              optional: false,
+              label: object(src)
+            ),
+            (
+              type: type_ref(type_symbol(pattern)),
+              optional: false,
+              label: object(ptrn)
+            )
+          }
+        ),
+        tag_type: symb_type(object(not_in_clause))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(clause)),
+              optional: false,
+              label: object(left)
+            ),
+            (
+              type: type_ref(type_symbol(clause)),
+              optional: false,
+              label: object(right)
+            )
+          }
+        ),
+        tag_type: symb_type(object(or_clause))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(clause)),
+              optional: false,
+              label: object(left)
+            ),
+            (
+              type: type_ref(type_symbol(clause)),
+              optional: false,
+              label: object(right)
+            )
+          }
+        ),
+        tag_type: symb_type(object(and_clause))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(expr)),
+              optional: false,
+              label: object(src)
+            ),
+            (
+              type: type_ref(type_symbol(pattern)),
+              optional: false,
+              label: object(value_ptrn)
+            ),
+            (
+              type: type_ref(type_symbol(pattern)),
+              optional: false,
+              label: object(key_ptrn)
+            )
+          }
+        ),
+        tag_type: symb_type(object(map_in_clause))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(expr)),
+              optional: false,
+              label: object(src)
+            ),
+            (
+              type: type_ref(type_symbol(pattern)),
+              optional: false,
+              label: object(value_ptrn)
+            ),
+            (
+              type: type_ref(type_symbol(pattern)),
+              optional: false,
+              label: object(key_ptrn)
+            )
+          }
+        ),
+        tag_type: symb_type(object(map_not_in_clause))
+      )
+    }
+  ),
+  name: type_symbol(clause)
+)

@@ -1,0 +1,19 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(nat)),
+              optional: false,
+              label: object(token)
+            )
+          }
+        ),
+        tag_type: symb_type(object(parser_error))
+      )
+    }
+  ),
+  name: type_symbol(parseerror)
+)

@@ -1,0 +1,130 @@
+syn_fn_def(
+  name: fn_symbol(merge_fns_same_name_and_arity),
+  params: [(type: type_ref(type_symbol(program)), var: var(prg))],
+  local_fns: [],
+  expr: do_expr(
+    [
+      assignment_stmt(
+        value: fn_call(
+          name: fn_symbol(apply),
+          params: [accessor(expr: const_or_var(prg), field: object(fndefs))],
+          named_params: [
+            syn_fn_def(
+              name: fn_symbol(f),
+              params: [(var: var(fd))],
+              local_fns: [],
+              expr: seq_expr(
+                head: [
+                  accessor(expr: const_or_var(fd), field: object(name)),
+                  fn_call(
+                    name: fn_symbol(arity),
+                    params: [const_or_var(fd)],
+                    named_params: []
+                  )
+                ]
+              )
+            )
+          ]
+        ),
+        var: var(mult_map)
+      ),
+      assignment_stmt(
+        value: set_comp(
+          sel_exprs: [
+            fn_call(
+              name: op_symbol(greater),
+              params: [const_or_var(m), object(1)],
+              named_params: []
+            )
+          ],
+          source: [
+            map_in_clause(
+              src: const_or_var(mult_map),
+              value_ptrn: var_ptrn(name: var(m)),
+              key_ptrn: var_ptrn(name: var(na))
+            )
+          ],
+          expr: set_comp(
+            sel_exprs: [
+              eq(
+                left: seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(fd), field: object(name)),
+                    fn_call(
+                      name: fn_symbol(arity),
+                      params: [const_or_var(fd)],
+                      named_params: []
+                    )
+                  ]
+                ),
+                right: const_or_var(na)
+              )
+            ],
+            source: [
+              in_clause(
+                src: accessor(expr: const_or_var(prg), field: object(fndefs)),
+                ptrn: var_ptrn(name: var(fd))
+              )
+            ],
+            expr: const_or_var(fd)
+          )
+        ),
+        var: var(fns_to_merge)
+      ),
+      assignment_stmt(
+        value: set_comp(
+          sel_exprs: [],
+          source: [
+            in_clause(
+              src: const_or_var(fns_to_merge),
+              ptrn: var_ptrn(name: var(fns))
+            )
+          ],
+          expr: fn_call(
+            name: fn_symbol(merge_fns),
+            params: [const_or_var(fns)],
+            named_params: []
+          )
+        ),
+        var: var(merged_fns)
+      ),
+      assignment_stmt(
+        value: fn_call(
+          name: op_symbol(amp),
+          params: [
+            const_or_var(merged_fns),
+            fn_call(
+              name: op_symbol(minus),
+              params: [
+                accessor(expr: const_or_var(prg), field: object(fndefs)),
+                fn_call(
+                  name: fn_symbol(union),
+                  params: [const_or_var(fns_to_merge)],
+                  named_params: []
+                )
+              ],
+              named_params: []
+            )
+          ],
+          named_params: []
+        ),
+        var: var(new_fns)
+      ),
+      return_stmt(
+        tag_obj_expr(
+          obj: map_expr(
+            {
+              (value: const_or_var(new_fns), key: object(fndefs)),
+              (
+                value: accessor(expr: const_or_var(prg), field: object(tdefs)),
+                key: object(tdefs)
+              )
+            }
+          ),
+          tag: object(program)
+        )
+      )
+    ]
+  ),
+  res_type: type_ref(type_symbol(program))
+)

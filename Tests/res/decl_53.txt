@@ -1,0 +1,38 @@
+syn_fn_def(
+  name: fn_symbol(rep_seq),
+  params: [
+    (type: type_ref(type_symbol(nat)), var: var(size)),
+    (type: type_var(t), var: var(value))
+  ],
+  local_fns: [],
+  expr: do_expr(
+    [
+      assignment_stmt(value: const_or_var(size), var: var(n)),
+      assignment_stmt(value: seq_expr(head: []), var: var(s)),
+      loop_stmt(
+        cond: fn_call(
+          name: op_symbol(greater),
+          params: [const_or_var(n), object(0)],
+          named_params: []
+        ),
+        body: [
+          assignment_stmt(
+            value: seq_expr(head: [const_or_var(value)], tail: const_or_var(s)),
+            var: var(s)
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(minus),
+              params: [const_or_var(n), object(1)],
+              named_params: []
+            ),
+            var: var(n)
+          )
+        ],
+        skip_first: false
+      ),
+      return_stmt(const_or_var(s))
+    ]
+  ),
+  res_type: seq_type(nonempty: false, elem_type: type_var(t))
+)

@@ -1,0 +1,24 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(nznat)),
+              optional: false,
+              label: object(arity)
+            ),
+            (
+              type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(instr))),
+              optional: false,
+              label: object(body)
+            )
+          }
+        ),
+        tag_type: symb_type(object(cls_def))
+      )
+    }
+  ),
+  name: type_symbol(clsdef)
+)

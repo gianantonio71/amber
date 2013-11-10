@@ -1,0 +1,70 @@
+syn_fn_def(
+  name: fn_symbol(are_disjoint),
+  params: [
+    (type: type_ref(type_symbol(objpartset)), var: var(ps)),
+    (
+      type: union_type(
+        {
+          symb_type(object(symbols)),
+          symb_type(object(tagged_objs)),
+          type_ref(type_symbol(objpart))
+        }
+      ),
+      var: var(p)
+    )
+  ],
+  local_fns: [],
+  expr: match_expr(
+    cases: [
+      case(
+        expr: not(
+          ex_qual(
+            sel_exprs: [],
+            source: [
+              or_clause(
+                left: in_clause(src: const_or_var(ps), ptrn: obj_ptrn(object(symbols))),
+                right: in_clause(
+                  src: const_or_var(ps),
+                  ptrn: tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(symbol)))
+                )
+              )
+            ]
+          )
+        ),
+        patterns: [type_ptrn(type_any), obj_ptrn(object(symbols))]
+      ),
+      case(
+        expr: not(
+          ex_qual(
+            sel_exprs: [],
+            source: [
+              or_clause(
+                left: in_clause(src: const_or_var(ps), ptrn: obj_ptrn(object(tagged_objs))),
+                right: in_clause(
+                  src: const_or_var(ps),
+                  ptrn: tag_ptrn(
+                    obj: type_ptrn(type_any),
+                    tag: obj_ptrn(object(tagged_obj))
+                  )
+                )
+              )
+            ]
+          )
+        ),
+        patterns: [type_ptrn(type_any), obj_ptrn(object(tagged_objs))]
+      ),
+      case(
+        expr: not(
+          fn_call(
+            name: fn_symbol(includes),
+            params: [const_or_var(ps), const_or_var(p)],
+            named_params: []
+          )
+        ),
+        patterns: [type_ptrn(type_any), type_ptrn(type_any)]
+      )
+    ],
+    exprs: [fn_par(0), fn_par(1)]
+  ),
+  res_type: type_ref(type_symbol(bool))
+)

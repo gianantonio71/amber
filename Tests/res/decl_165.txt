@@ -1,0 +1,11 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(prgdecl))),
+        tag_type: symb_type(object(prg))
+      )
+    }
+  ),
+  name: type_symbol(synprg)
+)

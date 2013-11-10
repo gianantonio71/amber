@@ -1,0 +1,21 @@
+typedef(
+  type: union_type(
+    {
+      symb_type(object(set)),
+      symb_type(object(neg)),
+      symb_type(object(add)),
+      symb_type(object(at)),
+      symb_type(object(len)),
+      symb_type(object(slice)),
+      symb_type(object(cat)),
+      symb_type(object(rev)),
+      symb_type(object(isort)),
+      symb_type(object(mset)),
+      symb_type(object(str)),
+      symb_type(object(symb)),
+      symb_type(object(list_to_seq)),
+      symb_type(object(counter))
+    }
+  ),
+  name: type_symbol(builtin)
+)

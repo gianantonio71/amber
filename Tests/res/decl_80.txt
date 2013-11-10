@@ -1,0 +1,67 @@
+syn_fn_def(
+  name: fn_symbol(merge_values),
+  params: [
+    (
+      type: set_type(
+        nonempty: false,
+        elem_type: map_type(value_type: type_var(v), key_type: type_var(k))
+      ),
+      var: var(maps)
+    )
+  ],
+  local_fns: [],
+  expr: do_expr(
+    [
+      assignment_stmt(
+        value: fn_call(
+          name: fn_symbol(union),
+          params: [
+            set_comp(
+              sel_exprs: [],
+              source: [
+                in_clause(src: const_or_var(maps), ptrn: var_ptrn(name: var(m)))
+              ],
+              expr: fn_call(
+                name: fn_symbol(keys),
+                params: [const_or_var(m)],
+                named_params: []
+              )
+            )
+          ],
+          named_params: []
+        ),
+        var: var(all_keys)
+      ),
+      return_stmt(
+        map_comp(
+          sel_exprs: [],
+          source: [
+            in_clause(src: const_or_var(all_keys), ptrn: var_ptrn(name: var(k)))
+          ],
+          value_expr: set_comp(
+            sel_exprs: [
+              fn_call(
+                name: fn_symbol(has_key),
+                params: [const_or_var(m), const_or_var(k)],
+                named_params: []
+              )
+            ],
+            source: [
+              in_clause(src: const_or_var(maps), ptrn: var_ptrn(name: var(m)))
+            ],
+            expr: fn_call(
+              name: op_symbol(brackets),
+              params: [const_or_var(m), const_or_var(k)],
+              named_params: []
+            )
+          ),
+          key_expr: const_or_var(k)
+        )
+      )
+    ]
+  ),
+  res_type: map_type(
+    value_type: set_type(nonempty: true, elem_type: type_var(v)),
+    key_type: type_var(k)
+  )
+)

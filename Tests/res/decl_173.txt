@@ -1,0 +1,11 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: type_ref(type_symbol(symbobj)),
+        tag_type: symb_type(object(symb_type))
+      )
+    }
+  ),
+  name: type_symbol(symbtype)
+)

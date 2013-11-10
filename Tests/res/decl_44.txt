@@ -1,0 +1,9 @@
+syn_fn_def(
+  name: op_symbol(amp),
+  params: [
+    (type: type_ref(type_symbol(seq)), var: var(s1)),
+    (type: type_ref(type_symbol(seq)), var: var(s2))
+  ],
+  local_fns: [],
+  expr: builtin_call(name: cat, params: [const_or_var(s1), const_or_var(s2)])
+)

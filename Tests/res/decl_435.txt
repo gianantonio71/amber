@@ -1,0 +1,122 @@
+syn_fn_def(
+  name: fn_symbol(norm_type),
+  params: [(type: type_ref(type_symbol(syntype)), var: var(type))],
+  local_fns: [
+    syn_fn_def(
+      name: fn_symbol(norm_union_type),
+      params: [(type: type_ref(type_symbol(uniontype)), var: var(utype))],
+      local_fns: [],
+      expr: do_expr(
+        [
+          assignment_stmt(
+            value: set_comp(
+              sel_exprs: [],
+              source: [
+                in_clause(
+                  src: fn_call(
+                    name: fn_symbol(rem_nesting),
+                    params: [const_or_var(utype)],
+                    named_params: []
+                  ),
+                  ptrn: var_ptrn(name: var(t))
+                )
+              ],
+              expr: fn_call(
+                name: fn_symbol(norm_type),
+                params: [const_or_var(t)],
+                named_params: []
+              )
+            ),
+            var: var(ts)
+          ),
+          return_stmt(
+            if_expr(
+              else: fn_call(
+                name: fn_symbol(only_element),
+                params: [const_or_var(ts)],
+                named_params: []
+              ),
+              branches: [
+                (
+                  expr: tag_obj_expr(obj: const_or_var(ts), tag: object(union_type)),
+                  cond: fn_call(
+                    name: op_symbol(greater),
+                    params: [
+                      fn_call(
+                        name: fn_symbol(size),
+                        params: [const_or_var(ts)],
+                        named_params: []
+                      ),
+                      object(1)
+                    ],
+                    named_params: []
+                  )
+                )
+              ]
+            )
+          )
+        ]
+      ),
+      res_type: type_ref(type_symbol(type))
+    ),
+    syn_fn_def(
+      name: fn_symbol(rem_nesting),
+      params: [(type: type_ref(type_symbol(type)), var: var(type))],
+      local_fns: [],
+      expr: match_expr(
+        cases: [
+          case(
+            expr: fn_call(
+              name: fn_symbol(union),
+              params: [
+                set_comp(
+                  sel_exprs: [],
+                  source: [
+                    in_clause(src: const_or_var(ts), ptrn: var_ptrn(name: var(t)))
+                  ],
+                  expr: fn_call(
+                    name: fn_symbol(rem_nesting),
+                    params: [const_or_var(t)],
+                    named_params: []
+                  )
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: var_ptrn(name: var(ts)),
+                tag: obj_ptrn(object(union_type))
+              )
+            ]
+          ),
+          case(
+            expr: set_expr({const_or_var(type)}),
+            patterns: [type_ptrn(type_any)]
+          )
+        ],
+        exprs: [fn_par(0)]
+      ),
+      res_type: set_type(nonempty: false, elem_type: type_ref(type_symbol(type)))
+    )
+  ],
+  expr: do_expr(
+    [
+      return_stmt(
+        replace_expr(
+          ptrn: var_ptrn(
+            name: var(t),
+            ptrn: type_ptrn(type_ref(type_symbol(uniontype)))
+          ),
+          expr: fn_call(
+            name: fn_symbol(norm_union_type),
+            params: [const_or_var(t)],
+            named_params: []
+          ),
+          src_expr: const_or_var(type)
+        )
+      )
+    ]
+  ),
+  res_type: type_ref(type_symbol(type))
+)

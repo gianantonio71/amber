@@ -1,0 +1,21 @@
+typedef(
+  type: union_type(
+    {
+      tuple_type(
+        {
+          (
+            type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string))),
+            optional: false,
+            label: object(body)
+          ),
+          (
+            type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string))),
+            optional: false,
+            label: object(header)
+          )
+        }
+      )
+    }
+  ),
+  name: type_symbol(ccodeoutput)
+)

@@ -1,0 +1,10 @@
+typedef(
+  type: union_type(
+    {
+      symb_type(object(parenthesis)),
+      symb_type(object(bracket)),
+      symb_type(object(brace))
+    }
+  ),
+  name: type_symbol(partype)
+)

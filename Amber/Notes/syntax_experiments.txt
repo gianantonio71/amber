@@ -1,0 +1,55 @@
+sum(INT, INT) is
+  0,                 $n                = $n,
+  succ($n1),         $n2               = sum($n1, $n2),
+  minus(succ($n1)),  succ($n2)         = sum(minus($n1), $n2),
+  NZ_NAT $n1,        NEG_INT $n2       = sum($n2, $n1),
+  minus(NZ_NAT $n1), minus(NZ_NAT $n2) = minus(sum($n1, $n2))
+end;
+
+def
+  var N, N1, N2     : NAT;
+  var NZ, NZ1, NZ2  : NZ_NAT;
+  var NG            : NEG_INT;
+  
+  sum(INT, INT) -> INT is
+    0,               N          = N,
+    succ(N1),        N2         = sum(N1, N2),
+    minus(succ(N1)), succ(N2)   = sum(minus(N1), N2),
+    NZ,              NG         = sum(NG, NZ),
+    minus(NZ1),      minus(NZ2) = minus(sum(NZ1, NZ2))
+  end;
+  
+  sum(NAT, NAT) -> NAT;
+  
+end
+
+
+
+
+
+at(SEQ $s, NAT $n) =  case $s, $n
+                        when [],        _         = !!
+                        when [$f | $r], 0         = $f
+                        when [$f | $r], succ($m)  = at($r, $m)
+                      end;
+
+at(SEQ, NAT) ~> ANY is
+  [],        _          = !!;
+  [$e | $s], 0          = $e;
+  [$e | $s], succ($n)   = at($s, $n);
+end;
+
+at(SEQ, NAT) is
+  [],      _         = !!;
+  [e | s], 0         = e;
+  [e | s], succ(n)   = at(s, n);
+end;
+
+vars E, S, N;
+
+at(SEQ, NAT) is
+  [],      _         = !!;
+  [E | S], 0         = E;
+  [E | S], succ(N)   = at(S, N);
+end;
+

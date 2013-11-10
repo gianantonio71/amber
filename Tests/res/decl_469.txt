@@ -1,0 +1,63 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            )
+          }
+        ),
+        tag_type: symb_type(object(set_found_var_and_leave))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(expr)),
+              optional: false,
+              label: object(expr)
+            ),
+            (
+              type: type_ref(type_symbol(streamvar)),
+              optional: false,
+              label: object(stream_var)
+            )
+          }
+        ),
+        tag_type: symb_type(object(eval_expr_and_add_to_set))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(expr)),
+              optional: false,
+              label: object(value_expr)
+            ),
+            (
+              type: type_ref(type_symbol(expr)),
+              optional: false,
+              label: object(key_expr)
+            ),
+            (
+              type: type_ref(type_symbol(streamvar)),
+              optional: false,
+              label: object(key_stream_var)
+            ),
+            (
+              type: type_ref(type_symbol(streamvar)),
+              optional: false,
+              label: object(value_stream_var)
+            )
+          }
+        ),
+        tag_type: symb_type(object(eval_exprs_and_add_to_map))
+      )
+    }
+  ),
+  name: type_symbol(finalmatchaction)
+)

@@ -1,0 +1,26 @@
+syn_fn_def(
+  name: fn_symbol(tail),
+  params: [
+    (
+      type: seq_type(nonempty: true, elem_type: type_var(t)),
+      var: var(s)
+    )
+  ],
+  local_fns: [],
+  expr: builtin_call(
+    name: slice,
+    params: [
+      const_or_var(s),
+      object(1),
+      fn_call(
+        name: op_symbol(minus),
+        params: [
+          builtin_call(name: len, params: [const_or_var(s)]),
+          object(1)
+        ],
+        named_params: []
+      )
+    ]
+  ),
+  res_type: type_var(t)
+)

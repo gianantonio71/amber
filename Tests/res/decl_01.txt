@@ -1,0 +1,4 @@
+typedef(
+  type: union_type({high_ints(min: 0)}),
+  name: type_symbol(nat)
+)

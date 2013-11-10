@@ -1,0 +1,25 @@
+syn_fn_def(
+  name: op_symbol(lower),
+  params: [
+    (type: type_ref(type_symbol(symbobj)), var: var(s1)),
+    (type: type_ref(type_symbol(symbobj)), var: var(s2))
+  ],
+  local_fns: [],
+  expr: fn_call(
+    name: fn_symbol(lower_than),
+    params: [
+      fn_call(
+        name: fn_symbol(untag),
+        params: [const_or_var(s1)],
+        named_params: []
+      ),
+      fn_call(
+        name: fn_symbol(untag),
+        params: [const_or_var(s2)],
+        named_params: []
+      )
+    ],
+    named_params: []
+  ),
+  res_type: type_ref(type_symbol(bool))
+)

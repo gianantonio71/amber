@@ -1,0 +1,46 @@
+syn_fn_def(
+  name: fn_symbol(max),
+  params: [
+    (
+      type: union_type(
+        {
+          tag_type(
+            obj_type: tuple_type(
+              {
+                (
+                  type: type_ref(type_symbol(int)),
+                  optional: false,
+                  label: object(min)
+                ),
+                (
+                  type: type_ref(type_symbol(nznat)),
+                  optional: false,
+                  label: object(size)
+                )
+              }
+            ),
+            tag_type: symb_type(object(int_range))
+          )
+        }
+      ),
+      var: var(t)
+    )
+  ],
+  local_fns: [],
+  expr: fn_call(
+    name: op_symbol(minus),
+    params: [
+      fn_call(
+        name: op_symbol(plus),
+        params: [
+          accessor(expr: const_or_var(t), field: object(min)),
+          accessor(expr: const_or_var(t), field: object(size))
+        ],
+        named_params: []
+      ),
+      object(1)
+    ],
+    named_params: []
+  ),
+  res_type: type_ref(type_symbol(int))
+)

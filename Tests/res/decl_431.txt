@@ -1,0 +1,34 @@
+syn_fn_def(
+  name: fn_symbol(never_falls_through),
+  params: [
+    (
+      type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(synstmt))),
+      var: var(stmts)
+    )
+  ],
+  local_fns: [],
+  expr: do_expr(
+    [
+      for_stmt(
+        body: [
+          if_stmt(
+            else: [],
+            branches: [
+              (
+                cond: fn_call(
+                  name: fn_symbol(never_falls_through),
+                  params: [const_or_var(s)],
+                  named_params: []
+                ),
+                body: [return_stmt(object(true))]
+              )
+            ]
+          )
+        ],
+        loops: [seq_iter(var: var(s), values: const_or_var(stmts))]
+      ),
+      return_stmt(object(false))
+    ]
+  ),
+  res_type: type_ref(type_symbol(bool))
+)

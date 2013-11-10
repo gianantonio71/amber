@@ -1,0 +1,23 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: type_ref(type_symbol(atom)),
+        tag_type: symb_type(object(var))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(nat)),
+        tag_type: symb_type(object(fn_par))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(nat)),
+        tag_type: symb_type(object(unique_var))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(atom)),
+        tag_type: symb_type(object(named_par))
+      )
+    }
+  ),
+  name: type_symbol(var)
+)

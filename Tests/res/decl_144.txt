@@ -1,0 +1,9 @@
+typedef(
+  type: union_type(
+    {
+      type_ref(type_symbol(parseerror)),
+      type_ref(type_symbol(parsesuccess))
+    }
+  ),
+  name: type_symbol(parseresult)
+)

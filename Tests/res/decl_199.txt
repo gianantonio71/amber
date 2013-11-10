@@ -1,0 +1,35 @@
+typedef(
+  type: union_type(
+    {
+      type_ref(type_symbol(var)),
+      tag_type(
+        obj_type: type_ref(type_symbol(nat)),
+        tag_type: symb_type(object(cls_ext_par))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(nat)),
+        tag_type: symb_type(object(lvar))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(nat)),
+              optional: false,
+              label: object(id)
+            ),
+            (
+              type: union_type(
+                {type_ref(type_symbol(nat)), type_ref(type_symbol(intvar))}
+              ),
+              optional: false,
+              label: object(idx)
+            )
+          }
+        ),
+        tag_type: symb_type(object(evar))
+      )
+    }
+  ),
+  name: type_symbol(objvar)
+)

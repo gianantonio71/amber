@@ -1,0 +1,24 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(type)),
+              optional: false,
+              label: object(out_type)
+            ),
+            (
+              type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(type))),
+              optional: false,
+              label: object(in_types)
+            )
+          }
+        ),
+        tag_type: symb_type(object(cls_type))
+      )
+    }
+  ),
+  name: type_symbol(clstype)
+)

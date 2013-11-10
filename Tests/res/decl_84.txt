@@ -1,0 +1,12 @@
+syn_fn_def(
+  name: fn_symbol(rand_sort),
+  params: [
+    (
+      type: set_type(nonempty: false, elem_type: type_var(t)),
+      var: var(set)
+    )
+  ],
+  local_fns: [],
+  expr: builtin_call(name: isort, params: [const_or_var(set)]),
+  res_type: seq_type(nonempty: false, elem_type: type_var(t))
+)

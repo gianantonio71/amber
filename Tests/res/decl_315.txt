@@ -1,0 +1,20 @@
+syn_fn_def(
+  name: fn_symbol(merge_maps),
+  params: [
+    (type: type_ref(type_symbol(objvar)), var: var(v)),
+    (type: type_ref(type_symbol(objexpr)), var: var(m1)),
+    (type: type_ref(type_symbol(objexpr)), var: var(m2))
+  ],
+  local_fns: [],
+  expr: tag_obj_expr(
+    obj: map_expr(
+      {
+        (value: const_or_var(v), key: object(var)),
+        (value: const_or_var(m1), key: object(map1)),
+        (value: const_or_var(m2), key: object(map2))
+      }
+    ),
+    tag: object(merge_maps)
+  ),
+  res_type: type_ref(type_symbol(instr))
+)

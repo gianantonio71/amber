@@ -1,0 +1,103 @@
+syn_fn_def(
+  name: fn_symbol(merge_partitions),
+  params: [
+    (
+      type: set_type(
+        nonempty: false,
+        elem_type: type_ref(type_symbol(objpartset))
+      ),
+      var: var(part_sets)
+    )
+  ],
+  local_fns: [],
+  expr: do_expr(
+    [
+      assignment_stmt(
+        value: fn_call(
+          name: fn_symbol(union),
+          params: [const_or_var(part_sets)],
+          named_params: []
+        ),
+        var: var(ps)
+      ),
+      if_stmt(
+        else: [],
+        branches: [
+          (
+            cond: fn_call(
+              name: fn_symbol(in),
+              params: [object(symbols), const_or_var(ps)],
+              named_params: []
+            ),
+            body: [
+              assignment_stmt(
+                value: set_comp(
+                  sel_exprs: [
+                    not(
+                      membership(
+                        type: union_type(
+                          {
+                            tag_type(
+                              obj_type: type_ref(type_symbol(atom)),
+                              tag_type: symb_type(object(symbol))
+                            )
+                          }
+                        ),
+                        obj: const_or_var(p)
+                      )
+                    )
+                  ],
+                  source: [
+                    in_clause(src: const_or_var(ps), ptrn: var_ptrn(name: var(p)))
+                  ],
+                  expr: const_or_var(p)
+                ),
+                var: var(ps)
+              )
+            ]
+          )
+        ]
+      ),
+      if_stmt(
+        else: [],
+        branches: [
+          (
+            cond: fn_call(
+              name: fn_symbol(in),
+              params: [object(tagged_objs), const_or_var(ps)],
+              named_params: []
+            ),
+            body: [
+              assignment_stmt(
+                value: set_comp(
+                  sel_exprs: [
+                    not(
+                      membership(
+                        type: union_type(
+                          {
+                            tag_type(
+                              obj_type: type_ref(type_symbol(atom)),
+                              tag_type: symb_type(object(tagged_obj))
+                            )
+                          }
+                        ),
+                        obj: const_or_var(p)
+                      )
+                    )
+                  ],
+                  source: [
+                    in_clause(src: const_or_var(ps), ptrn: var_ptrn(name: var(p)))
+                  ],
+                  expr: const_or_var(p)
+                ),
+                var: var(ps)
+              )
+            ]
+          )
+        ]
+      ),
+      return_stmt(const_or_var(ps))
+    ]
+  ),
+  res_type: type_ref(type_symbol(objpartset))
+)

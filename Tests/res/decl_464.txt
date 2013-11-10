@@ -1,0 +1,191 @@
+using_block(
+  fn_defs: [
+    syn_fn_def(
+      name: fn_symbol(gen_fn_code),
+      params: [(type: type_ref(type_symbol(fndef)), var: var(fndef))],
+      local_fns: [],
+      expr: do_expr(
+        [
+          assignment_stmt(
+            value: fn_call(
+              name: fn_symbol(lvar),
+              params: [object(0)],
+              named_params: []
+            ),
+            var: var(fn_res_var)
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: fn_symbol(bvar),
+              params: [object(0)],
+              named_params: []
+            ),
+            var: var(tmp_bvar)
+          ),
+          assignment_stmt(value: seq_expr(head: []), var: var(body)),
+          let_stmt(
+            body: [
+              assignment_stmt(
+                value: fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    const_or_var(body),
+                    seq_comp(
+                      var: var(p),
+                      expr: fn_call(
+                        name: fn_symbol(set_var),
+                        params: [
+                          accessor(expr: const_or_var(p), field: object(var)),
+                          fn_call(
+                            name: fn_symbol(fn_par),
+                            params: [const_or_var(i)],
+                            named_params: []
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      idx_var: var(i),
+                      src_expr: accessor(expr: const_or_var(fndef), field: object(params)),
+                      sel_expr: accessor_test(expr: const_or_var(p), field: object(var))
+                    )
+                  ],
+                  named_params: []
+                ),
+                var: var(body)
+              ),
+              assignment_stmt(
+                value: fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    const_or_var(body),
+                    fn_call(
+                      name: fn_symbol(gen_eval_code),
+                      params: [
+                        accessor(expr: const_or_var(fndef), field: object(expr)),
+                        const_or_var(fn_res_var)
+                      ],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                var: var(body)
+              )
+            ],
+            asgnms: [
+              syn_fn_def(
+                name: fn_symbol(next_set_it_var_id),
+                params: [],
+                local_fns: [],
+                expr: object(0)
+              ),
+              syn_fn_def(
+                name: fn_symbol(next_seq_it_var_id),
+                params: [],
+                local_fns: [],
+                expr: object(0)
+              ),
+              syn_fn_def(
+                name: fn_symbol(next_map_it_var_id),
+                params: [],
+                local_fns: [],
+                expr: object(0)
+              ),
+              syn_fn_def(
+                name: fn_symbol(next_obj_var_id),
+                params: [],
+                local_fns: [],
+                expr: object(1)
+              ),
+              syn_fn_def(
+                name: fn_symbol(next_int_var_id),
+                params: [],
+                local_fns: [],
+                expr: object(0)
+              ),
+              syn_fn_def(
+                name: fn_symbol(next_bool_var_id),
+                params: [],
+                local_fns: [],
+                expr: object(1)
+              ),
+              syn_fn_def(
+                name: fn_symbol(next_vector_var_id),
+                params: [],
+                local_fns: [],
+                expr: object(0)
+              ),
+              syn_fn_def(
+                name: fn_symbol(next_stream_var_id),
+                params: [],
+                local_fns: [],
+                expr: object(0)
+              )
+            ]
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(amp),
+              params: [
+                const_or_var(body),
+                seq_expr(
+                  head: [
+                    fn_call(
+                      name: fn_symbol(ret_val),
+                      params: [const_or_var(fn_res_var)],
+                      named_params: []
+                    )
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            var: var(body)
+          ),
+          return_stmt(
+            fn_call(
+              name: fn_symbol(obj_proc_def),
+              params: [
+                accessor(expr: const_or_var(fndef), field: object(name)),
+                fn_call(
+                  name: fn_symbol(length),
+                  params: [accessor(expr: const_or_var(fndef), field: object(params))],
+                  named_params: []
+                ),
+                map_comp(
+                  sel_exprs: [],
+                  source: [
+                    map_in_clause(
+                      src: accessor(expr: const_or_var(fndef), field: object(named_params)),
+                      value_ptrn: var_ptrn(name: var(t)),
+                      key_ptrn: var_ptrn(name: var(v))
+                    )
+                  ],
+                  value_expr: fn_call(
+                    name: fn_symbol(arity),
+                    params: [const_or_var(t)],
+                    named_params: []
+                  ),
+                  key_expr: const_or_var(v)
+                ),
+                const_or_var(body)
+              ],
+              named_params: []
+            )
+          )
+        ]
+      ),
+      res_type: type_ref(type_symbol(objprocdef))
+    )
+  ],
+  signatures: [
+    syn_sgn(
+      name: fn_symbol(type_map),
+      params: [],
+      res_type: map_type(
+        value_type: type_ref(type_symbol(type)),
+        key_type: type_ref(type_symbol(any))
+      )
+    )
+  ]
+)

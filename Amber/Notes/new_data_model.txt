@@ -1,0 +1,75 @@
+zero
+{succ, {zero}}
+{succ, {succ, {zero}}}
+{succ, {succ, {succ, {zero}}}}
+{succ, {succ, {succ, {succ, {zero}}}}}
+{succ, {succ, {succ, {succ, {succ, {zero}}}}}}
+
+zero
+succ * zero
+succ * succ * zero
+succ * succ * succ * zero
+succ * succ * succ * succ * zero
+succ * succ * succ * succ * succ * zero
+
+zero
+succ * zero
+succ ^ 2 * zero
+succ ^ 3 * zero
+succ ^ 4 * zero
+succ ^ 5 * zero
+
+minus * NZ_NAT
+
+<< >> () [] {}
+
+a * b = {{<< a} {>> b}} = (<< + a + ()) + (>> + b + ())
+
+a * b <-> {{<< a} {>> b}}
+
+{} <-> ()
+{a} <-> (a) <-> a + ()
+{a, b} <-> a + b + ()
+
+x + y <-> y + x
+x + (y + z) <-> (x + y) + z
+x + x -> x
+
+
+{} <-> ()
+{a} <-> a
+{a, b} <-> a + b
+
+
+{{a, b}, {c}} <-> {a, b} + c <-> (a + b) + c <-> a + (b + c) <-> a + {b, c} <-> {a, {b, c}}
+{{a, b}, c}   <-> {a, b} + c
+
+
+{{a, b}, {c, d}} <-> {a, b} + {c, d} <-> (a + b) + (c + d) <-> a + (b + (c + d)) <-> {a, {b, {c, d}}}
+
+{a} <-> a + ()
+
+
+succ, {succ, {zero}}}
+succ, {succ, {succ, {zero}}}}
+succ, {succ, {succ, {succ, {zero}}}}}
+succ, {succ, {succ, {succ, {succ, {zero}}}}}}
+
+empty_seq
+x1 * empty_seq
+x1 * (x2 * empty_seq)
+x1 * (x2 * (x3 * empty_seq))
+
+[]
+x1 * []
+x1 * (x2 * [])
+x1 * (x2 * (x3 * []))
+
+
+empty_seq
+{{head, {x1}}, {tail, {empty_seq}}}
+
+{x1 * {x2 * {empty_seq}}}
+{x1 * {x2 * {x3 * {empty_seq}}}}
+
+

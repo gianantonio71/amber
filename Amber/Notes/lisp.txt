@@ -1,0 +1,65 @@
+(define puts
+  (lambda (s)
+    (let ((idx 0))
+      (while (!= (char@ s idx) 0)
+        (putchar (char@ s idx))
+        (set idx (+ idx 1)))
+      (putchar 10))))
+
+def puts(s)
+  idx = 0
+  while s[idx] != 0
+    putchar s[idx]
+    idx = idx + 1
+  putchar(10)
+
+
+(for (x a b)
+(print x))
+
+for (x a b)
+  print x
+
+for (x a b)
+  print(x)
+
+for (x in (a, b))
+  print x
+
+
+
+(defun bad-reverse (lst)
+  (let* ((len (length lst))
+         (ilimit (truncate (/ len 2))))
+    (do ((i 0 (1+ i))
+         (j (1- len) (1- j)))
+        ((>= i ilimit))
+      (rotatef (nth i lst) (nth j lst)))))
+
+bad-reverse(lst)
+  let
+    len = length(lst)
+    ilimit = truncate(len / 2)
+  do i = 0, i = i + 1
+     j = len - 1, j = j - 1
+  while i <= ilimit
+    rotatef(lst[i], lst[j])
+
+
+
+
+(defun good-reverse (lst)
+  (labels ((rev (lst acc)
+             (if (null lst)
+                 acc
+                 (rev (cdr lst) (cons (car lst) acc)))))
+    (rev lst nil)))
+
+reverse(list) = is
+                  reverse(list, [])
+                with
+                  reverse([],             acc)  = acc;
+                  reverse([first | rest], acc)  = reverse(rest, [first | acc]);
+                end;
+
+

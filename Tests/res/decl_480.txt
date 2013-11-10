@@ -1,0 +1,1453 @@
+using_block(
+  fn_defs: [
+    syn_fn_def(
+      name: fn_symbol(gen_type_checking_code),
+      params: [
+        (type: type_ref(type_symbol(type)), var: var(type)),
+        (type: type_ref(type_symbol(atomicexpr)), var: var(obj)),
+        (type: type_ref(type_symbol(boolvar)), var: var(res_var))
+      ],
+      local_fns: [],
+      expr: match_expr(
+        cases: [
+          case(
+            expr: do_expr(
+              [
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(set_it_var),
+                    params: [const_or_var(next_set_it_var_id)],
+                    named_params: []
+                  ),
+                  var: var(it_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(lvar),
+                    params: [const_or_var(next_obj_var_id)],
+                    named_params: []
+                  ),
+                  var: var(elem_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(gen_type_checking_code),
+                    params: [
+                      accessor(expr: const_or_var(type), field: object(elem_type)),
+                      const_or_var(elem_var),
+                      const_or_var(res_var)
+                    ],
+                    named_params: [
+                      syn_fn_def(
+                        name: fn_symbol(next_obj_var_id),
+                        params: [],
+                        local_fns: [],
+                        expr: fn_call(
+                          name: op_symbol(plus),
+                          params: [const_or_var(next_obj_var_id), object(1)],
+                          named_params: []
+                        )
+                      ),
+                      syn_fn_def(
+                        name: fn_symbol(next_set_it_var_id),
+                        params: [],
+                        local_fns: [],
+                        expr: fn_call(
+                          name: op_symbol(plus),
+                          params: [const_or_var(next_set_it_var_id), object(1)],
+                          named_params: []
+                        )
+                      )
+                    ]
+                  ),
+                  var: var(elem_code)
+                ),
+                assignment_stmt(
+                  value: seq_expr(
+                    head: [
+                      fn_call(
+                        name: fn_symbol(maybe_op),
+                        params: [
+                          fn_call(
+                            name: fn_symbol(block_success_if),
+                            params: [
+                              fn_call(
+                                name: fn_symbol(is_empty_set),
+                                params: [const_or_var(obj)],
+                                named_params: []
+                              ),
+                              const_or_var(res_var)
+                            ],
+                            named_params: []
+                          ),
+                          not(
+                            accessor(expr: const_or_var(type), field: object(nonempty))
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(block_failure_if_not),
+                        params: [
+                          fn_call(
+                            name: fn_symbol(is_ne_set),
+                            params: [const_or_var(obj)],
+                            named_params: []
+                          ),
+                          const_or_var(res_var)
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(get_iter),
+                        params: [const_or_var(it_var), const_or_var(obj)],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(repeat),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  seq_expr(
+                                    head: [
+                                      fn_call(
+                                        name: fn_symbol(break_if),
+                                        params: [
+                                          fn_call(
+                                            name: fn_symbol(is_out_of_range),
+                                            params: [const_or_var(it_var)],
+                                            named_params: []
+                                          )
+                                        ],
+                                        named_params: []
+                                      ),
+                                      fn_call(
+                                        name: fn_symbol(get_curr_obj),
+                                        params: [const_or_var(elem_var), const_or_var(it_var)],
+                                        named_params: []
+                                      )
+                                    ]
+                                  ),
+                                  const_or_var(elem_code)
+                                ],
+                                named_params: []
+                              ),
+                              seq_expr(
+                                head: [
+                                  fn_call(
+                                    name: fn_symbol(exit_block_if_not),
+                                    params: [const_or_var(res_var)],
+                                    named_params: []
+                                  ),
+                                  fn_call(
+                                    name: fn_symbol(move_forward),
+                                    params: [const_or_var(it_var)],
+                                    named_params: []
+                                  )
+                                ]
+                              )
+                            ],
+                            named_params: []
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(set_bvar),
+                        params: [const_or_var(res_var), object(true)],
+                        named_params: []
+                      )
+                    ]
+                  ),
+                  var: var(code)
+                ),
+                return_stmt(
+                  seq_expr(
+                    head: [
+                      fn_call(
+                        name: fn_symbol(execute_block),
+                        params: [const_or_var(code)],
+                        named_params: []
+                      )
+                    ]
+                  )
+                )
+              ]
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(set_type)))
+            ]
+          ),
+          case(
+            expr: do_expr(
+              [
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(lvar),
+                    params: [const_or_var(next_obj_var_id)],
+                    named_params: []
+                  ),
+                  var: var(elem_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(seq_it_var),
+                    params: [const_or_var(next_seq_it_var_id)],
+                    named_params: []
+                  ),
+                  var: var(it_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(gen_type_checking_code),
+                    params: [
+                      accessor(expr: const_or_var(type), field: object(elem_type)),
+                      const_or_var(elem_var),
+                      const_or_var(res_var)
+                    ],
+                    named_params: [
+                      syn_fn_def(
+                        name: fn_symbol(next_obj_var_id),
+                        params: [],
+                        local_fns: [],
+                        expr: fn_call(
+                          name: op_symbol(plus),
+                          params: [const_or_var(next_obj_var_id), object(1)],
+                          named_params: []
+                        )
+                      ),
+                      syn_fn_def(
+                        name: fn_symbol(next_seq_it_var_id),
+                        params: [],
+                        local_fns: [],
+                        expr: fn_call(
+                          name: op_symbol(plus),
+                          params: [const_or_var(next_seq_it_var_id), object(1)],
+                          named_params: []
+                        )
+                      )
+                    ]
+                  ),
+                  var: var(elem_code)
+                ),
+                assignment_stmt(
+                  value: seq_expr(
+                    head: [
+                      fn_call(
+                        name: fn_symbol(maybe_op),
+                        params: [
+                          fn_call(
+                            name: fn_symbol(block_success_if),
+                            params: [
+                              fn_call(
+                                name: fn_symbol(is_empty_seq),
+                                params: [const_or_var(obj)],
+                                named_params: []
+                              ),
+                              const_or_var(res_var)
+                            ],
+                            named_params: []
+                          ),
+                          not(
+                            accessor(expr: const_or_var(type), field: object(nonempty))
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(block_failure_if_not),
+                        params: [
+                          fn_call(
+                            name: fn_symbol(is_ne_seq),
+                            params: [const_or_var(obj)],
+                            named_params: []
+                          ),
+                          const_or_var(res_var)
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(get_iter),
+                        params: [const_or_var(it_var), const_or_var(obj)],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(repeat),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  seq_expr(
+                                    head: [
+                                      fn_call(
+                                        name: fn_symbol(break_if),
+                                        params: [
+                                          fn_call(
+                                            name: fn_symbol(is_out_of_range),
+                                            params: [const_or_var(it_var)],
+                                            named_params: []
+                                          )
+                                        ],
+                                        named_params: []
+                                      ),
+                                      fn_call(
+                                        name: fn_symbol(get_curr_obj),
+                                        params: [const_or_var(elem_var), const_or_var(it_var)],
+                                        named_params: []
+                                      )
+                                    ]
+                                  ),
+                                  const_or_var(elem_code)
+                                ],
+                                named_params: []
+                              ),
+                              seq_expr(
+                                head: [
+                                  fn_call(
+                                    name: fn_symbol(exit_block_if_not),
+                                    params: [const_or_var(res_var)],
+                                    named_params: []
+                                  ),
+                                  fn_call(
+                                    name: fn_symbol(move_forward),
+                                    params: [const_or_var(it_var)],
+                                    named_params: []
+                                  )
+                                ]
+                              )
+                            ],
+                            named_params: []
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(set_bvar),
+                        params: [const_or_var(res_var), object(true)],
+                        named_params: []
+                      )
+                    ]
+                  ),
+                  var: var(code)
+                ),
+                return_stmt(
+                  seq_expr(
+                    head: [
+                      fn_call(
+                        name: fn_symbol(execute_block),
+                        params: [const_or_var(code)],
+                        named_params: []
+                      )
+                    ]
+                  )
+                )
+              ]
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(seq_type)))
+            ]
+          ),
+          case(
+            expr: do_expr(
+              [
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(ivar),
+                    params: [const_or_var(next_int_var_id)],
+                    named_params: []
+                  ),
+                  var: var(len_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(lvar),
+                    params: [const_or_var(next_obj_var_id)],
+                    named_params: []
+                  ),
+                  var: var(elem_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(seq_it_var),
+                    params: [const_or_var(next_seq_it_var_id)],
+                    named_params: []
+                  ),
+                  var: var(it_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(length),
+                    params: [const_or_var(ts)],
+                    named_params: []
+                  ),
+                  var: var(len)
+                ),
+                assignment_stmt(
+                  value: seq_expr(
+                    head: [
+                      fn_call(
+                        name: fn_symbol(set_bvar),
+                        params: [const_or_var(res_var), object(false)],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(exit_block_if_not),
+                        params: [
+                          fn_call(
+                            name: fn_symbol(is_ne_seq),
+                            params: [const_or_var(obj)],
+                            named_params: []
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(set_ivar),
+                        params: [
+                          const_or_var(len_var),
+                          fn_call(
+                            name: fn_symbol(get_seq_len),
+                            params: [const_or_var(obj)],
+                            named_params: []
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(exit_block_if_not),
+                        params: [
+                          fn_call(
+                            name: fn_symbol(is_eq),
+                            params: [const_or_var(len_var), const_or_var(len)],
+                            named_params: []
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(get_iter),
+                        params: [const_or_var(it_var), const_or_var(obj)],
+                        named_params: []
+                      )
+                    ]
+                  ),
+                  var: var(code)
+                ),
+                let_stmt(
+                  body: [
+                    for_stmt(
+                      body: [
+                        assignment_stmt(
+                          value: fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      const_or_var(code),
+                                      seq_expr(
+                                        head: [
+                                          fn_call(
+                                            name: fn_symbol(get_curr_obj),
+                                            params: [const_or_var(elem_var), const_or_var(it_var)],
+                                            named_params: []
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    named_params: []
+                                  ),
+                                  fn_call(
+                                    name: fn_symbol(gen_type_checking_code),
+                                    params: [
+                                      const_or_var(t),
+                                      const_or_var(elem_var),
+                                      const_or_var(res_var)
+                                    ],
+                                    named_params: []
+                                  )
+                                ],
+                                named_params: []
+                              ),
+                              seq_expr(
+                                head: [
+                                  fn_call(
+                                    name: fn_symbol(exit_block_if_not),
+                                    params: [const_or_var(res_var)],
+                                    named_params: []
+                                  ),
+                                  fn_call(
+                                    name: fn_symbol(maybe_op),
+                                    params: [
+                                      fn_call(
+                                        name: fn_symbol(move_forward),
+                                        params: [const_or_var(it_var)],
+                                        named_params: []
+                                      ),
+                                      neq(
+                                        left: const_or_var(i),
+                                        right: fn_call(
+                                          name: op_symbol(minus),
+                                          params: [const_or_var(len), object(1)],
+                                          named_params: []
+                                        )
+                                      )
+                                    ],
+                                    named_params: []
+                                  )
+                                ]
+                              )
+                            ],
+                            named_params: []
+                          ),
+                          var: var(code)
+                        )
+                      ],
+                      loops: [
+                        seq_iter(var: var(t), values: const_or_var(ts), idx_var: var(i))
+                      ]
+                    )
+                  ],
+                  asgnms: [
+                    syn_fn_def(
+                      name: fn_symbol(next_int_var_id),
+                      params: [],
+                      local_fns: [],
+                      expr: fn_call(
+                        name: op_symbol(plus),
+                        params: [const_or_var(next_int_var_id), object(1)],
+                        named_params: []
+                      )
+                    ),
+                    syn_fn_def(
+                      name: fn_symbol(next_obj_var_id),
+                      params: [],
+                      local_fns: [],
+                      expr: fn_call(
+                        name: op_symbol(plus),
+                        params: [const_or_var(next_obj_var_id), object(1)],
+                        named_params: []
+                      )
+                    ),
+                    syn_fn_def(
+                      name: fn_symbol(next_seq_it_var_id),
+                      params: [],
+                      local_fns: [],
+                      expr: fn_call(
+                        name: op_symbol(plus),
+                        params: [const_or_var(next_seq_it_var_id), object(1)],
+                        named_params: []
+                      )
+                    )
+                  ]
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      const_or_var(code),
+                      seq_expr(
+                        head: [
+                          fn_call(
+                            name: fn_symbol(set_bvar),
+                            params: [const_or_var(res_var), object(true)],
+                            named_params: []
+                          )
+                        ]
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  var: var(code)
+                ),
+                return_stmt(
+                  seq_expr(
+                    head: [
+                      fn_call(
+                        name: fn_symbol(execute_block),
+                        params: [const_or_var(code)],
+                        named_params: []
+                      )
+                    ]
+                  )
+                )
+              ]
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: var_ptrn(name: var(ts)),
+                tag: obj_ptrn(object(fixed_seq_type))
+              )
+            ]
+          ),
+          case(
+            expr: do_expr(
+              [
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(lvar),
+                    params: [const_or_var(next_obj_var_id)],
+                    named_params: []
+                  ),
+                  var: var(obj_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(map_it_var),
+                    params: [const_or_var(next_map_it_var_id)],
+                    named_params: []
+                  ),
+                  var: var(it_var)
+                ),
+                let_stmt(
+                  body: [
+                    assignment_stmt(
+                      value: seq_expr(
+                        head: [
+                          fn_call(
+                            name: fn_symbol(block_success_if),
+                            params: [
+                              fn_call(
+                                name: fn_symbol(is_empty_map),
+                                params: [const_or_var(obj)],
+                                named_params: []
+                              ),
+                              const_or_var(res_var)
+                            ],
+                            named_params: []
+                          ),
+                          fn_call(
+                            name: fn_symbol(block_failure_if_not),
+                            params: [
+                              fn_call(
+                                name: fn_symbol(is_ne_map),
+                                params: [const_or_var(obj)],
+                                named_params: []
+                              ),
+                              const_or_var(res_var)
+                            ],
+                            named_params: []
+                          ),
+                          fn_call(
+                            name: fn_symbol(get_iter),
+                            params: [const_or_var(it_var), const_or_var(obj)],
+                            named_params: []
+                          ),
+                          fn_call(
+                            name: fn_symbol(repeat),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      fn_call(
+                                        name: op_symbol(amp),
+                                        params: [
+                                          fn_call(
+                                            name: op_symbol(amp),
+                                            params: [
+                                              seq_expr(
+                                                head: [
+                                                  fn_call(
+                                                    name: fn_symbol(break_if),
+                                                    params: [
+                                                      fn_call(
+                                                        name: fn_symbol(is_out_of_range),
+                                                        params: [const_or_var(it_var)],
+                                                        named_params: []
+                                                      )
+                                                    ],
+                                                    named_params: []
+                                                  ),
+                                                  fn_call(
+                                                    name: fn_symbol(get_curr_key),
+                                                    params: [const_or_var(obj_var), const_or_var(it_var)],
+                                                    named_params: []
+                                                  )
+                                                ]
+                                              ),
+                                              fn_call(
+                                                name: fn_symbol(gen_type_checking_code),
+                                                params: [
+                                                  accessor(expr: const_or_var(type), field: object(key_type)),
+                                                  const_or_var(obj_var),
+                                                  const_or_var(res_var)
+                                                ],
+                                                named_params: []
+                                              )
+                                            ],
+                                            named_params: []
+                                          ),
+                                          seq_expr(
+                                            head: [
+                                              fn_call(
+                                                name: fn_symbol(exit_block_if_not),
+                                                params: [const_or_var(res_var)],
+                                                named_params: []
+                                              ),
+                                              fn_call(
+                                                name: fn_symbol(get_curr_value),
+                                                params: [const_or_var(obj_var), const_or_var(it_var)],
+                                                named_params: []
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        named_params: []
+                                      ),
+                                      fn_call(
+                                        name: fn_symbol(gen_type_checking_code),
+                                        params: [
+                                          accessor(expr: const_or_var(type), field: object(value_type)),
+                                          const_or_var(obj_var),
+                                          const_or_var(res_var)
+                                        ],
+                                        named_params: []
+                                      )
+                                    ],
+                                    named_params: []
+                                  ),
+                                  seq_expr(
+                                    head: [
+                                      fn_call(
+                                        name: fn_symbol(exit_block_if_not),
+                                        params: [const_or_var(res_var)],
+                                        named_params: []
+                                      ),
+                                      fn_call(
+                                        name: fn_symbol(move_forward),
+                                        params: [const_or_var(it_var)],
+                                        named_params: []
+                                      )
+                                    ]
+                                  )
+                                ],
+                                named_params: []
+                              )
+                            ],
+                            named_params: []
+                          ),
+                          fn_call(
+                            name: fn_symbol(set_bvar),
+                            params: [const_or_var(res_var), object(true)],
+                            named_params: []
+                          )
+                        ]
+                      ),
+                      var: var(code)
+                    )
+                  ],
+                  asgnms: [
+                    syn_fn_def(
+                      name: fn_symbol(next_obj_var_id),
+                      params: [],
+                      local_fns: [],
+                      expr: fn_call(
+                        name: op_symbol(plus),
+                        params: [const_or_var(next_obj_var_id), object(1)],
+                        named_params: []
+                      )
+                    ),
+                    syn_fn_def(
+                      name: fn_symbol(next_map_it_var_id),
+                      params: [],
+                      local_fns: [],
+                      expr: fn_call(
+                        name: op_symbol(plus),
+                        params: [const_or_var(next_map_it_var_id), object(1)],
+                        named_params: []
+                      )
+                    )
+                  ]
+                ),
+                return_stmt(
+                  seq_expr(
+                    head: [
+                      fn_call(
+                        name: fn_symbol(execute_block),
+                        params: [const_or_var(code)],
+                        named_params: []
+                      )
+                    ]
+                  )
+                )
+              ]
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(map_type)))
+            ]
+          ),
+          case(
+            expr: do_expr(
+              [
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(ivar),
+                    params: [const_or_var(next_int_var_id)],
+                    named_params: []
+                  ),
+                  var: var(size_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(lvar),
+                    params: [const_or_var(next_obj_var_id)],
+                    named_params: []
+                  ),
+                  var: var(obj_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(map_it_var),
+                    params: [const_or_var(next_map_it_var_id)],
+                    named_params: []
+                  ),
+                  var: var(it_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(size),
+                    params: [const_or_var(fs)],
+                    named_params: []
+                  ),
+                  var: var(max_fields)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(size),
+                    params: [
+                      set_comp(
+                        sel_exprs: [
+                          not(accessor(expr: const_or_var(f), field: object(optional)))
+                        ],
+                        source: [
+                          in_clause(src: const_or_var(fs), ptrn: var_ptrn(name: var(f)))
+                        ],
+                        expr: const_or_var(f)
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  var: var(min_fields)
+                ),
+                assignment_stmt(
+                  value: seq_expr(
+                    head: [
+                      fn_call(
+                        name: fn_symbol(maybe_op),
+                        params: [
+                          fn_call(
+                            name: fn_symbol(block_success_if),
+                            params: [
+                              fn_call(
+                                name: fn_symbol(is_empty_map),
+                                params: [const_or_var(obj)],
+                                named_params: []
+                              ),
+                              const_or_var(res_var)
+                            ],
+                            named_params: []
+                          ),
+                          eq(left: const_or_var(min_fields), right: object(0))
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(block_failure_if_not),
+                        params: [
+                          fn_call(
+                            name: fn_symbol(is_ne_map),
+                            params: [const_or_var(obj)],
+                            named_params: []
+                          ),
+                          const_or_var(res_var)
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(set_ivar),
+                        params: [
+                          const_or_var(size_var),
+                          fn_call(
+                            name: fn_symbol(get_map_size),
+                            params: [const_or_var(obj)],
+                            named_params: []
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(block_failure_if_not),
+                        params: [
+                          fn_call(
+                            name: fn_symbol(is_between),
+                            params: [
+                              const_or_var(size_var),
+                              const_or_var(min_fields),
+                              const_or_var(max_fields)
+                            ],
+                            named_params: []
+                          ),
+                          const_or_var(res_var)
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: fn_symbol(get_iter),
+                        params: [const_or_var(it_var), const_or_var(obj)],
+                        named_params: []
+                      )
+                    ]
+                  ),
+                  var: var(code)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(sort_set),
+                    params: [const_or_var(fs)],
+                    named_params: [
+                      syn_fn_def(
+                        name: fn_symbol(is_strictly_ordered),
+                        params: [(var: var(f1)), (var: var(f2))],
+                        local_fns: [],
+                        expr: fn_call(
+                          name: op_symbol(lower),
+                          params: [
+                            accessor(expr: const_or_var(f1), field: object(label)),
+                            accessor(expr: const_or_var(f2), field: object(label))
+                          ],
+                          named_params: []
+                        )
+                      )
+                    ]
+                  ),
+                  var: var(sorted_fields)
+                ),
+                for_stmt(
+                  body: [
+                    assignment_stmt(
+                      value: fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              seq_expr(
+                                head: [
+                                  fn_call(
+                                    name: fn_symbol(set_var),
+                                    params: [
+                                      const_or_var(obj_var),
+                                      fn_call(
+                                        name: fn_symbol(get_curr_value),
+                                        params: [const_or_var(it_var)],
+                                        named_params: []
+                                      )
+                                    ],
+                                    named_params: []
+                                  )
+                                ]
+                              ),
+                              fn_call(
+                                name: fn_symbol(gen_type_checking_code),
+                                params: [
+                                  accessor(expr: const_or_var(b), field: object(type)),
+                                  const_or_var(obj_var),
+                                  const_or_var(res_var)
+                                ],
+                                named_params: [
+                                  syn_fn_def(
+                                    name: fn_symbol(next_int_var_id),
+                                    params: [],
+                                    local_fns: [],
+                                    expr: fn_call(
+                                      name: op_symbol(plus),
+                                      params: [const_or_var(next_int_var_id), object(1)],
+                                      named_params: []
+                                    )
+                                  ),
+                                  syn_fn_def(
+                                    name: fn_symbol(next_obj_var_id),
+                                    params: [],
+                                    local_fns: [],
+                                    expr: fn_call(
+                                      name: op_symbol(plus),
+                                      params: [const_or_var(next_obj_var_id), object(1)],
+                                      named_params: []
+                                    )
+                                  ),
+                                  syn_fn_def(
+                                    name: fn_symbol(next_map_it_var_id),
+                                    params: [],
+                                    local_fns: [],
+                                    expr: fn_call(
+                                      name: op_symbol(plus),
+                                      params: [const_or_var(next_map_it_var_id), object(1)],
+                                      named_params: []
+                                    )
+                                  )
+                                ]
+                              )
+                            ],
+                            named_params: []
+                          ),
+                          seq_expr(
+                            head: [
+                              fn_call(
+                                name: fn_symbol(exit_block_if_not),
+                                params: [const_or_var(res_var)],
+                                named_params: []
+                              ),
+                              fn_call(
+                                name: fn_symbol(move_forward),
+                                params: [const_or_var(it_var)],
+                                named_params: []
+                              )
+                            ]
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      var: var(inner_code)
+                    ),
+                    if_stmt(
+                      else: [
+                        assignment_stmt(
+                          value: fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  const_or_var(code),
+                                  seq_expr(
+                                    head: [
+                                      fn_call(
+                                        name: fn_symbol(block_failure_if),
+                                        params: [
+                                          fn_call(
+                                            name: fn_symbol(is_out_of_range),
+                                            params: [const_or_var(it_var)],
+                                            named_params: []
+                                          ),
+                                          const_or_var(res_var)
+                                        ],
+                                        named_params: []
+                                      ),
+                                      fn_call(
+                                        name: fn_symbol(set_var),
+                                        params: [
+                                          const_or_var(obj_var),
+                                          fn_call(
+                                            name: fn_symbol(get_curr_key),
+                                            params: [const_or_var(it_var)],
+                                            named_params: []
+                                          )
+                                        ],
+                                        named_params: []
+                                      ),
+                                      fn_call(
+                                        name: fn_symbol(block_failure_if_not),
+                                        params: [
+                                          fn_call(
+                                            name: fn_symbol(is_eq),
+                                            params: [
+                                              const_or_var(obj_var),
+                                              accessor(expr: const_or_var(b), field: object(label))
+                                            ],
+                                            named_params: []
+                                          ),
+                                          const_or_var(res_var)
+                                        ],
+                                        named_params: []
+                                      )
+                                    ]
+                                  )
+                                ],
+                                named_params: []
+                              ),
+                              const_or_var(inner_code)
+                            ],
+                            named_params: []
+                          ),
+                          var: var(code)
+                        )
+                      ],
+                      branches: [
+                        (
+                          cond: accessor(expr: const_or_var(b), field: object(optional)),
+                          body: [
+                            assignment_stmt(
+                              value: fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  const_or_var(code),
+                                  seq_expr(
+                                    head: [
+                                      fn_call(
+                                        name: fn_symbol(do_if_not),
+                                        params: [
+                                          fn_call(
+                                            name: fn_symbol(is_out_of_range),
+                                            params: [const_or_var(it_var)],
+                                            named_params: []
+                                          ),
+                                          seq_expr(
+                                            head: [
+                                              fn_call(
+                                                name: fn_symbol(set_var),
+                                                params: [
+                                                  const_or_var(obj_var),
+                                                  fn_call(
+                                                    name: fn_symbol(get_curr_key),
+                                                    params: [const_or_var(it_var)],
+                                                    named_params: []
+                                                  )
+                                                ],
+                                                named_params: []
+                                              ),
+                                              fn_call(
+                                                name: fn_symbol(do_if),
+                                                params: [
+                                                  fn_call(
+                                                    name: fn_symbol(is_eq),
+                                                    params: [
+                                                      const_or_var(obj_var),
+                                                      accessor(expr: const_or_var(b), field: object(label))
+                                                    ],
+                                                    named_params: []
+                                                  ),
+                                                  const_or_var(inner_code)
+                                                ],
+                                                named_params: []
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        named_params: []
+                                      )
+                                    ]
+                                  )
+                                ],
+                                named_params: []
+                              ),
+                              var: var(code)
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ],
+                  loops: [seq_iter(var: var(b), values: const_or_var(sorted_fields))]
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      const_or_var(code),
+                      seq_expr(
+                        head: [
+                          fn_call(
+                            name: fn_symbol(set_bvar),
+                            params: [
+                              const_or_var(res_var),
+                              fn_call(
+                                name: fn_symbol(is_out_of_range),
+                                params: [const_or_var(it_var)],
+                                named_params: []
+                              )
+                            ],
+                            named_params: []
+                          )
+                        ]
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  var: var(code)
+                ),
+                return_stmt(
+                  seq_expr(
+                    head: [
+                      fn_call(
+                        name: fn_symbol(execute_block),
+                        params: [const_or_var(code)],
+                        named_params: []
+                      )
+                    ]
+                  )
+                )
+              ]
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: var_ptrn(name: var(fs)),
+                tag: obj_ptrn(object(tuple_type))
+              )
+            ]
+          ),
+          case(
+            expr: do_expr(
+              [
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(lvar),
+                    params: [const_or_var(next_obj_var_id)],
+                    named_params: []
+                  ),
+                  var: var(obj_var)
+                ),
+                let_stmt(
+                  body: [
+                    assignment_stmt(
+                      value: fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  seq_expr(
+                                    head: [
+                                      fn_call(
+                                        name: fn_symbol(block_failure_if_not),
+                                        params: [
+                                          fn_call(
+                                            name: fn_symbol(is_tagged_obj),
+                                            params: [const_or_var(obj)],
+                                            named_params: []
+                                          ),
+                                          const_or_var(res_var)
+                                        ],
+                                        named_params: []
+                                      ),
+                                      fn_call(
+                                        name: fn_symbol(set_var),
+                                        params: [
+                                          const_or_var(obj_var),
+                                          fn_call(
+                                            name: fn_symbol(get_tag),
+                                            params: [const_or_var(obj)],
+                                            named_params: []
+                                          )
+                                        ],
+                                        named_params: []
+                                      )
+                                    ]
+                                  ),
+                                  fn_call(
+                                    name: fn_symbol(gen_type_checking_code),
+                                    params: [
+                                      accessor(expr: const_or_var(type), field: object(tag_type)),
+                                      const_or_var(obj_var),
+                                      const_or_var(res_var)
+                                    ],
+                                    named_params: []
+                                  )
+                                ],
+                                named_params: []
+                              ),
+                              seq_expr(
+                                head: [
+                                  fn_call(
+                                    name: fn_symbol(exit_block_if_not),
+                                    params: [const_or_var(res_var)],
+                                    named_params: []
+                                  ),
+                                  fn_call(
+                                    name: fn_symbol(set_var),
+                                    params: [
+                                      const_or_var(obj_var),
+                                      fn_call(
+                                        name: fn_symbol(get_inner_obj),
+                                        params: [const_or_var(obj)],
+                                        named_params: []
+                                      )
+                                    ],
+                                    named_params: []
+                                  )
+                                ]
+                              )
+                            ],
+                            named_params: []
+                          ),
+                          fn_call(
+                            name: fn_symbol(gen_type_checking_code),
+                            params: [
+                              accessor(expr: const_or_var(type), field: object(obj_type)),
+                              const_or_var(obj_var),
+                              const_or_var(res_var)
+                            ],
+                            named_params: []
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      var: var(code)
+                    )
+                  ],
+                  asgnms: [
+                    syn_fn_def(
+                      name: fn_symbol(next_obj_var_id),
+                      params: [],
+                      local_fns: [],
+                      expr: fn_call(
+                        name: op_symbol(plus),
+                        params: [const_or_var(next_obj_var_id), object(1)],
+                        named_params: []
+                      )
+                    )
+                  ]
+                ),
+                return_stmt(
+                  seq_expr(
+                    head: [
+                      fn_call(
+                        name: fn_symbol(execute_block),
+                        params: [const_or_var(code)],
+                        named_params: []
+                      )
+                    ]
+                  )
+                )
+              ]
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(tag_type)))
+            ]
+          ),
+          case(
+            expr: do_expr(
+              [
+                assignment_stmt(value: seq_expr(head: []), var: var(code)),
+                for_stmt(
+                  body: [
+                    assignment_stmt(
+                      value: fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              const_or_var(code),
+                              fn_call(
+                                name: fn_symbol(gen_type_checking_code),
+                                params: [const_or_var(t), const_or_var(obj), const_or_var(res_var)],
+                                named_params: []
+                              )
+                            ],
+                            named_params: []
+                          ),
+                          seq_expr(
+                            head: [
+                              fn_call(
+                                name: fn_symbol(exit_block_if),
+                                params: [const_or_var(res_var)],
+                                named_params: []
+                              )
+                            ]
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      var: var(code)
+                    )
+                  ],
+                  loops: [
+                    seq_iter(
+                      var: var(t),
+                      values: fn_call(
+                        name: fn_symbol(rand_sort),
+                        params: [const_or_var(ts)],
+                        named_params: []
+                      )
+                    )
+                  ]
+                ),
+                return_stmt(
+                  seq_expr(
+                    head: [
+                      fn_call(
+                        name: fn_symbol(execute_block),
+                        params: [const_or_var(code)],
+                        named_params: []
+                      )
+                    ]
+                  )
+                )
+              ]
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: var_ptrn(name: var(ts)),
+                tag: obj_ptrn(object(union_type))
+              )
+            ]
+          ),
+          case(
+            expr: seq_expr(
+              head: [
+                fn_call(
+                  name: fn_symbol(set_bvar),
+                  params: [
+                    const_or_var(res_var),
+                    fn_call(
+                      name: fn_symbol(gen_type_checking_expr),
+                      params: [const_or_var(type), const_or_var(obj)],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                )
+              ]
+            ),
+            patterns: [type_ptrn(type_any)]
+          )
+        ],
+        exprs: [fn_par(0), fn_par(1), fn_par(2)]
+      ),
+      res_type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(instr)))
+    )
+  ],
+  signatures: [
+    syn_sgn(
+      name: fn_symbol(next_set_it_var_id),
+      params: [],
+      res_type: type_ref(type_symbol(nat))
+    ),
+    syn_sgn(
+      name: fn_symbol(next_seq_it_var_id),
+      params: [],
+      res_type: type_ref(type_symbol(nat))
+    ),
+    syn_sgn(
+      name: fn_symbol(next_map_it_var_id),
+      params: [],
+      res_type: type_ref(type_symbol(nat))
+    ),
+    syn_sgn(
+      name: fn_symbol(next_obj_var_id),
+      params: [],
+      res_type: type_ref(type_symbol(nat))
+    ),
+    syn_sgn(
+      name: fn_symbol(next_int_var_id),
+      params: [],
+      res_type: type_ref(type_symbol(nat))
+    )
+  ]
+)

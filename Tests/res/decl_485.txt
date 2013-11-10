@@ -1,0 +1,5109 @@
+using_block(
+  fn_defs: [
+    syn_fn_def(
+      name: fn_symbol(compile_to_c),
+      params: [
+        (
+          type: seq_type(
+            nonempty: false,
+            elem_type: type_ref(type_symbol(objprocdef))
+          ),
+          var: var(obj_proc_defs)
+        ),
+        (
+          type: seq_type(
+            nonempty: false,
+            elem_type: type_ref(type_symbol(boolprocdef))
+          ),
+          var: var(bool_proc_defs)
+        ),
+        (
+          type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(clsdef))),
+          var: var(cls_defs)
+        )
+      ],
+      local_fns: [],
+      expr: do_expr(
+        [
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(amp),
+              params: [
+                seq_comp(
+                  var: var(pd),
+                  expr: fn_call(
+                    name: fn_symbol(gen_c_decl),
+                    params: [const_or_var(pd)],
+                    named_params: []
+                  ),
+                  src_expr: const_or_var(bool_proc_defs)
+                ),
+                fn_call(
+                  name: fn_symbol(rep_seq),
+                  params: [
+                    object(4),
+                    tag_obj_expr(obj: seq_expr(head: []), tag: object(string))
+                  ],
+                  named_params: []
+                )
+              ],
+              named_params: []
+            ),
+            var: var(type_checking_fn_decls)
+          ),
+          print_stmt(
+            tag_obj_expr(
+              obj: seq_expr(
+                head: [
+                  object(84),
+                  object(121),
+                  object(112),
+                  object(101),
+                  object(32),
+                  object(99),
+                  object(104),
+                  object(101),
+                  object(99),
+                  object(107),
+                  object(105),
+                  object(110),
+                  object(103),
+                  object(32),
+                  object(102),
+                  object(117),
+                  object(110),
+                  object(99),
+                  object(116),
+                  object(105),
+                  object(111),
+                  object(110),
+                  object(32),
+                  object(100),
+                  object(101),
+                  object(99),
+                  object(108),
+                  object(97),
+                  object(114),
+                  object(97),
+                  object(116),
+                  object(105),
+                  object(111),
+                  object(110),
+                  object(115),
+                  object(32),
+                  object(103),
+                  object(101),
+                  object(110),
+                  object(101),
+                  object(114),
+                  object(97),
+                  object(116),
+                  object(101),
+                  object(100)
+                ]
+              ),
+              tag: object(string)
+            )
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(amp),
+              params: [
+                seq_comp(
+                  var: var(d),
+                  expr: fn_call(
+                    name: fn_symbol(gen_c_decl),
+                    params: [const_or_var(d), const_or_var(i)],
+                    named_params: []
+                  ),
+                  idx_var: var(i),
+                  src_expr: const_or_var(cls_defs)
+                ),
+                fn_call(
+                  name: fn_symbol(rep_seq),
+                  params: [
+                    object(4),
+                    tag_obj_expr(obj: seq_expr(head: []), tag: object(string))
+                  ],
+                  named_params: []
+                )
+              ],
+              named_params: []
+            ),
+            var: var(closure_decls)
+          ),
+          print_stmt(
+            tag_obj_expr(
+              obj: seq_expr(
+                head: [
+                  object(67),
+                  object(108),
+                  object(111),
+                  object(115),
+                  object(117),
+                  object(114),
+                  object(101),
+                  object(32),
+                  object(100),
+                  object(101),
+                  object(99),
+                  object(108),
+                  object(97),
+                  object(114),
+                  object(97),
+                  object(116),
+                  object(105),
+                  object(111),
+                  object(110),
+                  object(115),
+                  object(32),
+                  object(103),
+                  object(101),
+                  object(110),
+                  object(101),
+                  object(114),
+                  object(97),
+                  object(116),
+                  object(101),
+                  object(100)
+                ]
+              ),
+              tag: object(string)
+            )
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(amp),
+              params: [
+                seq_comp(
+                  var: var(pd),
+                  expr: fn_call(
+                    name: fn_symbol(gen_c_decl),
+                    params: [const_or_var(pd)],
+                    named_params: []
+                  ),
+                  src_expr: const_or_var(obj_proc_defs)
+                ),
+                fn_call(
+                  name: fn_symbol(rep_seq),
+                  params: [
+                    object(4),
+                    tag_obj_expr(obj: seq_expr(head: []), tag: object(string))
+                  ],
+                  named_params: []
+                )
+              ],
+              named_params: []
+            ),
+            var: var(fn_decls)
+          ),
+          print_stmt(
+            tag_obj_expr(
+              obj: seq_expr(
+                head: [
+                  object(70),
+                  object(117),
+                  object(110),
+                  object(99),
+                  object(116),
+                  object(105),
+                  object(111),
+                  object(110),
+                  object(32),
+                  object(100),
+                  object(101),
+                  object(99),
+                  object(108),
+                  object(97),
+                  object(114),
+                  object(97),
+                  object(116),
+                  object(105),
+                  object(111),
+                  object(110),
+                  object(115),
+                  object(32),
+                  object(103),
+                  object(101),
+                  object(110),
+                  object(101),
+                  object(114),
+                  object(97),
+                  object(116),
+                  object(101),
+                  object(100)
+                ]
+              ),
+              tag: object(string)
+            )
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: fn_symbol(join),
+                  params: [
+                    seq_comp(
+                      var: var(d),
+                      expr: fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: fn_symbol(compile_to_c),
+                            params: [const_or_var(d)],
+                            named_params: []
+                          ),
+                          seq_expr(
+                            head: [
+                              tag_obj_expr(obj: seq_expr(head: []), tag: object(string)),
+                              tag_obj_expr(obj: seq_expr(head: []), tag: object(string))
+                            ]
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      src_expr: const_or_var(bool_proc_defs)
+                    )
+                  ],
+                  named_params: []
+                ),
+                fn_call(
+                  name: fn_symbol(rep_seq),
+                  params: [
+                    object(4),
+                    tag_obj_expr(obj: seq_expr(head: []), tag: object(string))
+                  ],
+                  named_params: []
+                )
+              ],
+              named_params: []
+            ),
+            var: var(type_checking_fns)
+          ),
+          print_stmt(
+            tag_obj_expr(
+              obj: seq_expr(
+                head: [
+                  object(84),
+                  object(121),
+                  object(112),
+                  object(101),
+                  object(32),
+                  object(99),
+                  object(104),
+                  object(101),
+                  object(99),
+                  object(107),
+                  object(105),
+                  object(110),
+                  object(103),
+                  object(32),
+                  object(102),
+                  object(117),
+                  object(110),
+                  object(99),
+                  object(116),
+                  object(105),
+                  object(111),
+                  object(110),
+                  object(115),
+                  object(32),
+                  object(103),
+                  object(101),
+                  object(110),
+                  object(101),
+                  object(114),
+                  object(97),
+                  object(116),
+                  object(101),
+                  object(100)
+                ]
+              ),
+              tag: object(string)
+            )
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: fn_symbol(join),
+                  params: [
+                    seq_comp(
+                      var: var(d),
+                      expr: fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: fn_symbol(compile_to_c),
+                            params: [const_or_var(d), const_or_var(i)],
+                            named_params: []
+                          ),
+                          seq_expr(
+                            head: [
+                              tag_obj_expr(obj: seq_expr(head: []), tag: object(string)),
+                              tag_obj_expr(obj: seq_expr(head: []), tag: object(string))
+                            ]
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      idx_var: var(i),
+                      src_expr: const_or_var(cls_defs)
+                    )
+                  ],
+                  named_params: []
+                ),
+                fn_call(
+                  name: fn_symbol(rep_seq),
+                  params: [
+                    object(4),
+                    tag_obj_expr(obj: seq_expr(head: []), tag: object(string))
+                  ],
+                  named_params: []
+                )
+              ],
+              named_params: []
+            ),
+            var: var(closures)
+          ),
+          print_stmt(
+            tag_obj_expr(
+              obj: seq_expr(
+                head: [
+                  object(67),
+                  object(108),
+                  object(111),
+                  object(115),
+                  object(117),
+                  object(114),
+                  object(101),
+                  object(115),
+                  object(32),
+                  object(103),
+                  object(101),
+                  object(110),
+                  object(101),
+                  object(114),
+                  object(97),
+                  object(116),
+                  object(101),
+                  object(100)
+                ]
+              ),
+              tag: object(string)
+            )
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: fn_symbol(join),
+              params: [
+                seq_comp(
+                  var: var(d),
+                  expr: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      fn_call(
+                        name: fn_symbol(compile_to_c),
+                        params: [const_or_var(d)],
+                        named_params: []
+                      ),
+                      seq_expr(
+                        head: [
+                          tag_obj_expr(obj: seq_expr(head: []), tag: object(string)),
+                          tag_obj_expr(obj: seq_expr(head: []), tag: object(string))
+                        ]
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  src_expr: const_or_var(obj_proc_defs)
+                )
+              ],
+              named_params: []
+            ),
+            var: var(functions)
+          ),
+          print_stmt(
+            tag_obj_expr(
+              obj: seq_expr(
+                head: [
+                  object(70),
+                  object(117),
+                  object(110),
+                  object(99),
+                  object(116),
+                  object(105),
+                  object(111),
+                  object(110),
+                  object(115),
+                  object(32),
+                  object(103),
+                  object(101),
+                  object(110),
+                  object(101),
+                  object(114),
+                  object(97),
+                  object(116),
+                  object(101),
+                  object(100)
+                ]
+              ),
+              tag: object(string)
+            )
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: fn_symbol(join),
+              params: [
+                seq_expr(
+                  head: [
+                    const_or_var(type_checking_fn_decls),
+                    const_or_var(closure_decls),
+                    const_or_var(fn_decls),
+                    const_or_var(type_checking_fns),
+                    const_or_var(closures),
+                    const_or_var(functions)
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            var: var(body)
+          ),
+          return_stmt(
+            map_expr(
+              {
+                (value: const_or_var(body), key: object(body)),
+                (value: const_or_var(fn_decls), key: object(header))
+              }
+            )
+          )
+        ]
+      ),
+      res_type: type_ref(type_symbol(ccodeoutput))
+    ),
+    syn_fn_def(
+      name: fn_symbol(gen_c_decl),
+      params: [(type: type_ref(type_symbol(procdef)), var: var(pd))],
+      local_fns: [
+        syn_fn_def(
+          name: fn_symbol(arity),
+          params: [(type: type_ref(type_symbol(procdef)), var: var(pd))],
+          local_fns: [],
+          expr: match_expr(
+            cases: [
+              case(
+                expr: accessor(expr: const_or_var(pd), field: object(in_arity)),
+                patterns: [type_ptrn(type_ref(type_symbol(objprocdef)))]
+              ),
+              case(
+                expr: accessor(expr: const_or_var(pd), field: object(arity)),
+                patterns: [type_ptrn(type_ref(type_symbol(boolprocdef)))]
+              )
+            ],
+            exprs: [fn_par(0)]
+          ),
+          res_type: type_ref(type_symbol(nat))
+        ),
+        syn_fn_def(
+          name: fn_symbol(ret_type_str),
+          params: [(type: type_ref(type_symbol(procdef)))],
+          local_fns: [],
+          expr: match_expr(
+            cases: [
+              case(
+                expr: tag_obj_expr(
+                  obj: seq_expr(head: [object(79), object(98), object(106), object(32)]),
+                  tag: object(string)
+                ),
+                patterns: [type_ptrn(type_ref(type_symbol(objprocdef)))]
+              ),
+              case(
+                expr: tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(98),
+                      object(111),
+                      object(111),
+                      object(108),
+                      object(32)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                patterns: [type_ptrn(type_ref(type_symbol(boolprocdef)))]
+              )
+            ],
+            exprs: [fn_par(0)]
+          ),
+          res_type: type_ref(type_symbol(string))
+        ),
+        syn_fn_def(
+          name: fn_symbol(extra_params),
+          params: [(type: type_ref(type_symbol(procdef)))],
+          local_fns: [],
+          expr: match_expr(
+            cases: [
+              case(
+                expr: seq_expr(
+                  head: [
+                    tag_obj_expr(
+                      obj: seq_expr(
+                        head: [
+                          object(69),
+                          object(110),
+                          object(118),
+                          object(32),
+                          object(38)
+                        ]
+                      ),
+                      tag: object(string)
+                    )
+                  ]
+                ),
+                patterns: [type_ptrn(type_ref(type_symbol(objprocdef)))]
+              ),
+              case(
+                expr: seq_expr(head: []),
+                patterns: [type_ptrn(type_ref(type_symbol(boolprocdef)))]
+              )
+            ],
+            exprs: [fn_par(0)]
+          ),
+          res_type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string)))
+        )
+      ],
+      expr: do_expr(
+        [
+          assignment_stmt(
+            value: fn_call(
+              name: fn_symbol(append),
+              params: [
+                fn_call(
+                  name: fn_symbol(intermix),
+                  params: [
+                    fn_call(
+                      name: op_symbol(amp),
+                      params: [
+                        fn_call(
+                          name: fn_symbol(rep_seq),
+                          params: [
+                            fn_call(
+                              name: fn_symbol(arity),
+                              params: [const_or_var(pd)],
+                              named_params: []
+                            ),
+                            tag_obj_expr(
+                              obj: seq_expr(head: [object(79), object(98), object(106)]),
+                              tag: object(string)
+                            )
+                          ],
+                          named_params: []
+                        ),
+                        fn_call(
+                          name: fn_symbol(extra_params),
+                          params: [const_or_var(pd)],
+                          named_params: []
+                        )
+                      ],
+                      named_params: []
+                    ),
+                    tag_obj_expr(
+                      obj: seq_expr(head: [object(44), object(32)]),
+                      tag: object(string)
+                    )
+                  ],
+                  named_params: []
+                )
+              ],
+              named_params: []
+            ),
+            var: var(par_list)
+          ),
+          return_stmt(
+            fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    fn_call(
+                      name: op_symbol(amp),
+                      params: [
+                        fn_call(
+                          name: op_symbol(amp),
+                          params: [
+                            fn_call(
+                              name: fn_symbol(ret_type_str),
+                              params: [const_or_var(pd)],
+                              named_params: []
+                            ),
+                            fn_call(
+                              name: fn_symbol(to_c_fn_name),
+                              params: [accessor(expr: const_or_var(pd), field: object(name))],
+                              named_params: []
+                            )
+                          ],
+                          named_params: []
+                        ),
+                        tag_obj_expr(obj: seq_expr(head: [object(40)]), tag: object(string))
+                      ],
+                      named_params: []
+                    ),
+                    const_or_var(par_list)
+                  ],
+                  named_params: []
+                ),
+                tag_obj_expr(
+                  obj: seq_expr(head: [object(41), object(59)]),
+                  tag: object(string)
+                )
+              ],
+              named_params: []
+            )
+          )
+        ]
+      ),
+      res_type: type_ref(type_symbol(string))
+    ),
+    syn_fn_def(
+      name: fn_symbol(gen_c_decl),
+      params: [
+        (type: type_ref(type_symbol(clsdef)), var: var(cd)),
+        (type: type_ref(type_symbol(nat)), var: var(id))
+      ],
+      local_fns: [],
+      expr: do_expr(
+        [
+          assignment_stmt(
+            value: fn_call(
+              name: fn_symbol(append),
+              params: [
+                fn_call(
+                  name: fn_symbol(intermix),
+                  params: [
+                    fn_call(
+                      name: op_symbol(amp),
+                      params: [
+                        fn_call(
+                          name: fn_symbol(rep_seq),
+                          params: [
+                            accessor(expr: const_or_var(cd), field: object(arity)),
+                            tag_obj_expr(
+                              obj: seq_expr(head: [object(79), object(98), object(106)]),
+                              tag: object(string)
+                            )
+                          ],
+                          named_params: []
+                        ),
+                        seq_expr(
+                          head: [
+                            tag_obj_expr(
+                              obj: seq_expr(
+                                head: [
+                                  object(99),
+                                  object(111),
+                                  object(110),
+                                  object(115),
+                                  object(116),
+                                  object(32),
+                                  object(79),
+                                  object(98),
+                                  object(106),
+                                  object(32),
+                                  object(42)
+                                ]
+                              ),
+                              tag: object(string)
+                            ),
+                            tag_obj_expr(
+                              obj: seq_expr(
+                                head: [
+                                  object(69),
+                                  object(110),
+                                  object(118),
+                                  object(32),
+                                  object(38)
+                                ]
+                              ),
+                              tag: object(string)
+                            )
+                          ]
+                        )
+                      ],
+                      named_params: []
+                    ),
+                    tag_obj_expr(
+                      obj: seq_expr(head: [object(44), object(32)]),
+                      tag: object(string)
+                    )
+                  ],
+                  named_params: []
+                )
+              ],
+              named_params: []
+            ),
+            var: var(par_list)
+          ),
+          return_stmt(
+            fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    fn_call(
+                      name: op_symbol(amp),
+                      params: [
+                        fn_call(
+                          name: op_symbol(amp),
+                          params: [
+                            tag_obj_expr(
+                              obj: seq_expr(
+                                head: [
+                                  object(79),
+                                  object(98),
+                                  object(106),
+                                  object(32),
+                                  object(99),
+                                  object(108),
+                                  object(115),
+                                  object(95)
+                                ]
+                              ),
+                              tag: object(string)
+                            ),
+                            fn_call(
+                              name: fn_symbol(to_str),
+                              params: [const_or_var(id)],
+                              named_params: []
+                            )
+                          ],
+                          named_params: []
+                        ),
+                        tag_obj_expr(obj: seq_expr(head: [object(40)]), tag: object(string))
+                      ],
+                      named_params: []
+                    ),
+                    const_or_var(par_list)
+                  ],
+                  named_params: []
+                ),
+                tag_obj_expr(
+                  obj: seq_expr(head: [object(41), object(59)]),
+                  tag: object(string)
+                )
+              ],
+              named_params: []
+            )
+          )
+        ]
+      ),
+      res_type: type_ref(type_symbol(string))
+    ),
+    syn_fn_def(
+      name: fn_symbol(compile_to_c),
+      params: [(type: type_ref(type_symbol(procdef)), var: var(pd))],
+      local_fns: [
+        syn_fn_def(
+          name: fn_symbol(arity),
+          params: [(type: type_ref(type_symbol(procdef)), var: var(pd))],
+          local_fns: [],
+          expr: match_expr(
+            cases: [
+              case(
+                expr: accessor(expr: const_or_var(pd), field: object(in_arity)),
+                patterns: [type_ptrn(type_ref(type_symbol(objprocdef)))]
+              ),
+              case(
+                expr: accessor(expr: const_or_var(pd), field: object(arity)),
+                patterns: [type_ptrn(type_ref(type_symbol(boolprocdef)))]
+              )
+            ],
+            exprs: [fn_par(0)]
+          ),
+          res_type: type_ref(type_symbol(nat))
+        ),
+        syn_fn_def(
+          name: fn_symbol(ret_type_str),
+          params: [(type: type_ref(type_symbol(procdef)))],
+          local_fns: [],
+          expr: match_expr(
+            cases: [
+              case(
+                expr: tag_obj_expr(
+                  obj: seq_expr(head: [object(79), object(98), object(106), object(32)]),
+                  tag: object(string)
+                ),
+                patterns: [type_ptrn(type_ref(type_symbol(objprocdef)))]
+              ),
+              case(
+                expr: tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(98),
+                      object(111),
+                      object(111),
+                      object(108),
+                      object(32)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                patterns: [type_ptrn(type_ref(type_symbol(boolprocdef)))]
+              )
+            ],
+            exprs: [fn_par(0)]
+          ),
+          res_type: type_ref(type_symbol(string))
+        ),
+        syn_fn_def(
+          name: fn_symbol(extra_params),
+          params: [(type: type_ref(type_symbol(procdef)))],
+          local_fns: [],
+          expr: match_expr(
+            cases: [
+              case(
+                expr: seq_expr(
+                  head: [
+                    tag_obj_expr(
+                      obj: seq_expr(
+                        head: [
+                          object(69),
+                          object(110),
+                          object(118),
+                          object(32),
+                          object(38),
+                          object(101),
+                          object(110),
+                          object(118)
+                        ]
+                      ),
+                      tag: object(string)
+                    )
+                  ]
+                ),
+                patterns: [type_ptrn(type_ref(type_symbol(objprocdef)))]
+              ),
+              case(
+                expr: seq_expr(head: []),
+                patterns: [type_ptrn(type_ref(type_symbol(boolprocdef)))]
+              )
+            ],
+            exprs: [fn_par(0)]
+          ),
+          res_type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string)))
+        )
+      ],
+      expr: do_expr(
+        [
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(amp),
+              params: [
+                seq_comp(
+                  var: var(n),
+                  expr: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      tag_obj_expr(
+                        obj: seq_expr(
+                          head: [
+                            object(79),
+                            object(98),
+                            object(106),
+                            object(32),
+                            object(112)
+                          ]
+                        ),
+                        tag: object(string)
+                      ),
+                      fn_call(
+                        name: fn_symbol(to_str),
+                        params: [const_or_var(n)],
+                        named_params: []
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  src_expr: fn_call(
+                    name: fn_symbol(inc_seq),
+                    params: [
+                      fn_call(
+                        name: fn_symbol(arity),
+                        params: [const_or_var(pd)],
+                        named_params: []
+                      )
+                    ],
+                    named_params: []
+                  )
+                ),
+                fn_call(
+                  name: fn_symbol(extra_params),
+                  params: [const_or_var(pd)],
+                  named_params: []
+                )
+              ],
+              named_params: []
+            ),
+            var: var(par_list)
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    fn_call(
+                      name: op_symbol(amp),
+                      params: [
+                        fn_call(
+                          name: op_symbol(amp),
+                          params: [
+                            fn_call(
+                              name: fn_symbol(ret_type_str),
+                              params: [const_or_var(pd)],
+                              named_params: []
+                            ),
+                            fn_call(
+                              name: fn_symbol(to_c_fn_name),
+                              params: [accessor(expr: const_or_var(pd), field: object(name))],
+                              named_params: []
+                            )
+                          ],
+                          named_params: []
+                        ),
+                        tag_obj_expr(obj: seq_expr(head: [object(40)]), tag: object(string))
+                      ],
+                      named_params: []
+                    ),
+                    fn_call(
+                      name: fn_symbol(append),
+                      params: [
+                        fn_call(
+                          name: fn_symbol(intermix),
+                          params: [
+                            const_or_var(par_list),
+                            tag_obj_expr(
+                              obj: seq_expr(head: [object(44), object(32)]),
+                              tag: object(string)
+                            )
+                          ],
+                          named_params: []
+                        )
+                      ],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                tag_obj_expr(obj: seq_expr(head: [object(41)]), tag: object(string))
+              ],
+              named_params: []
+            ),
+            var: var(signature)
+          ),
+          assignment_stmt(
+            value: accessor(expr: const_or_var(pd), field: object(body)),
+            var: var(body)
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: fn_symbol(vars_to_declare),
+              params: [const_or_var(body)],
+              named_params: []
+            ),
+            var: var(vars_to_decl)
+          ),
+          assignment_stmt(
+            value: set_comp(
+              sel_exprs: [],
+              source: [
+                in_clause(
+                  src: const_or_var(vars_to_decl),
+                  ptrn: var_ptrn(
+                    name: var(v),
+                    ptrn: type_ptrn(type_ref(type_symbol(vecvar)))
+                  )
+                )
+              ],
+              expr: const_or_var(v)
+            ),
+            var: var(vector_vars)
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(minus),
+              params: [const_or_var(vars_to_decl), const_or_var(vector_vars)],
+              named_params: []
+            ),
+            var: var(scalar_vars)
+          ),
+          assignment_stmt(
+            value: set_comp(
+              sel_exprs: [],
+              source: [
+                in_clause(
+                  src: const_or_var(vector_vars),
+                  ptrn: var_ptrn(name: var(v))
+                )
+              ],
+              expr: accessor(expr: const_or_var(v), field: object(id))
+            ),
+            var: var(vec_var_ids)
+          ),
+          assignment_stmt(
+            value: set_comp(
+              sel_exprs: [],
+              source: [
+                in_clause(
+                  src: const_or_var(vec_var_ids),
+                  ptrn: var_ptrn(name: var(id))
+                )
+              ],
+              expr: fn_call(
+                name: fn_symbol(vvar),
+                params: [
+                  const_or_var(id),
+                  fn_call(
+                    name: fn_symbol(max),
+                    params: [
+                      set_comp(
+                        sel_exprs: [
+                          eq(
+                            left: accessor(expr: const_or_var(v), field: object(id)),
+                            right: const_or_var(id)
+                          )
+                        ],
+                        source: [
+                          in_clause(
+                            src: const_or_var(vector_vars),
+                            ptrn: var_ptrn(name: var(v))
+                          )
+                        ],
+                        expr: accessor(expr: const_or_var(v), field: object(size))
+                      )
+                    ],
+                    named_params: []
+                  )
+                ],
+                named_params: []
+              )
+            ),
+            var: var(new_vec_vars)
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(amp),
+              params: [const_or_var(scalar_vars), const_or_var(new_vec_vars)],
+              named_params: []
+            ),
+            var: var(vars_to_decl)
+          ),
+          assignment_stmt(
+            value: seq_comp(
+              var: var(v),
+              expr: fn_call(
+                name: fn_symbol(var_decl),
+                params: [const_or_var(v)],
+                named_params: []
+              ),
+              src_expr: fn_call(
+                name: fn_symbol(rand_sort),
+                params: [const_or_var(vars_to_decl)],
+                named_params: []
+              )
+            ),
+            var: var(var_decls)
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: fn_symbol(compile_to_c),
+              params: [const_or_var(body), object(nil)],
+              named_params: []
+            ),
+            var: var(comp_body)
+          ),
+          return_stmt(
+            fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    fn_call(
+                      name: op_symbol(amp),
+                      params: [
+                        fn_call(
+                          name: op_symbol(amp),
+                          params: [
+                            seq_expr(
+                              head: [
+                                const_or_var(signature),
+                                tag_obj_expr(obj: seq_expr(head: [object(123)]), tag: object(string))
+                              ]
+                            ),
+                            fn_call(
+                              name: fn_symbol(indent),
+                              params: [const_or_var(var_decls)],
+                              named_params: []
+                            )
+                          ],
+                          named_params: []
+                        ),
+                        seq_expr(
+                          head: [tag_obj_expr(obj: seq_expr(head: []), tag: object(string))]
+                        )
+                      ],
+                      named_params: []
+                    ),
+                    fn_call(
+                      name: fn_symbol(indent),
+                      params: [const_or_var(comp_body)],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                seq_expr(
+                  head: [
+                    tag_obj_expr(obj: seq_expr(head: [object(125)]), tag: object(string))
+                  ]
+                )
+              ],
+              named_params: []
+            )
+          )
+        ]
+      ),
+      res_type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string)))
+    ),
+    syn_fn_def(
+      name: fn_symbol(compile_to_c),
+      params: [
+        (type: type_ref(type_symbol(clsdef)), var: var(cd)),
+        (type: type_ref(type_symbol(nat)), var: var(id))
+      ],
+      local_fns: [],
+      expr: do_expr(
+        [
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(amp),
+              params: [
+                seq_comp(
+                  var: var(n),
+                  expr: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      tag_obj_expr(
+                        obj: seq_expr(
+                          head: [
+                            object(79),
+                            object(98),
+                            object(106),
+                            object(32),
+                            object(112)
+                          ]
+                        ),
+                        tag: object(string)
+                      ),
+                      fn_call(
+                        name: fn_symbol(to_str),
+                        params: [const_or_var(n)],
+                        named_params: []
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  src_expr: fn_call(
+                    name: fn_symbol(inc_seq),
+                    params: [accessor(expr: const_or_var(cd), field: object(arity))],
+                    named_params: []
+                  )
+                ),
+                seq_expr(
+                  head: [
+                    tag_obj_expr(
+                      obj: seq_expr(
+                        head: [
+                          object(99),
+                          object(111),
+                          object(110),
+                          object(115),
+                          object(116),
+                          object(32),
+                          object(79),
+                          object(98),
+                          object(106),
+                          object(32),
+                          object(67),
+                          object(91),
+                          object(93)
+                        ]
+                      ),
+                      tag: object(string)
+                    ),
+                    tag_obj_expr(
+                      obj: seq_expr(
+                        head: [
+                          object(69),
+                          object(110),
+                          object(118),
+                          object(32),
+                          object(38),
+                          object(101),
+                          object(110),
+                          object(118)
+                        ]
+                      ),
+                      tag: object(string)
+                    )
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            var: var(par_list)
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    fn_call(
+                      name: op_symbol(amp),
+                      params: [
+                        fn_call(
+                          name: op_symbol(amp),
+                          params: [
+                            tag_obj_expr(
+                              obj: seq_expr(
+                                head: [
+                                  object(79),
+                                  object(98),
+                                  object(106),
+                                  object(32),
+                                  object(99),
+                                  object(108),
+                                  object(115),
+                                  object(95)
+                                ]
+                              ),
+                              tag: object(string)
+                            ),
+                            fn_call(
+                              name: fn_symbol(to_str),
+                              params: [const_or_var(id)],
+                              named_params: []
+                            )
+                          ],
+                          named_params: []
+                        ),
+                        tag_obj_expr(obj: seq_expr(head: [object(40)]), tag: object(string))
+                      ],
+                      named_params: []
+                    ),
+                    fn_call(
+                      name: fn_symbol(append),
+                      params: [
+                        fn_call(
+                          name: fn_symbol(intermix),
+                          params: [
+                            const_or_var(par_list),
+                            tag_obj_expr(
+                              obj: seq_expr(head: [object(44), object(32)]),
+                              tag: object(string)
+                            )
+                          ],
+                          named_params: []
+                        )
+                      ],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                tag_obj_expr(obj: seq_expr(head: [object(41)]), tag: object(string))
+              ],
+              named_params: []
+            ),
+            var: var(signature)
+          ),
+          assignment_stmt(
+            value: accessor(expr: const_or_var(cd), field: object(body)),
+            var: var(body)
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: fn_symbol(vars_to_declare),
+              params: [const_or_var(body)],
+              named_params: []
+            ),
+            var: var(vars_to_decl)
+          ),
+          assignment_stmt(
+            value: seq_comp(
+              var: var(v),
+              expr: fn_call(
+                name: fn_symbol(var_decl),
+                params: [const_or_var(v)],
+                named_params: []
+              ),
+              src_expr: fn_call(
+                name: fn_symbol(rand_sort),
+                params: [const_or_var(vars_to_decl)],
+                named_params: []
+              )
+            ),
+            var: var(var_decls)
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: fn_symbol(compile_to_c),
+              params: [const_or_var(body), object(nil)],
+              named_params: []
+            ),
+            var: var(comp_body)
+          ),
+          return_stmt(
+            fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    fn_call(
+                      name: op_symbol(amp),
+                      params: [
+                        fn_call(
+                          name: op_symbol(amp),
+                          params: [
+                            seq_expr(
+                              head: [
+                                const_or_var(signature),
+                                tag_obj_expr(obj: seq_expr(head: [object(123)]), tag: object(string))
+                              ]
+                            ),
+                            fn_call(
+                              name: fn_symbol(indent),
+                              params: [const_or_var(var_decls)],
+                              named_params: []
+                            )
+                          ],
+                          named_params: []
+                        ),
+                        seq_expr(
+                          head: [tag_obj_expr(obj: seq_expr(head: []), tag: object(string))]
+                        )
+                      ],
+                      named_params: []
+                    ),
+                    fn_call(
+                      name: fn_symbol(indent),
+                      params: [const_or_var(comp_body)],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                seq_expr(
+                  head: [
+                    tag_obj_expr(obj: seq_expr(head: [object(125)]), tag: object(string))
+                  ]
+                )
+              ],
+              named_params: []
+            )
+          )
+        ]
+      ),
+      res_type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string)))
+    ),
+    syn_fn_def(
+      name: fn_symbol(vars_to_declare),
+      params: [
+        (
+          type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(instr))),
+          var: var(instrs)
+        )
+      ],
+      local_fns: [],
+      expr: do_expr(
+        [
+          assignment_stmt(
+            value: set_comp(
+              sel_exprs: [
+                not(
+                  membership(
+                    type: union_type(
+                      {
+                        tag_type(
+                          obj_type: type_ref(type_symbol(nat)),
+                          tag_type: symb_type(object(fn_par))
+                        ),
+                        tag_type(
+                          obj_type: type_ref(type_symbol(atom)),
+                          tag_type: symb_type(object(named_par))
+                        ),
+                        tag_type(
+                          obj_type: type_ref(type_symbol(nat)),
+                          tag_type: symb_type(object(cls_ext_par))
+                        ),
+                        type_ref(type_symbol(clsdef)),
+                        tag_type(
+                          obj_type: tuple_type(
+                            {
+                              (
+                                type: type_ref(type_symbol(nat)),
+                                optional: false,
+                                label: object(id)
+                              ),
+                              (
+                                type: union_type(
+                                  {type_ref(type_symbol(nat)), type_ref(type_symbol(intvar))}
+                                ),
+                                optional: false,
+                                label: object(idx)
+                              )
+                            }
+                          ),
+                          tag_type: symb_type(object(evar))
+                        )
+                      }
+                    ),
+                    obj: const_or_var(x)
+                  )
+                )
+              ],
+              source: [
+                in_clause(
+                  src: select_expr(
+                    type: union_type(
+                      {
+                        type_ref(type_symbol(anyvar)),
+                        type_ref(type_symbol(clsdef))
+                      }
+                    ),
+                    src_expr: const_or_var(instrs)
+                  ),
+                  ptrn: var_ptrn(name: var(x))
+                )
+              ],
+              expr: const_or_var(x)
+            ),
+            var: var(vs)
+          ),
+          return_stmt(const_or_var(vs))
+        ]
+      ),
+      res_type: set_type(nonempty: false, elem_type: type_ref(type_symbol(anyvar)))
+    ),
+    syn_fn_def(
+      name: fn_symbol(var_decl),
+      params: [(type: type_ref(type_symbol(anyvar)), var: var(v))],
+      local_fns: [],
+      expr: match_expr(
+        cases: [
+          case(
+            expr: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    tag_obj_expr(
+                      obj: seq_expr(head: [object(79), object(98), object(106), object(32)]),
+                      tag: object(string)
+                    ),
+                    fn_call(
+                      name: fn_symbol(to_c_var_name),
+                      params: [const_or_var(v)],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+              ],
+              named_params: []
+            ),
+            patterns: [type_ptrn(type_ref(type_symbol(objvar)))]
+          ),
+          case(
+            expr: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    fn_call(
+                      name: op_symbol(amp),
+                      params: [
+                        fn_call(
+                          name: op_symbol(amp),
+                          params: [
+                            tag_obj_expr(
+                              obj: seq_expr(head: [object(79), object(98), object(106), object(32)]),
+                              tag: object(string)
+                            ),
+                            fn_call(
+                              name: fn_symbol(to_c_var_name),
+                              params: [const_or_var(v)],
+                              named_params: []
+                            )
+                          ],
+                          named_params: []
+                        ),
+                        tag_obj_expr(obj: seq_expr(head: [object(91)]), tag: object(string))
+                      ],
+                      named_params: []
+                    ),
+                    fn_call(
+                      name: fn_symbol(to_str),
+                      params: [accessor(expr: const_or_var(v), field: object(size))],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                tag_obj_expr(
+                  obj: seq_expr(head: [object(93), object(59)]),
+                  tag: object(string)
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [type_ptrn(type_ref(type_symbol(vecvar)))]
+          ),
+          case(
+            expr: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    tag_obj_expr(
+                      obj: seq_expr(
+                        head: [
+                          object(98),
+                          object(111),
+                          object(111),
+                          object(108),
+                          object(32)
+                        ]
+                      ),
+                      tag: object(string)
+                    ),
+                    fn_call(
+                      name: fn_symbol(to_c_var_name),
+                      params: [const_or_var(v)],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+              ],
+              named_params: []
+            ),
+            patterns: [type_ptrn(type_ref(type_symbol(boolvar)))]
+          ),
+          case(
+            expr: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    tag_obj_expr(
+                      obj: seq_expr(head: [object(105), object(110), object(116), object(32)]),
+                      tag: object(string)
+                    ),
+                    fn_call(
+                      name: fn_symbol(to_c_var_name),
+                      params: [const_or_var(v)],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+              ],
+              named_params: []
+            ),
+            patterns: [type_ptrn(type_ref(type_symbol(intvar)))]
+          ),
+          case(
+            expr: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    tag_obj_expr(
+                      obj: seq_expr(
+                        head: [
+                          object(83),
+                          object(101),
+                          object(116),
+                          object(73),
+                          object(116),
+                          object(101),
+                          object(114),
+                          object(32)
+                        ]
+                      ),
+                      tag: object(string)
+                    ),
+                    fn_call(
+                      name: fn_symbol(to_c_var_name),
+                      params: [const_or_var(v)],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+              ],
+              named_params: []
+            ),
+            patterns: [type_ptrn(type_ref(type_symbol(setitvar)))]
+          ),
+          case(
+            expr: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    tag_obj_expr(
+                      obj: seq_expr(
+                        head: [
+                          object(83),
+                          object(101),
+                          object(113),
+                          object(73),
+                          object(116),
+                          object(101),
+                          object(114),
+                          object(32)
+                        ]
+                      ),
+                      tag: object(string)
+                    ),
+                    fn_call(
+                      name: fn_symbol(to_c_var_name),
+                      params: [const_or_var(v)],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+              ],
+              named_params: []
+            ),
+            patterns: [type_ptrn(type_ref(type_symbol(seqitvar)))]
+          ),
+          case(
+            expr: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    tag_obj_expr(
+                      obj: seq_expr(
+                        head: [
+                          object(77),
+                          object(97),
+                          object(112),
+                          object(73),
+                          object(116),
+                          object(101),
+                          object(114),
+                          object(32)
+                        ]
+                      ),
+                      tag: object(string)
+                    ),
+                    fn_call(
+                      name: fn_symbol(to_c_var_name),
+                      params: [const_or_var(v)],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+              ],
+              named_params: []
+            ),
+            patterns: [type_ptrn(type_ref(type_symbol(mapitvar)))]
+          ),
+          case(
+            expr: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    tag_obj_expr(
+                      obj: seq_expr(
+                        head: [
+                          object(83),
+                          object(116),
+                          object(114),
+                          object(101),
+                          object(97),
+                          object(109),
+                          object(32)
+                        ]
+                      ),
+                      tag: object(string)
+                    ),
+                    fn_call(
+                      name: fn_symbol(to_c_var_name),
+                      params: [const_or_var(v)],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+              ],
+              named_params: []
+            ),
+            patterns: [type_ptrn(type_ref(type_symbol(streamvar)))]
+          )
+        ],
+        exprs: [fn_par(0)]
+      ),
+      res_type: type_ref(type_symbol(string))
+    ),
+    syn_fn_def(
+      name: fn_symbol(compile_to_c),
+      params: [
+        (
+          type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(instr))),
+          var: var(instrs)
+        ),
+        (
+          type: union_type({type_ref(type_symbol(nat)), symb_type(object(nil))}),
+          var: var(block_id)
+        )
+      ],
+      local_fns: [],
+      expr: fn_call(
+        name: fn_symbol(join),
+        params: [
+          seq_comp(
+            var: var(instr),
+            expr: fn_call(
+              name: fn_symbol(compile_to_c),
+              params: [const_or_var(instr), const_or_var(block_id)],
+              named_params: []
+            ),
+            src_expr: const_or_var(instrs)
+          )
+        ],
+        named_params: []
+      ),
+      res_type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string)))
+    ),
+    syn_fn_def(
+      name: fn_symbol(compile_to_c),
+      params: [
+        (type: type_ref(type_symbol(instr)), var: var(instr)),
+        (
+          type: union_type({type_ref(type_symbol(nat)), symb_type(object(nil))}),
+          var: var(block_id)
+        )
+      ],
+      local_fns: [],
+      expr: match_expr(
+        cases: [
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                tag_obj_expr(
+                  obj: seq_expr(head: [object(105), object(110), object(105), object(116)]),
+                  tag: object(string)
+                ),
+                seq_expr(head: [const_or_var(v)])
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: var_ptrn(name: var(v)),
+                tag: obj_ptrn(object(init_stream))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(97),
+                      object(112),
+                      object(112),
+                      object(101),
+                      object(110),
+                      object(100)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(stream)),
+                    accessor(expr: const_or_var(instr), field: object(obj))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(append)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(109),
+                      object(97),
+                      object(107),
+                      object(101),
+                      object(95),
+                      object(115),
+                      object(101),
+                      object(116)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [accessor(expr: const_or_var(instr), field: object(stream))]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(mk_set_from_stream))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(109),
+                      object(97),
+                      object(107),
+                      object(101),
+                      object(95),
+                      object(115),
+                      object(101),
+                      object(116)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(elems)),
+                    accessor(expr: const_or_var(instr), field: object(size))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(mk_set)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(109),
+                      object(97),
+                      object(107),
+                      object(101),
+                      object(95),
+                      object(115),
+                      object(101),
+                      object(113)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [accessor(expr: const_or_var(instr), field: object(stream))]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(mk_seq_from_stream))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(109),
+                      object(97),
+                      object(107),
+                      object(101),
+                      object(95),
+                      object(115),
+                      object(101),
+                      object(113)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(elems)),
+                    accessor(expr: const_or_var(instr), field: object(size))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(mk_seq)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(109),
+                      object(97),
+                      object(107),
+                      object(101),
+                      object(95),
+                      object(109),
+                      object(97),
+                      object(112)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(key_stream)),
+                    accessor(expr: const_or_var(instr), field: object(value_stream))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(mk_map_from_streams))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(109),
+                      object(97),
+                      object(107),
+                      object(101),
+                      object(95),
+                      object(109),
+                      object(97),
+                      object(112)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(keys)),
+                    accessor(expr: const_or_var(instr), field: object(values)),
+                    accessor(expr: const_or_var(instr), field: object(size))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(mk_map)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(109),
+                      object(97),
+                      object(107),
+                      object(101),
+                      object(95),
+                      object(116),
+                      object(97),
+                      object(103),
+                      object(103),
+                      object(101),
+                      object(100),
+                      object(95),
+                      object(111),
+                      object(98),
+                      object(106)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(tag)),
+                    accessor(expr: const_or_var(instr), field: object(obj))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(mk_tagged_obj))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(109),
+                      object(97),
+                      object(107),
+                      object(101),
+                      object(95),
+                      object(97),
+                      object(114),
+                      object(114),
+                      object(97),
+                      object(121)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(size)),
+                    accessor(expr: const_or_var(instr), field: object(value))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(mk_array)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(103),
+                      object(101),
+                      object(116),
+                      object(95),
+                      object(115),
+                      object(101),
+                      object(113),
+                      object(95),
+                      object(115),
+                      object(108),
+                      object(105),
+                      object(99),
+                      object(101)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(seq)),
+                    accessor(expr: const_or_var(instr), field: object(idx_first)),
+                    accessor(expr: const_or_var(instr), field: object(len))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(get_seq_slice))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(106),
+                      object(111),
+                      object(105),
+                      object(110),
+                      object(95),
+                      object(115),
+                      object(101),
+                      object(113),
+                      object(115)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(left)),
+                    accessor(expr: const_or_var(instr), field: object(right))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(join_seqs)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(114),
+                      object(101),
+                      object(118),
+                      object(95),
+                      object(115),
+                      object(101),
+                      object(113)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [accessor(expr: const_or_var(instr), field: object(seq))]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(rev_seq)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(103),
+                      object(101),
+                      object(116),
+                      object(95),
+                      object(97),
+                      object(116)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(seq)),
+                    accessor(expr: const_or_var(instr), field: object(idx))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(get_at)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(115),
+                      object(101),
+                      object(116),
+                      object(95),
+                      object(97),
+                      object(116)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(var)),
+                    accessor(expr: const_or_var(instr), field: object(idx)),
+                    accessor(expr: const_or_var(instr), field: object(value))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(set_at)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(108),
+                      object(111),
+                      object(111),
+                      object(107),
+                      object(117),
+                      object(112)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    seq_expr(
+                      head: [
+                        accessor(expr: const_or_var(instr), field: object(map)),
+                        accessor(expr: const_or_var(instr), field: object(key))
+                      ]
+                    ),
+                    if_expr(
+                      else: seq_expr(head: []),
+                      branches: [
+                        (
+                          expr: seq_expr(
+                            head: [
+                              accessor(expr: const_or_var(instr), field: object(success_var))
+                            ]
+                          ),
+                          cond: accessor_test(expr: const_or_var(instr), field: object(success_var))
+                        )
+                      ]
+                    )
+                  ],
+                  named_params: []
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(lookup)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(101),
+                      object(120),
+                      object(116),
+                      object(95),
+                      object(108),
+                      object(111),
+                      object(111),
+                      object(107),
+                      object(117),
+                      object(112)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    seq_expr(
+                      head: [
+                        accessor(expr: const_or_var(instr), field: object(map)),
+                        accessor(expr: const_or_var(instr), field: object(key))
+                      ]
+                    ),
+                    if_expr(
+                      else: seq_expr(head: []),
+                      branches: [
+                        (
+                          expr: seq_expr(
+                            head: [
+                              accessor(expr: const_or_var(instr), field: object(success_var))
+                            ]
+                          ),
+                          cond: accessor_test(expr: const_or_var(instr), field: object(success_var))
+                        )
+                      ]
+                    )
+                  ],
+                  named_params: []
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(ext_lookup))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(109),
+                      object(101),
+                      object(114),
+                      object(103),
+                      object(101),
+                      object(95),
+                      object(109),
+                      object(97),
+                      object(112),
+                      object(115)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(map1)),
+                    accessor(expr: const_or_var(instr), field: object(map2))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(merge_maps))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(115),
+                      object(101),
+                      object(113),
+                      object(95),
+                      object(116),
+                      object(111),
+                      object(95),
+                      object(115),
+                      object(101),
+                      object(116)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [accessor(expr: const_or_var(instr), field: object(seq))]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(seq_to_set))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(115),
+                      object(101),
+                      object(113),
+                      object(95),
+                      object(116),
+                      object(111),
+                      object(95),
+                      object(109),
+                      object(115),
+                      object(101),
+                      object(116)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [accessor(expr: const_or_var(instr), field: object(seq))]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(seq_to_mset))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(108),
+                      object(105),
+                      object(115),
+                      object(116),
+                      object(95),
+                      object(116),
+                      object(111),
+                      object(95),
+                      object(115),
+                      object(101),
+                      object(113)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [accessor(expr: const_or_var(instr), field: object(list))]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(list_to_seq))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(105),
+                      object(110),
+                      object(116),
+                      object(101),
+                      object(114),
+                      object(110),
+                      object(97),
+                      object(108),
+                      object(95),
+                      object(115),
+                      object(111),
+                      object(114),
+                      object(116)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [accessor(expr: const_or_var(instr), field: object(set))]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(internal_sort))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(103),
+                      object(101),
+                      object(116),
+                      object(95),
+                      object(115),
+                      object(101),
+                      object(116),
+                      object(95),
+                      object(105),
+                      object(116),
+                      object(101),
+                      object(114)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(var)),
+                    accessor(expr: const_or_var(instr), field: object(src))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(get_set_iter))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(103),
+                      object(101),
+                      object(116),
+                      object(95),
+                      object(115),
+                      object(101),
+                      object(113),
+                      object(95),
+                      object(105),
+                      object(116),
+                      object(101),
+                      object(114)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(var)),
+                    accessor(expr: const_or_var(instr), field: object(src))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(get_seq_iter))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(103),
+                      object(101),
+                      object(116),
+                      object(95),
+                      object(109),
+                      object(97),
+                      object(112),
+                      object(95),
+                      object(105),
+                      object(116),
+                      object(101),
+                      object(114)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [
+                    accessor(expr: const_or_var(instr), field: object(var)),
+                    accessor(expr: const_or_var(instr), field: object(src))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(get_map_iter))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(109),
+                      object(111),
+                      object(118),
+                      object(101),
+                      object(95),
+                      object(102),
+                      object(111),
+                      object(114),
+                      object(119),
+                      object(97),
+                      object(114),
+                      object(100)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(head: [const_or_var(v)])
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: var_ptrn(name: var(v)),
+                tag: obj_ptrn(object(move_forward))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_assignment),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                accessor(expr: const_or_var(instr), field: object(value))
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(set_var)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_assignment),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                accessor(expr: const_or_var(instr), field: object(value))
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(set_bvar)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_assignment),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                accessor(expr: const_or_var(instr), field: object(value))
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(set_ivar)))
+            ]
+          ),
+          case(
+            expr: seq_expr(
+              head: [
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(102),
+                      object(97),
+                      object(105),
+                      object(108),
+                      object(40),
+                      object(41),
+                      object(59)
+                    ]
+                  ),
+                  tag: object(string)
+                )
+              ]
+            ),
+            patterns: [obj_ptrn(object(terminate))]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(97),
+                      object(100),
+                      object(100),
+                      object(95),
+                      object(114),
+                      object(101),
+                      object(102)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(head: [const_or_var(v)])
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: var_ptrn(name: var(v)),
+                tag: obj_ptrn(object(add_ref))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(114),
+                      object(101),
+                      object(108),
+                      object(101),
+                      object(97),
+                      object(115),
+                      object(101)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(head: [const_or_var(v)])
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: var_ptrn(name: var(v)),
+                tag: obj_ptrn(object(release))
+              )
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_call),
+              params: [
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(112),
+                      object(114),
+                      object(105),
+                      object(110),
+                      object(116)
+                    ]
+                  ),
+                  tag: object(string)
+                ),
+                seq_expr(
+                  head: [accessor(expr: const_or_var(instr), field: object(obj))]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(print_obj)))
+            ]
+          ),
+          case(
+            expr: seq_expr(
+              head: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    fn_call(
+                      name: op_symbol(amp),
+                      params: [
+                        tag_obj_expr(
+                          obj: seq_expr(
+                            head: [
+                              object(114),
+                              object(101),
+                              object(116),
+                              object(117),
+                              object(114),
+                              object(110),
+                              object(32)
+                            ]
+                          ),
+                          tag: object(string)
+                        ),
+                        fn_call(
+                          name: fn_symbol(to_c_expr),
+                          params: [const_or_var(e)],
+                          named_params: []
+                        )
+                      ],
+                      named_params: []
+                    ),
+                    tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+                  ],
+                  named_params: []
+                )
+              ]
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: var_ptrn(name: var(e)),
+                tag: obj_ptrn(object(ret_val))
+              )
+            ]
+          ),
+          case(
+            expr: seq_expr(head: []),
+            patterns: [obj_ptrn(object(no_op))]
+          ),
+          case(
+            expr: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    seq_expr(
+                      head: [
+                        tag_obj_expr(
+                          obj: seq_expr(
+                            head: [
+                              object(102),
+                              object(111),
+                              object(114),
+                              object(32),
+                              object(40),
+                              object(32),
+                              object(59),
+                              object(32),
+                              object(59),
+                              object(32),
+                              object(41)
+                            ]
+                          ),
+                          tag: object(string)
+                        ),
+                        tag_obj_expr(obj: seq_expr(head: [object(123)]), tag: object(string))
+                      ]
+                    ),
+                    fn_call(
+                      name: fn_symbol(indent),
+                      params: [
+                        fn_call(
+                          name: fn_symbol(compile_to_c),
+                          params: [const_or_var(body), const_or_var(block_id)],
+                          named_params: []
+                        )
+                      ],
+                      named_params: []
+                    )
+                  ],
+                  named_params: []
+                ),
+                seq_expr(
+                  head: [
+                    tag_obj_expr(obj: seq_expr(head: [object(125)]), tag: object(string))
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: var_ptrn(name: var(body)),
+                tag: obj_ptrn(object(repeat))
+              )
+            ]
+          ),
+          case(
+            expr: seq_expr(
+              head: [
+                tag_obj_expr(
+                  obj: seq_expr(
+                    head: [
+                      object(98),
+                      object(114),
+                      object(101),
+                      object(97),
+                      object(107),
+                      object(59)
+                    ]
+                  ),
+                  tag: object(string)
+                )
+              ]
+            ),
+            patterns: [obj_ptrn(object(break_loop))]
+          ),
+          case(
+            expr: do_expr(
+              [
+                assignment_stmt(
+                  value: builtin_call(name: counter, params: [object(nil)]),
+                  var: var(new_block_id)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(compile_to_c),
+                    params: [const_or_var(body), const_or_var(new_block_id)],
+                    named_params: []
+                  ),
+                  var: var(body_code)
+                ),
+                assignment_stmt(
+                  value: seq_expr(
+                    head: [
+                      fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              tag_obj_expr(
+                                obj: seq_expr(
+                                  head: [
+                                    object(98),
+                                    object(108),
+                                    object(111),
+                                    object(99),
+                                    object(107),
+                                    object(95)
+                                  ]
+                                ),
+                                tag: object(string)
+                              ),
+                              fn_call(
+                                name: fn_symbol(to_str),
+                                params: [const_or_var(new_block_id)],
+                                named_params: []
+                              )
+                            ],
+                            named_params: []
+                          ),
+                          tag_obj_expr(
+                            obj: seq_expr(
+                              head: [
+                                object(95),
+                                object(101),
+                                object(110),
+                                object(100),
+                                object(58),
+                                object(59)
+                              ]
+                            ),
+                            tag: object(string)
+                          )
+                        ],
+                        named_params: []
+                      )
+                    ]
+                  ),
+                  var: var(label)
+                ),
+                return_stmt(
+                  fn_call(
+                    name: op_symbol(amp),
+                    params: [const_or_var(body_code), const_or_var(label)],
+                    named_params: []
+                  )
+                )
+              ]
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: var_ptrn(name: var(body)),
+                tag: obj_ptrn(object(execute_block))
+              )
+            ]
+          ),
+          case(
+            expr: do_expr(
+              [
+                assert_stmt(neq(left: const_or_var(block_id), right: object(nil))),
+                return_stmt(
+                  seq_expr(
+                    head: [
+                      fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              tag_obj_expr(
+                                obj: seq_expr(
+                                  head: [
+                                    object(103),
+                                    object(111),
+                                    object(116),
+                                    object(111),
+                                    object(32),
+                                    object(98),
+                                    object(108),
+                                    object(111),
+                                    object(99),
+                                    object(107),
+                                    object(95)
+                                  ]
+                                ),
+                                tag: object(string)
+                              ),
+                              fn_call(
+                                name: fn_symbol(to_str),
+                                params: [const_or_var(block_id)],
+                                named_params: []
+                              )
+                            ],
+                            named_params: []
+                          ),
+                          tag_obj_expr(
+                            obj: seq_expr(
+                              head: [
+                                object(95),
+                                object(101),
+                                object(110),
+                                object(100),
+                                object(59)
+                              ]
+                            ),
+                            tag: object(string)
+                          )
+                        ],
+                        named_params: []
+                      )
+                    ]
+                  )
+                )
+              ]
+            ),
+            patterns: [obj_ptrn(object(exit_block))]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_fn_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                fn_call(
+                  name: fn_symbol(to_c_fn_name),
+                  params: [accessor(expr: const_or_var(instr), field: object(name))],
+                  named_params: []
+                ),
+                accessor(expr: const_or_var(instr), field: object(params))
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(call_proc)))
+            ]
+          ),
+          case(
+            expr: fn_call(
+              name: fn_symbol(mk_cls_call),
+              params: [
+                accessor(expr: const_or_var(instr), field: object(var)),
+                accessor(expr: const_or_var(instr), field: object(cls_var)),
+                accessor(expr: const_or_var(instr), field: object(params))
+              ],
+              named_params: []
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(call_cls)))
+            ]
+          ),
+          case(
+            expr: do_expr(
+              [
+                assert_stmt(
+                  or(
+                    left: accessor_test(expr: const_or_var(instr), field: object(when_true)),
+                    right: accessor_test(expr: const_or_var(instr), field: object(when_false))
+                  )
+                ),
+                assignment_stmt(
+                  value: accessor(expr: const_or_var(instr), field: object(cond)),
+                  var: var(cond)
+                ),
+                assignment_stmt(value: seq_expr(head: []), var: var(when_true)),
+                assignment_stmt(value: seq_expr(head: []), var: var(when_false)),
+                if_stmt(
+                  else: [
+                    assignment_stmt(
+                      value: fn_call(
+                        name: fn_symbol(neg),
+                        params: [const_or_var(cond)],
+                        named_params: []
+                      ),
+                      var: var(cond)
+                    ),
+                    assignment_stmt(
+                      value: accessor(expr: const_or_var(instr), field: object(when_false)),
+                      var: var(when_true)
+                    )
+                  ],
+                  branches: [
+                    (
+                      cond: accessor_test(expr: const_or_var(instr), field: object(when_true)),
+                      body: [
+                        assignment_stmt(
+                          value: accessor(expr: const_or_var(instr), field: object(when_true)),
+                          var: var(when_true)
+                        ),
+                        if_stmt(
+                          else: [],
+                          branches: [
+                            (
+                              cond: accessor_test(expr: const_or_var(instr), field: object(when_false)),
+                              body: [
+                                assignment_stmt(
+                                  value: accessor(expr: const_or_var(instr), field: object(when_false)),
+                                  var: var(when_false)
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          seq_expr(
+                            head: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      tag_obj_expr(
+                                        obj: seq_expr(head: [object(105), object(102), object(32), object(40)]),
+                                        tag: object(string)
+                                      ),
+                                      fn_call(
+                                        name: fn_symbol(to_c_expr),
+                                        params: [const_or_var(cond)],
+                                        named_params: []
+                                      )
+                                    ],
+                                    named_params: []
+                                  ),
+                                  tag_obj_expr(obj: seq_expr(head: [object(41)]), tag: object(string))
+                                ],
+                                named_params: []
+                              ),
+                              tag_obj_expr(obj: seq_expr(head: [object(123)]), tag: object(string))
+                            ]
+                          ),
+                          fn_call(
+                            name: fn_symbol(indent),
+                            params: [
+                              fn_call(
+                                name: fn_symbol(compile_to_c),
+                                params: [const_or_var(when_true), const_or_var(block_id)],
+                                named_params: []
+                              )
+                            ],
+                            named_params: []
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      seq_expr(
+                        head: [
+                          tag_obj_expr(obj: seq_expr(head: [object(125)]), tag: object(string))
+                        ]
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  var: var(code)
+                ),
+                if_stmt(
+                  else: [],
+                  branches: [
+                    (
+                      cond: neq(left: const_or_var(when_false), right: seq_expr(head: [])),
+                      body: [
+                        assignment_stmt(
+                          value: fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      const_or_var(code),
+                                      seq_expr(
+                                        head: [
+                                          tag_obj_expr(
+                                            obj: seq_expr(head: [object(101), object(108), object(115), object(101)]),
+                                            tag: object(string)
+                                          ),
+                                          tag_obj_expr(obj: seq_expr(head: [object(123)]), tag: object(string))
+                                        ]
+                                      )
+                                    ],
+                                    named_params: []
+                                  ),
+                                  fn_call(
+                                    name: fn_symbol(indent),
+                                    params: [
+                                      fn_call(
+                                        name: fn_symbol(compile_to_c),
+                                        params: [const_or_var(when_false), const_or_var(block_id)],
+                                        named_params: []
+                                      )
+                                    ],
+                                    named_params: []
+                                  )
+                                ],
+                                named_params: []
+                              ),
+                              seq_expr(
+                                head: [
+                                  tag_obj_expr(obj: seq_expr(head: [object(125)]), tag: object(string))
+                                ]
+                              )
+                            ],
+                            named_params: []
+                          ),
+                          var: var(code)
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                return_stmt(const_or_var(code))
+              ]
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(branch)))
+            ]
+          ),
+          case(
+            expr: do_expr(
+              [
+                assignment_stmt(
+                  value: seq_expr(
+                    head: [
+                      fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              tag_obj_expr(
+                                obj: seq_expr(
+                                  head: [
+                                    object(115),
+                                    object(119),
+                                    object(105),
+                                    object(116),
+                                    object(99),
+                                    object(104),
+                                    object(32),
+                                    object(40)
+                                  ]
+                                ),
+                                tag: object(string)
+                              ),
+                              fn_call(
+                                name: fn_symbol(to_c_expr),
+                                params: [accessor(expr: const_or_var(instr), field: object(val))],
+                                named_params: []
+                              )
+                            ],
+                            named_params: []
+                          ),
+                          tag_obj_expr(obj: seq_expr(head: [object(41)]), tag: object(string))
+                        ],
+                        named_params: []
+                      ),
+                      tag_obj_expr(obj: seq_expr(head: [object(123)]), tag: object(string))
+                    ]
+                  ),
+                  var: var(code)
+                ),
+                for_stmt(
+                  body: [
+                    assignment_stmt(
+                      value: fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          seq_comp(
+                            var: var(s),
+                            expr: fn_call(
+                              name: op_symbol(amp),
+                              params: [
+                                fn_call(
+                                  name: op_symbol(amp),
+                                  params: [
+                                    tag_obj_expr(
+                                      obj: seq_expr(
+                                        head: [
+                                          object(99),
+                                          object(97),
+                                          object(115),
+                                          object(101),
+                                          object(32),
+                                          object(83),
+                                          object(95)
+                                        ]
+                                      ),
+                                      tag: object(string)
+                                    ),
+                                    builtin_call(
+                                      name: str,
+                                      params: [
+                                        fn_call(
+                                          name: fn_symbol(untag),
+                                          params: [const_or_var(s)],
+                                          named_params: []
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  named_params: []
+                                ),
+                                tag_obj_expr(obj: seq_expr(head: [object(58)]), tag: object(string))
+                              ],
+                              named_params: []
+                            ),
+                            src_expr: fn_call(
+                              name: fn_symbol(rand_sort),
+                              params: [accessor(expr: const_or_var(c), field: object(vals))],
+                              named_params: []
+                            )
+                          ),
+                          fn_call(
+                            name: fn_symbol(indent),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: fn_symbol(compile_to_c),
+                                    params: [
+                                      accessor(expr: const_or_var(c), field: object(instrs)),
+                                      const_or_var(block_id)
+                                    ],
+                                    named_params: []
+                                  ),
+                                  seq_expr(
+                                    head: [
+                                      tag_obj_expr(
+                                        obj: seq_expr(
+                                          head: [
+                                            object(98),
+                                            object(114),
+                                            object(101),
+                                            object(97),
+                                            object(107),
+                                            object(59)
+                                          ]
+                                        ),
+                                        tag: object(string)
+                                      )
+                                    ]
+                                  )
+                                ],
+                                named_params: []
+                              )
+                            ],
+                            named_params: []
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      var: var(case_code)
+                    ),
+                    assignment_stmt(
+                      value: fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          const_or_var(code),
+                          fn_call(
+                            name: fn_symbol(indent),
+                            params: [const_or_var(case_code)],
+                            named_params: []
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      var: var(code)
+                    )
+                  ],
+                  loops: [
+                    seq_iter(
+                      var: var(c),
+                      values: fn_call(
+                        name: fn_symbol(rand_sort),
+                        params: [accessor(expr: const_or_var(instr), field: object(cases))],
+                        named_params: []
+                      )
+                    )
+                  ]
+                ),
+                if_stmt(
+                  else: [],
+                  branches: [
+                    (
+                      cond: accessor_test(expr: const_or_var(instr), field: object(else)),
+                      body: [
+                        assignment_stmt(
+                          value: fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  const_or_var(code),
+                                  seq_expr(
+                                    head: [
+                                      tag_obj_expr(
+                                        obj: seq_expr(
+                                          head: [
+                                            object(100),
+                                            object(101),
+                                            object(102),
+                                            object(97),
+                                            object(117),
+                                            object(108),
+                                            object(116),
+                                            object(58)
+                                          ]
+                                        ),
+                                        tag: object(string)
+                                      )
+                                    ]
+                                  )
+                                ],
+                                named_params: []
+                              ),
+                              fn_call(
+                                name: fn_symbol(indent),
+                                params: [
+                                  fn_call(
+                                    name: fn_symbol(compile_to_c),
+                                    params: [
+                                      accessor(expr: const_or_var(instr), field: object(else)),
+                                      const_or_var(block_id)
+                                    ],
+                                    named_params: []
+                                  )
+                                ],
+                                named_params: []
+                              )
+                            ],
+                            named_params: []
+                          ),
+                          var: var(code)
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                return_stmt(
+                  fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      const_or_var(code),
+                      seq_expr(
+                        head: [
+                          tag_obj_expr(obj: seq_expr(head: [object(125)]), tag: object(string))
+                        ]
+                      )
+                    ],
+                    named_params: []
+                  )
+                )
+              ]
+            ),
+            patterns: [
+              tag_ptrn(
+                obj: type_ptrn(type_any),
+                tag: obj_ptrn(object(symbol_switch))
+              )
+            ]
+          ),
+          case(
+            expr: do_expr(
+              [
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(to_str),
+                    params: [builtin_call(name: counter, params: [object(nil)])],
+                    named_params: []
+                  ),
+                  var: var(scope_id)
+                ),
+                assignment_stmt(
+                  value: accessor(expr: const_or_var(instr), field: object(var)),
+                  var: var(var)
+                ),
+                assignment_stmt(
+                  value: accessor(expr: const_or_var(instr), field: object(new_value)),
+                  var: var(val)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(to_c_expr),
+                    params: [const_or_var(val)],
+                    named_params: []
+                  ),
+                  var: var(val_str)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(to_c_var_name),
+                    params: [const_or_var(var)],
+                    named_params: []
+                  ),
+                  var: var(env_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      tag_obj_expr(
+                        obj: seq_expr(head: [object(66), object(75)]),
+                        tag: object(string)
+                      ),
+                      const_or_var(scope_id)
+                    ],
+                    named_params: []
+                  ),
+                  var: var(bk_var)
+                ),
+                assignment_stmt(
+                  value: seq_expr(
+                    head: [
+                      fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      tag_obj_expr(
+                                        obj: seq_expr(head: [object(79), object(98), object(106), object(32)]),
+                                        tag: object(string)
+                                      ),
+                                      const_or_var(bk_var)
+                                    ],
+                                    named_params: []
+                                  ),
+                                  tag_obj_expr(
+                                    obj: seq_expr(head: [object(32), object(61), object(32)]),
+                                    tag: object(string)
+                                  )
+                                ],
+                                named_params: []
+                              ),
+                              const_or_var(env_var)
+                            ],
+                            named_params: []
+                          ),
+                          tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  const_or_var(env_var),
+                                  tag_obj_expr(
+                                    obj: seq_expr(head: [object(32), object(61), object(32)]),
+                                    tag: object(string)
+                                  )
+                                ],
+                                named_params: []
+                              ),
+                              const_or_var(val_str)
+                            ],
+                            named_params: []
+                          ),
+                          tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              tag_obj_expr(
+                                obj: seq_expr(
+                                  head: [
+                                    object(97),
+                                    object(100),
+                                    object(100),
+                                    object(95),
+                                    object(114),
+                                    object(101),
+                                    object(102),
+                                    object(40)
+                                  ]
+                                ),
+                                tag: object(string)
+                              ),
+                              const_or_var(env_var)
+                            ],
+                            named_params: []
+                          ),
+                          tag_obj_expr(
+                            obj: seq_expr(head: [object(41), object(59)]),
+                            tag: object(string)
+                          )
+                        ],
+                        named_params: []
+                      )
+                    ]
+                  ),
+                  var: var(code)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      const_or_var(code),
+                      fn_call(
+                        name: fn_symbol(compile_to_c),
+                        params: [
+                          accessor(expr: const_or_var(instr), field: object(body)),
+                          const_or_var(block_id)
+                        ],
+                        named_params: []
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  var: var(code)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      const_or_var(code),
+                      seq_expr(
+                        head: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  tag_obj_expr(
+                                    obj: seq_expr(
+                                      head: [
+                                        object(114),
+                                        object(101),
+                                        object(108),
+                                        object(101),
+                                        object(97),
+                                        object(115),
+                                        object(101),
+                                        object(40)
+                                      ]
+                                    ),
+                                    tag: object(string)
+                                  ),
+                                  const_or_var(env_var)
+                                ],
+                                named_params: []
+                              ),
+                              tag_obj_expr(
+                                obj: seq_expr(head: [object(41), object(59)]),
+                                tag: object(string)
+                              )
+                            ],
+                            named_params: []
+                          ),
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      const_or_var(env_var),
+                                      tag_obj_expr(
+                                        obj: seq_expr(head: [object(32), object(61), object(32)]),
+                                        tag: object(string)
+                                      )
+                                    ],
+                                    named_params: []
+                                  ),
+                                  const_or_var(bk_var)
+                                ],
+                                named_params: []
+                              ),
+                              tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+                            ],
+                            named_params: []
+                          )
+                        ]
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  var: var(code)
+                ),
+                return_stmt(const_or_var(code))
+              ]
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(var_scope)))
+            ]
+          ),
+          case(
+            expr: do_expr(
+              [
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(to_str),
+                    params: [builtin_call(name: counter, params: [object(nil)])],
+                    named_params: []
+                  ),
+                  var: var(scope_id)
+                ),
+                assignment_stmt(
+                  value: accessor(expr: const_or_var(instr), field: object(var)),
+                  var: var(var)
+                ),
+                assignment_stmt(
+                  value: accessor(
+                    expr: accessor(expr: const_or_var(instr), field: object(cls)),
+                    field: object(arity)
+                  ),
+                  var: var(arity)
+                ),
+                assignment_stmt(
+                  value: accessor(expr: const_or_var(instr), field: object(env)),
+                  var: var(env)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(length),
+                    params: [const_or_var(env)],
+                    named_params: []
+                  ),
+                  var: var(env_size)
+                ),
+                assignment_stmt(
+                  value: builtin_call(
+                    name: str,
+                    params: [
+                      fn_call(
+                        name: fn_symbol(untag),
+                        params: [const_or_var(var)],
+                        named_params: []
+                      )
+                    ]
+                  ),
+                  var: var(var_str)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(to_str),
+                    params: [const_or_var(arity)],
+                    named_params: []
+                  ),
+                  var: var(arity_str)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(to_str),
+                    params: [const_or_var(env_size)],
+                    named_params: []
+                  ),
+                  var: var(env_size_str)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              tag_obj_expr(
+                                obj: seq_expr(
+                                  head: [
+                                    object(101),
+                                    object(110),
+                                    object(118),
+                                    object(46),
+                                    object(110)
+                                  ]
+                                ),
+                                tag: object(string)
+                              ),
+                              const_or_var(arity_str)
+                            ],
+                            named_params: []
+                          ),
+                          tag_obj_expr(obj: seq_expr(head: [object(95)]), tag: object(string))
+                        ],
+                        named_params: []
+                      ),
+                      const_or_var(var_str)
+                    ],
+                    named_params: []
+                  ),
+                  var: var(fn_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              tag_obj_expr(
+                                obj: seq_expr(
+                                  head: [
+                                    object(101),
+                                    object(110),
+                                    object(118),
+                                    object(46),
+                                    object(67)
+                                  ]
+                                ),
+                                tag: object(string)
+                              ),
+                              const_or_var(arity_str)
+                            ],
+                            named_params: []
+                          ),
+                          tag_obj_expr(obj: seq_expr(head: [object(95)]), tag: object(string))
+                        ],
+                        named_params: []
+                      ),
+                      const_or_var(var_str)
+                    ],
+                    named_params: []
+                  ),
+                  var: var(data_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      tag_obj_expr(
+                        obj: seq_expr(head: [object(66), object(70)]),
+                        tag: object(string)
+                      ),
+                      const_or_var(scope_id)
+                    ],
+                    named_params: []
+                  ),
+                  var: var(fn_bk_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      tag_obj_expr(
+                        obj: seq_expr(head: [object(66), object(68)]),
+                        tag: object(string)
+                      ),
+                      const_or_var(scope_id)
+                    ],
+                    named_params: []
+                  ),
+                  var: var(data_bk_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      tag_obj_expr(
+                        obj: seq_expr(head: [object(78), object(68)]),
+                        tag: object(string)
+                      ),
+                      const_or_var(scope_id)
+                    ],
+                    named_params: []
+                  ),
+                  var: var(new_data_var)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      fn_call(
+                        name: fn_symbol(rep_seq),
+                        params: [
+                          const_or_var(arity),
+                          tag_obj_expr(
+                            obj: seq_expr(head: [object(79), object(98), object(106)]),
+                            tag: object(string)
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      seq_expr(
+                        head: [
+                          tag_obj_expr(
+                            obj: seq_expr(
+                              head: [
+                                object(99),
+                                object(111),
+                                object(110),
+                                object(115),
+                                object(116),
+                                object(32),
+                                object(79),
+                                object(98),
+                                object(106),
+                                object(32),
+                                object(42)
+                              ]
+                            ),
+                            tag: object(string)
+                          ),
+                          tag_obj_expr(
+                            obj: seq_expr(
+                              head: [
+                                object(69),
+                                object(110),
+                                object(118),
+                                object(32),
+                                object(38)
+                              ]
+                            ),
+                            tag: object(string)
+                          )
+                        ]
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  var: var(tmp)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(intermix),
+                    params: [
+                      const_or_var(tmp),
+                      tag_obj_expr(
+                        obj: seq_expr(head: [object(44), object(32)]),
+                        tag: object(string)
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  var: var(tmp)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: fn_symbol(append),
+                    params: [const_or_var(tmp)],
+                    named_params: []
+                  ),
+                  var: var(tmp)
+                ),
+                assignment_stmt(
+                  value: seq_expr(
+                    head: [
+                      fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      fn_call(
+                                        name: op_symbol(amp),
+                                        params: [
+                                          fn_call(
+                                            name: op_symbol(amp),
+                                            params: [
+                                              tag_obj_expr(
+                                                obj: seq_expr(
+                                                  head: [
+                                                    object(79),
+                                                    object(98),
+                                                    object(106),
+                                                    object(32),
+                                                    object(40),
+                                                    object(42)
+                                                  ]
+                                                ),
+                                                tag: object(string)
+                                              ),
+                                              const_or_var(fn_bk_var)
+                                            ],
+                                            named_params: []
+                                          ),
+                                          tag_obj_expr(
+                                            obj: seq_expr(head: [object(41), object(40)]),
+                                            tag: object(string)
+                                          )
+                                        ],
+                                        named_params: []
+                                      ),
+                                      const_or_var(tmp)
+                                    ],
+                                    named_params: []
+                                  ),
+                                  tag_obj_expr(
+                                    obj: seq_expr(head: [object(41), object(32), object(61), object(32)]),
+                                    tag: object(string)
+                                  )
+                                ],
+                                named_params: []
+                              ),
+                              const_or_var(fn_var)
+                            ],
+                            named_params: []
+                          ),
+                          tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+                        ],
+                        named_params: []
+                      ),
+                      fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      tag_obj_expr(
+                                        obj: seq_expr(
+                                          head: [
+                                            object(99),
+                                            object(111),
+                                            object(110),
+                                            object(115),
+                                            object(116),
+                                            object(32),
+                                            object(79),
+                                            object(98),
+                                            object(106),
+                                            object(32),
+                                            object(42),
+                                            object(66),
+                                            object(68)
+                                          ]
+                                        ),
+                                        tag: object(string)
+                                      ),
+                                      const_or_var(scope_id)
+                                    ],
+                                    named_params: []
+                                  ),
+                                  tag_obj_expr(
+                                    obj: seq_expr(head: [object(32), object(61), object(32)]),
+                                    tag: object(string)
+                                  )
+                                ],
+                                named_params: []
+                              ),
+                              const_or_var(data_var)
+                            ],
+                            named_params: []
+                          ),
+                          tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+                        ],
+                        named_params: []
+                      )
+                    ]
+                  ),
+                  var: var(code)
+                ),
+                if_stmt(
+                  else: [],
+                  branches: [
+                    (
+                      cond: fn_call(
+                        name: op_symbol(greater),
+                        params: [const_or_var(env_size), object(0)],
+                        named_params: []
+                      ),
+                      body: [
+                        assignment_stmt(
+                          value: fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              const_or_var(code),
+                              seq_expr(
+                                head: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      fn_call(
+                                        name: op_symbol(amp),
+                                        params: [
+                                          fn_call(
+                                            name: op_symbol(amp),
+                                            params: [
+                                              fn_call(
+                                                name: op_symbol(amp),
+                                                params: [
+                                                  tag_obj_expr(
+                                                    obj: seq_expr(head: [object(79), object(98), object(106), object(32)]),
+                                                    tag: object(string)
+                                                  ),
+                                                  const_or_var(new_data_var)
+                                                ],
+                                                named_params: []
+                                              ),
+                                              tag_obj_expr(obj: seq_expr(head: [object(91)]), tag: object(string))
+                                            ],
+                                            named_params: []
+                                          ),
+                                          const_or_var(env_size_str)
+                                        ],
+                                        named_params: []
+                                      ),
+                                      tag_obj_expr(
+                                        obj: seq_expr(head: [object(93), object(59)]),
+                                        tag: object(string)
+                                      )
+                                    ],
+                                    named_params: []
+                                  )
+                                ]
+                              )
+                            ],
+                            named_params: []
+                          ),
+                          var: var(code)
+                        )
+                      ]
+                    )
+                  ]
+                ),
+                for_stmt(
+                  body: [
+                    assignment_stmt(
+                      value: fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          const_or_var(code),
+                          seq_expr(
+                            head: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      fn_call(
+                                        name: op_symbol(amp),
+                                        params: [
+                                          fn_call(
+                                            name: op_symbol(amp),
+                                            params: [
+                                              fn_call(
+                                                name: op_symbol(amp),
+                                                params: [
+                                                  const_or_var(new_data_var),
+                                                  tag_obj_expr(obj: seq_expr(head: [object(91)]), tag: object(string))
+                                                ],
+                                                named_params: []
+                                              ),
+                                              fn_call(
+                                                name: fn_symbol(to_str),
+                                                params: [const_or_var(i)],
+                                                named_params: []
+                                              )
+                                            ],
+                                            named_params: []
+                                          ),
+                                          tag_obj_expr(
+                                            obj: seq_expr(head: [object(93), object(32), object(61), object(32)]),
+                                            tag: object(string)
+                                          )
+                                        ],
+                                        named_params: []
+                                      ),
+                                      fn_call(
+                                        name: fn_symbol(to_c_var_name),
+                                        params: [
+                                          fn_call(
+                                            name: op_symbol(brackets),
+                                            params: [const_or_var(env), const_or_var(i)],
+                                            named_params: []
+                                          )
+                                        ],
+                                        named_params: []
+                                      )
+                                    ],
+                                    named_params: []
+                                  ),
+                                  tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+                                ],
+                                named_params: []
+                              ),
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      fn_call(
+                                        name: op_symbol(amp),
+                                        params: [
+                                          fn_call(
+                                            name: op_symbol(amp),
+                                            params: [
+                                              tag_obj_expr(
+                                                obj: seq_expr(
+                                                  head: [
+                                                    object(97),
+                                                    object(100),
+                                                    object(100),
+                                                    object(95),
+                                                    object(114),
+                                                    object(101),
+                                                    object(102),
+                                                    object(40)
+                                                  ]
+                                                ),
+                                                tag: object(string)
+                                              ),
+                                              const_or_var(new_data_var)
+                                            ],
+                                            named_params: []
+                                          ),
+                                          tag_obj_expr(obj: seq_expr(head: [object(91)]), tag: object(string))
+                                        ],
+                                        named_params: []
+                                      ),
+                                      fn_call(
+                                        name: fn_symbol(to_str),
+                                        params: [const_or_var(i)],
+                                        named_params: []
+                                      )
+                                    ],
+                                    named_params: []
+                                  ),
+                                  tag_obj_expr(
+                                    obj: seq_expr(head: [object(93), object(41), object(59)]),
+                                    tag: object(string)
+                                  )
+                                ],
+                                named_params: []
+                              )
+                            ]
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      var: var(code)
+                    )
+                  ],
+                  loops: [
+                    seq_iter(
+                      var: var(i),
+                      values: fn_call(
+                        name: fn_symbol(inc_seq),
+                        params: [const_or_var(env_size)],
+                        named_params: []
+                      )
+                    )
+                  ]
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      const_or_var(code),
+                      seq_expr(
+                        head: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      const_or_var(fn_var),
+                                      tag_obj_expr(
+                                        obj: seq_expr(
+                                          head: [
+                                            object(32),
+                                            object(61),
+                                            object(32),
+                                            object(99),
+                                            object(108),
+                                            object(115),
+                                            object(95)
+                                          ]
+                                        ),
+                                        tag: object(string)
+                                      )
+                                    ],
+                                    named_params: []
+                                  ),
+                                  fn_call(
+                                    name: fn_symbol(to_str),
+                                    params: [
+                                      fn_call(
+                                        name: fn_symbol(cls2id),
+                                        params: [accessor(expr: const_or_var(instr), field: object(cls))],
+                                        named_params: []
+                                      )
+                                    ],
+                                    named_params: []
+                                  )
+                                ],
+                                named_params: []
+                              ),
+                              tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+                            ],
+                            named_params: []
+                          ),
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      const_or_var(data_var),
+                                      tag_obj_expr(
+                                        obj: seq_expr(head: [object(32), object(61), object(32)]),
+                                        tag: object(string)
+                                      )
+                                    ],
+                                    named_params: []
+                                  ),
+                                  if_expr(
+                                    else: tag_obj_expr(obj: seq_expr(head: [object(48)]), tag: object(string)),
+                                    branches: [
+                                      (
+                                        expr: const_or_var(new_data_var),
+                                        cond: fn_call(
+                                          name: op_symbol(greater),
+                                          params: [const_or_var(env_size), object(0)],
+                                          named_params: []
+                                        )
+                                      )
+                                    ]
+                                  )
+                                ],
+                                named_params: []
+                              ),
+                              tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+                            ],
+                            named_params: []
+                          )
+                        ]
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  var: var(code)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      const_or_var(code),
+                      fn_call(
+                        name: fn_symbol(compile_to_c),
+                        params: [
+                          accessor(expr: const_or_var(instr), field: object(body)),
+                          const_or_var(block_id)
+                        ],
+                        named_params: []
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  var: var(code)
+                ),
+                assignment_stmt(
+                  value: fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      const_or_var(code),
+                      seq_expr(
+                        head: [
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      const_or_var(fn_var),
+                                      tag_obj_expr(
+                                        obj: seq_expr(head: [object(32), object(61), object(32)]),
+                                        tag: object(string)
+                                      )
+                                    ],
+                                    named_params: []
+                                  ),
+                                  const_or_var(fn_bk_var)
+                                ],
+                                named_params: []
+                              ),
+                              tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+                            ],
+                            named_params: []
+                          ),
+                          fn_call(
+                            name: op_symbol(amp),
+                            params: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      const_or_var(data_var),
+                                      tag_obj_expr(
+                                        obj: seq_expr(head: [object(32), object(61), object(32)]),
+                                        tag: object(string)
+                                      )
+                                    ],
+                                    named_params: []
+                                  ),
+                                  const_or_var(data_bk_var)
+                                ],
+                                named_params: []
+                              ),
+                              tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+                            ],
+                            named_params: []
+                          )
+                        ]
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  var: var(code)
+                ),
+                for_stmt(
+                  body: [
+                    assignment_stmt(
+                      value: fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          const_or_var(code),
+                          seq_expr(
+                            head: [
+                              fn_call(
+                                name: op_symbol(amp),
+                                params: [
+                                  fn_call(
+                                    name: op_symbol(amp),
+                                    params: [
+                                      fn_call(
+                                        name: op_symbol(amp),
+                                        params: [
+                                          fn_call(
+                                            name: op_symbol(amp),
+                                            params: [
+                                              tag_obj_expr(
+                                                obj: seq_expr(
+                                                  head: [
+                                                    object(114),
+                                                    object(101),
+                                                    object(108),
+                                                    object(101),
+                                                    object(97),
+                                                    object(115),
+                                                    object(101),
+                                                    object(40)
+                                                  ]
+                                                ),
+                                                tag: object(string)
+                                              ),
+                                              const_or_var(new_data_var)
+                                            ],
+                                            named_params: []
+                                          ),
+                                          tag_obj_expr(obj: seq_expr(head: [object(91)]), tag: object(string))
+                                        ],
+                                        named_params: []
+                                      ),
+                                      fn_call(
+                                        name: fn_symbol(to_str),
+                                        params: [const_or_var(i)],
+                                        named_params: []
+                                      )
+                                    ],
+                                    named_params: []
+                                  ),
+                                  tag_obj_expr(
+                                    obj: seq_expr(head: [object(93), object(41), object(59)]),
+                                    tag: object(string)
+                                  )
+                                ],
+                                named_params: []
+                              )
+                            ]
+                          )
+                        ],
+                        named_params: []
+                      ),
+                      var: var(code)
+                    )
+                  ],
+                  loops: [
+                    seq_iter(
+                      var: var(i),
+                      values: fn_call(
+                        name: fn_symbol(inc_seq),
+                        params: [const_or_var(env_size)],
+                        named_params: []
+                      )
+                    )
+                  ]
+                ),
+                return_stmt(const_or_var(code))
+              ]
+            ),
+            patterns: [
+              tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(cls_scope)))
+            ]
+          )
+        ],
+        exprs: [fn_par(0), fn_par(1)]
+      ),
+      res_type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string)))
+    ),
+    syn_fn_def(
+      name: fn_symbol(mk_gen_call),
+      params: [
+        (type: type_ref(type_symbol(string)), var: var(fn_name)),
+        (
+          type: seq_type(
+            nonempty: false,
+            elem_type: type_ref(type_symbol(fncallparam))
+          ),
+          var: var(params)
+        ),
+        (
+          type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string))),
+          var: var(trailing_params)
+        )
+      ],
+      local_fns: [],
+      expr: fn_call(
+        name: op_symbol(amp),
+        params: [
+          fn_call(
+            name: op_symbol(amp),
+            params: [
+              fn_call(
+                name: op_symbol(amp),
+                params: [
+                  const_or_var(fn_name),
+                  tag_obj_expr(obj: seq_expr(head: [object(40)]), tag: object(string))
+                ],
+                named_params: []
+              ),
+              fn_call(
+                name: fn_symbol(append),
+                params: [
+                  fn_call(
+                    name: fn_symbol(intermix),
+                    params: [
+                      fn_call(
+                        name: op_symbol(amp),
+                        params: [
+                          seq_comp(
+                            var: var(p),
+                            expr: fn_call(
+                              name: fn_symbol(to_c_expr),
+                              params: [const_or_var(p)],
+                              named_params: []
+                            ),
+                            src_expr: const_or_var(params)
+                          ),
+                          const_or_var(trailing_params)
+                        ],
+                        named_params: []
+                      ),
+                      tag_obj_expr(
+                        obj: seq_expr(head: [object(44), object(32)]),
+                        tag: object(string)
+                      )
+                    ],
+                    named_params: []
+                  )
+                ],
+                named_params: []
+              )
+            ],
+            named_params: []
+          ),
+          tag_obj_expr(
+            obj: seq_expr(head: [object(41), object(59)]),
+            tag: object(string)
+          )
+        ],
+        named_params: []
+      ),
+      res_type: type_ref(type_symbol(string))
+    ),
+    syn_fn_def(
+      name: fn_symbol(mk_gen_call),
+      params: [
+        (type: type_ref(type_symbol(anyvar)), var: var(var)),
+        (type: type_ref(type_symbol(string)), var: var(fn_name)),
+        (
+          type: seq_type(
+            nonempty: false,
+            elem_type: type_ref(type_symbol(fncallparam))
+          ),
+          var: var(params)
+        ),
+        (
+          type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string))),
+          var: var(trailing_params)
+        )
+      ],
+      local_fns: [],
+      expr: fn_call(
+        name: op_symbol(amp),
+        params: [
+          fn_call(
+            name: op_symbol(amp),
+            params: [
+              fn_call(
+                name: fn_symbol(to_c_var_name),
+                params: [const_or_var(var)],
+                named_params: []
+              ),
+              tag_obj_expr(
+                obj: seq_expr(head: [object(32), object(61), object(32)]),
+                tag: object(string)
+              )
+            ],
+            named_params: []
+          ),
+          fn_call(
+            name: fn_symbol(mk_gen_call),
+            params: [
+              const_or_var(fn_name),
+              const_or_var(params),
+              const_or_var(trailing_params)
+            ],
+            named_params: []
+          )
+        ],
+        named_params: []
+      ),
+      res_type: type_ref(type_symbol(string))
+    ),
+    syn_fn_def(
+      name: fn_symbol(mk_call),
+      params: [
+        (type: type_ref(type_symbol(string)), var: var(fn_name)),
+        (
+          type: seq_type(
+            nonempty: false,
+            elem_type: type_ref(type_symbol(fncallparam))
+          ),
+          var: var(params)
+        )
+      ],
+      local_fns: [],
+      expr: seq_expr(
+        head: [
+          fn_call(
+            name: fn_symbol(mk_gen_call),
+            params: [
+              const_or_var(fn_name),
+              const_or_var(params),
+              seq_expr(head: [])
+            ],
+            named_params: []
+          )
+        ]
+      ),
+      res_type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string)))
+    ),
+    syn_fn_def(
+      name: fn_symbol(mk_call),
+      params: [
+        (type: type_ref(type_symbol(anyvar)), var: var(var)),
+        (type: type_ref(type_symbol(string)), var: var(fn_name)),
+        (
+          type: seq_type(
+            nonempty: false,
+            elem_type: type_ref(type_symbol(fncallparam))
+          ),
+          var: var(params)
+        )
+      ],
+      local_fns: [],
+      expr: seq_expr(
+        head: [
+          fn_call(
+            name: fn_symbol(mk_gen_call),
+            params: [
+              const_or_var(var),
+              const_or_var(fn_name),
+              const_or_var(params),
+              seq_expr(head: [])
+            ],
+            named_params: []
+          )
+        ]
+      ),
+      res_type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string)))
+    ),
+    syn_fn_def(
+      name: fn_symbol(mk_fn_call),
+      params: [
+        (type: type_ref(type_symbol(anyvar)), var: var(var)),
+        (type: type_ref(type_symbol(string)), var: var(fn_name)),
+        (
+          type: seq_type(
+            nonempty: false,
+            elem_type: type_ref(type_symbol(fncallparam))
+          ),
+          var: var(params)
+        )
+      ],
+      local_fns: [],
+      expr: seq_expr(
+        head: [
+          fn_call(
+            name: fn_symbol(mk_gen_call),
+            params: [
+              const_or_var(var),
+              const_or_var(fn_name),
+              const_or_var(params),
+              seq_expr(
+                head: [
+                  tag_obj_expr(
+                    obj: seq_expr(head: [object(101), object(110), object(118)]),
+                    tag: object(string)
+                  )
+                ]
+              )
+            ],
+            named_params: []
+          )
+        ]
+      ),
+      res_type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string)))
+    ),
+    syn_fn_def(
+      name: fn_symbol(mk_assignment),
+      params: [
+        (type: type_ref(type_symbol(anyvar)), var: var(var)),
+        (type: type_ref(type_symbol(anyexpr)), var: var(value))
+      ],
+      local_fns: [],
+      expr: seq_expr(
+        head: [
+          fn_call(
+            name: op_symbol(amp),
+            params: [
+              fn_call(
+                name: op_symbol(amp),
+                params: [
+                  fn_call(
+                    name: op_symbol(amp),
+                    params: [
+                      fn_call(
+                        name: fn_symbol(to_c_var_name),
+                        params: [const_or_var(var)],
+                        named_params: []
+                      ),
+                      tag_obj_expr(
+                        obj: seq_expr(head: [object(32), object(61), object(32)]),
+                        tag: object(string)
+                      )
+                    ],
+                    named_params: []
+                  ),
+                  fn_call(
+                    name: fn_symbol(to_c_expr),
+                    params: [const_or_var(value)],
+                    named_params: []
+                  )
+                ],
+                named_params: []
+              ),
+              tag_obj_expr(obj: seq_expr(head: [object(59)]), tag: object(string))
+            ],
+            named_params: []
+          )
+        ]
+      ),
+      res_type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string)))
+    ),
+    syn_fn_def(
+      name: fn_symbol(mk_cls_call),
+      params: [
+        (type: type_ref(type_symbol(objvar)), var: var(var)),
+        (type: type_ref(type_symbol(var)), var: var(cls_var)),
+        (
+          type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(objexpr))),
+          var: var(params)
+        )
+      ],
+      local_fns: [],
+      expr: do_expr(
+        [
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(amp),
+              params: [
+                fn_call(
+                  name: op_symbol(amp),
+                  params: [
+                    fn_call(
+                      name: fn_symbol(to_str),
+                      params: [
+                        fn_call(
+                          name: fn_symbol(length),
+                          params: [const_or_var(params)],
+                          named_params: []
+                        )
+                      ],
+                      named_params: []
+                    ),
+                    tag_obj_expr(obj: seq_expr(head: [object(95)]), tag: object(string))
+                  ],
+                  named_params: []
+                ),
+                builtin_call(
+                  name: str,
+                  params: [
+                    fn_call(
+                      name: fn_symbol(untag),
+                      params: [const_or_var(cls_var)],
+                      named_params: []
+                    )
+                  ]
+                )
+              ],
+              named_params: []
+            ),
+            var: var(name)
+          ),
+          return_stmt(
+            seq_expr(
+              head: [
+                fn_call(
+                  name: fn_symbol(mk_gen_call),
+                  params: [
+                    const_or_var(var),
+                    fn_call(
+                      name: op_symbol(amp),
+                      params: [
+                        tag_obj_expr(
+                          obj: seq_expr(
+                            head: [
+                              object(101),
+                              object(110),
+                              object(118),
+                              object(46),
+                              object(110)
+                            ]
+                          ),
+                          tag: object(string)
+                        ),
+                        const_or_var(name)
+                      ],
+                      named_params: []
+                    ),
+                    const_or_var(params),
+                    seq_expr(
+                      head: [
+                        fn_call(
+                          name: op_symbol(amp),
+                          params: [
+                            tag_obj_expr(
+                              obj: seq_expr(
+                                head: [
+                                  object(101),
+                                  object(110),
+                                  object(118),
+                                  object(46),
+                                  object(67)
+                                ]
+                              ),
+                              tag: object(string)
+                            ),
+                            const_or_var(name)
+                          ],
+                          named_params: []
+                        ),
+                        tag_obj_expr(
+                          obj: seq_expr(head: [object(101), object(110), object(118)]),
+                          tag: object(string)
+                        )
+                      ]
+                    )
+                  ],
+                  named_params: []
+                )
+              ]
+            )
+          )
+        ]
+      ),
+      res_type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(string)))
+    )
+  ],
+  signatures: [
+    syn_sgn(
+      name: fn_symbol(typesymb2name),
+      params: [type_ref(type_symbol(typesymbol))],
+      res_type: type_ref(type_symbol(string))
+    ),
+    syn_sgn(
+      name: fn_symbol(cls2id),
+      params: [type_ref(type_symbol(clsdef))],
+      res_type: type_ref(type_symbol(nat))
+    )
+  ]
+)

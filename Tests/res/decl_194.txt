@@ -1,0 +1,105 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: type_ref(type_symbol(type)),
+        tag_type: symb_type(object(type_ptrn))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(var)),
+        tag_type: symb_type(object(ext_var_ptrn))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(leafobj)),
+        tag_type: symb_type(object(obj_ptrn))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(var)),
+              optional: false,
+              label: object(name)
+            ),
+            (
+              type: type_ref(type_symbol(pattern)),
+              optional: true,
+              label: object(ptrn)
+            )
+          }
+        ),
+        tag_type: symb_type(object(var_ptrn))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(pattern)),
+              optional: false,
+              label: object(obj)
+            ),
+            (
+              type: union_type(
+                {
+                  tag_type(
+                    obj_type: tuple_type(
+                      {
+                        (
+                          type: type_ref(type_symbol(var)),
+                          optional: false,
+                          label: object(name)
+                        )
+                      }
+                    ),
+                    tag_type: symb_type(object(var_ptrn))
+                  ),
+                  tag_type(
+                    obj_type: type_ref(type_symbol(symbobj)),
+                    tag_type: symb_type(object(obj_ptrn))
+                  )
+                }
+              ),
+              optional: false,
+              label: object(tag)
+            )
+          }
+        ),
+        tag_type: symb_type(object(tag_ptrn))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(bool)),
+              optional: false,
+              label: object(is_open)
+            ),
+            (
+              type: set_type(
+                nonempty: true,
+                elem_type: tuple_type(
+                  {
+                    (
+                      type: type_ref(type_symbol(symbobj)),
+                      optional: false,
+                      label: object(label)
+                    ),
+                    (
+                      type: type_ref(type_symbol(pattern)),
+                      optional: false,
+                      label: object(ptrn)
+                    )
+                  }
+                )
+              ),
+              optional: false,
+              label: object(fields)
+            )
+          }
+        ),
+        tag_type: symb_type(object(tuple_ptrn))
+      )
+    }
+  ),
+  name: type_symbol(pattern)
+)

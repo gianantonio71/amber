@@ -1,0 +1,28 @@
+syn_fn_def(
+  name: fn_symbol(normalize_union),
+  params: [(type: type_ref(type_symbol(syntype)), var: var(type))],
+  local_fns: [],
+  expr: match_expr(
+    cases: [
+      case(
+        expr: fn_call(
+          name: fn_symbol(normalize_unions),
+          params: [const_or_var(ts)],
+          named_params: []
+        ),
+        patterns: [
+          tag_ptrn(
+            obj: var_ptrn(name: var(ts)),
+            tag: obj_ptrn(object(union_type))
+          )
+        ]
+      ),
+      case(
+        expr: set_expr({const_or_var(type)}),
+        patterns: [type_ptrn(type_any)]
+      )
+    ],
+    exprs: [fn_par(0)]
+  ),
+  res_type: set_type(nonempty: true, elem_type: type_ref(type_symbol(syntype)))
+)

@@ -1,0 +1,13 @@
+typedef(
+  type: union_type(
+    {
+      type_ref(
+        par_type_symbol(
+          params: [type_ref(type_symbol(any))],
+          symbol: type_symbol(bintree)
+        )
+      )
+    }
+  ),
+  name: type_symbol(bintree)
+)

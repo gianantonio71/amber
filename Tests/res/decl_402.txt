@@ -1,0 +1,69 @@
+syn_fn_def(
+  name: fn_symbol(merge_and_override),
+  params: [
+    (
+      type: set_type(
+        nonempty: false,
+        elem_type: type_ref(type_symbol(untypedsgn))
+      ),
+      var: var(low_priority_sgns)
+    ),
+    (
+      type: set_type(
+        nonempty: false,
+        elem_type: type_ref(type_symbol(untypedsgn))
+      ),
+      var: var(high_priority_sgns)
+    )
+  ],
+  local_fns: [],
+  expr: do_expr(
+    [
+      assignment_stmt(
+        value: set_comp(
+          sel_exprs: [
+            not(
+              ex_qual(
+                sel_exprs: [
+                  eq(
+                    left: accessor(expr: const_or_var(s), field: object(name)),
+                    right: accessor(expr: const_or_var(os), field: object(name))
+                  ),
+                  eq(
+                    left: accessor(expr: const_or_var(s), field: object(arity)),
+                    right: accessor(expr: const_or_var(os), field: object(arity))
+                  )
+                ],
+                source: [
+                  in_clause(
+                    src: const_or_var(high_priority_sgns),
+                    ptrn: var_ptrn(name: var(os))
+                  )
+                ]
+              )
+            )
+          ],
+          source: [
+            in_clause(
+              src: const_or_var(low_priority_sgns),
+              ptrn: var_ptrn(name: var(s))
+            )
+          ],
+          expr: const_or_var(s)
+        ),
+        var: var(sgns)
+      ),
+      return_stmt(
+        fn_call(
+          name: op_symbol(amp),
+          params: [const_or_var(sgns), const_or_var(high_priority_sgns)],
+          named_params: []
+        )
+      )
+    ]
+  ),
+  res_type: set_type(
+    nonempty: false,
+    elem_type: type_ref(type_symbol(untypedsgn))
+  )
+)

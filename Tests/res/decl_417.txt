@@ -1,0 +1,113 @@
+typedef(
+  type: union_type(
+    {
+      symb_type(object(no_ret_stmt)),
+      symb_type(object(no_way_out_loop)),
+      symb_type(object(break_outside_loop)),
+      type_ref(type_symbol(tdefusererr)),
+      symb_type(object(mult_vars_in_mult_ptrn_branch)),
+      symb_type(object(nested_mult_ptrn_branch)),
+      symb_type(object(unreachable_code)),
+      tag_type(
+        obj_type: type_ref(type_symbol(atom)),
+        tag_type: symb_type(object(undef_var_or_const))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(atom)),
+        tag_type: symb_type(object(almost_def_const))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(var)),
+        tag_type: symb_type(object(undef_var))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(var)),
+        tag_type: symb_type(object(var_redef))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(var)),
+        tag_type: symb_type(object(asgnm_readonly_var))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(var)),
+        tag_type: symb_type(object(free_var_in_try_expr))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(var)),
+        tag_type: symb_type(object(undef_bound_ptrn_var))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(var)),
+        tag_type: symb_type(object(already_def_ptrn_var))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(var)),
+        tag_type: symb_type(object(loc_bound_var_with_ptrn))
+      ),
+      tag_type(
+        obj_type: set_type(nonempty: true, elem_type: type_ref(type_symbol(var))),
+        tag_type: symb_type(object(diff_vars_in_or_clause))
+      ),
+      tag_type(
+        obj_type: set_type(nonempty: false, elem_type: type_ref(type_symbol(var))),
+        tag_type: symb_type(object(vars_repeated_in_diff_branches))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(basicuntypedsgn)),
+        tag_type: symb_type(object(dup_closure_def))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(fnsymbol)),
+              optional: false,
+              label: object(name)
+            ),
+            (
+              type: type_ref(type_symbol(nznat)),
+              optional: false,
+              label: object(arity)
+            )
+          }
+        ),
+        tag_type: symb_type(object(undef_fn))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(fnsymbol)),
+              optional: false,
+              label: object(name)
+            ),
+            (
+              type: type_ref(type_symbol(nznat)),
+              optional: false,
+              label: object(arity)
+            )
+          }
+        ),
+        tag_type: symb_type(object(almost_def_fn))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(basicuntypedsgn)),
+              optional: false,
+              label: object(outer_fn)
+            ),
+            (
+              type: type_ref(type_symbol(basicuntypedsgn)),
+              optional: false,
+              label: object(inner_fn)
+            )
+          }
+        ),
+        tag_type: symb_type(object(nested_local_fn))
+      )
+    }
+  ),
+  name: type_symbol(synobjerr)
+)

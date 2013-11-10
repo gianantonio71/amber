@@ -1,0 +1,119 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: type_ref(type_symbol(basictypesymbol)),
+        tag_type: symb_type(object(dup_tdef))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(basictypesymbol)),
+              optional: false,
+              label: object(name)
+            ),
+            (
+              type: type_ref(type_symbol(nznat)),
+              optional: false,
+              label: object(arity)
+            )
+          }
+        ),
+        tag_type: symb_type(object(dup_par_tdef))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: set_type(
+                nonempty: false,
+                elem_type: type_ref(type_symbol(ublockerr))
+              ),
+              optional: false,
+              label: object(errs)
+            )
+          }
+        ),
+        tag_type: symb_type(object(ublock_err))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(typesymbol)),
+              optional: false,
+              label: object(type)
+            ),
+            (
+              type: set_type(
+                nonempty: false,
+                elem_type: type_ref(type_symbol(tdefusererr))
+              ),
+              optional: false,
+              label: object(errs)
+            )
+          }
+        ),
+        tag_type: symb_type(object(tdef_err))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(fnsymbol)),
+              optional: false,
+              label: object(name)
+            ),
+            (
+              type: type_ref(type_symbol(nat)),
+              optional: false,
+              label: object(arity)
+            ),
+            (
+              type: set_type(
+                nonempty: true,
+                elem_type: seq_type(
+                  nonempty: false,
+                  elem_type: type_ref(type_symbol(objpartset))
+                )
+              ),
+              optional: false,
+              label: object(params)
+            )
+          }
+        ),
+        tag_type: symb_type(object(incomp_fndefs))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(fnsymbol)),
+              optional: false,
+              label: object(name)
+            ),
+            (
+              type: seq_type(
+                nonempty: false,
+                elem_type: union_type({symb_type(object(nil)), type_ref(type_symbol(syntype))})
+              ),
+              optional: false,
+              label: object(params)
+            ),
+            (
+              type: set_type(
+                nonempty: false,
+                elem_type: type_ref(type_symbol(synobjerr))
+              ),
+              optional: false,
+              label: object(errs)
+            )
+          }
+        ),
+        tag_type: symb_type(object(fndef_err))
+      )
+    }
+  ),
+  name: type_symbol(usererr)
+)

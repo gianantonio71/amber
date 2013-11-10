@@ -1,0 +1,17 @@
+red-black trees
+B*trees?
+I don't think that would be quite right for in-memory data structures
+skip lists, splay trees, half-balanced trees, and so on.
+
+
+Use case
+
+  Fi: A, Bi, ... -> Zi 
+  
+  g: A -> A'
+  
+  I want to define easily (with just one statement) the functions:
+
+  Fi': A', Bi, ... -> Zi = Fi(g(A), Bi, ...)
+
+

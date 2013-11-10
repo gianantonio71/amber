@@ -1,0 +1,24 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(fnsymbol)),
+              optional: false,
+              label: object(name)
+            ),
+            (
+              type: type_ref(type_symbol(nat)),
+              optional: false,
+              label: object(arity)
+            )
+          }
+        ),
+        tag_type: symb_type(object(untyped_sgn))
+      )
+    }
+  ),
+  name: type_symbol(basicuntypedsgn)
+)

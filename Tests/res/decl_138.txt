@@ -1,0 +1,6 @@
+syn_fn_def(
+  name: fn_symbol(symbol),
+  params: [(type: type_ref(type_symbol(atom)), var: var(a))],
+  local_fns: [],
+  expr: tag_obj_expr(obj: const_or_var(a), tag: object(symbol))
+)

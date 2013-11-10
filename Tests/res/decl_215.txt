@@ -1,0 +1,48 @@
+typedef(
+  type: union_type(
+    {
+      symb_type(object(true)),
+      symb_type(object(false)),
+      type_ref(type_symbol(boolvar)),
+      type_ref(type_symbol(natboolop)),
+      tag_type(
+        obj_type: type_ref(type_symbol(boolexpr)),
+        tag_type: symb_type(object(neg))
+      ),
+      tag_type(
+        obj_type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(boolexpr))),
+        tag_type: symb_type(object(or))
+      ),
+      tag_type(
+        obj_type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(boolexpr))),
+        tag_type: symb_type(object(and))
+      ),
+      tag_type(
+        obj_type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(boolexpr))),
+        tag_type: symb_type(object(and_then))
+      ),
+      tag_type(
+        obj_type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(boolexpr))),
+        tag_type: symb_type(object(or_else))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(boolfnname)),
+              optional: false,
+              label: object(name)
+            ),
+            (
+              type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(anyexpr))),
+              optional: false,
+              label: object(params)
+            )
+          }
+        ),
+        tag_type: symb_type(object(eval_bool_fn))
+      )
+    }
+  ),
+  name: type_symbol(boolexpr)
+)

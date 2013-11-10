@@ -1,0 +1,20 @@
+syn_fn_def(
+  name: fn_symbol(mk_map_from_streams),
+  params: [
+    (type: type_ref(type_symbol(objvar)), var: var(v)),
+    (type: type_ref(type_symbol(streamvar)), var: var(ks)),
+    (type: type_ref(type_symbol(streamvar)), var: var(vs))
+  ],
+  local_fns: [],
+  expr: tag_obj_expr(
+    obj: map_expr(
+      {
+        (value: const_or_var(v), key: object(var)),
+        (value: const_or_var(ks), key: object(key_stream)),
+        (value: const_or_var(vs), key: object(value_stream))
+      }
+    ),
+    tag: object(mk_map_from_streams)
+  ),
+  res_type: type_ref(type_symbol(instr))
+)

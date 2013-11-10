@@ -1,0 +1,29 @@
+syn_fn_def(
+  name: fn_symbol(can_fall_through),
+  params: [
+    (
+      type: seq_type(
+        nonempty: false,
+        elem_type: type_ref(type_symbol(statement))
+      ),
+      var: var(stmts)
+    )
+  ],
+  local_fns: [],
+  expr: fn_call(
+    name: fn_symbol(none),
+    params: [
+      seq_comp(
+        var: var(s),
+        expr: fn_call(
+          name: fn_symbol(is_last_for_sure),
+          params: [const_or_var(s)],
+          named_params: []
+        ),
+        src_expr: const_or_var(stmts)
+      )
+    ],
+    named_params: []
+  ),
+  res_type: type_ref(type_symbol(bool))
+)

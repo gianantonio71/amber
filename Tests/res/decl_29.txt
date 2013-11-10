@@ -1,0 +1,40 @@
+syn_fn_def(
+  name: op_symbol(lower),
+  params: [
+    (type: type_ref(type_symbol(int)), var: var(a)),
+    (type: type_ref(type_symbol(int)), var: var(b))
+  ],
+  local_fns: [],
+  expr: match_expr(
+    cases: [
+      case(
+        expr: object(true),
+        patterns: [
+          type_ptrn(int_range(min: 0, size: 1)),
+          type_ptrn(high_ints(min: 1))
+        ]
+      ),
+      case(
+        expr: object(false),
+        patterns: [type_ptrn(int_range(min: 0, size: 1)), type_ptrn(type_any)]
+      ),
+      case(
+        expr: fn_call(
+          name: op_symbol(lower),
+          params: [
+            object(0),
+            fn_call(
+              name: op_symbol(minus),
+              params: [const_or_var(b), const_or_var(a)],
+              named_params: []
+            )
+          ],
+          named_params: []
+        ),
+        patterns: [type_ptrn(type_any), type_ptrn(type_any)]
+      )
+    ],
+    exprs: [fn_par(0), fn_par(1)]
+  ),
+  res_type: type_ref(type_symbol(bool))
+)

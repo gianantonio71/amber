@@ -1,0 +1,21 @@
+typedef(
+  type: union_type(
+    {
+      tuple_type(
+        {
+          (
+            type: type_ref(type_symbol(any)),
+            optional: false,
+            label: object(obj)
+          ),
+          (
+            type: type_ref(type_symbol(nat)),
+            optional: false,
+            label: object(offset)
+          )
+        }
+      )
+    }
+  ),
+  name: type_symbol(parseintermres)
+)

@@ -1,0 +1,170 @@
+The Amber programming language
+
+Amber is a language designed to test a number of obvious but (mistakenly, in our opinion)
+out-of-the-beaten-track ideas on software development. These are described in detail in
+"Anatomy of an Amber program" and "The data model" sections below. More generally, the aim is to make
+programs as simple, short and reliable as possible. Simple, by eliminating all sources of complexity
+that are not intrinsic to the real-world problem to be solved (For example, in Amber you don't have
+to worry about data persistence, networking, multithreading/concurrency or logging, because these
+services (and many others) are transparently and automatically provided by the language). Short, by
+making the language abstract and expressive, and by removing limitations that force you to write
+boilerplate code. Reliable, by eliminating many common causes of error, by making testing easier and
+especially by reducing the amount of damage a bug can do.
+
+The price to pay for this is a reduced flexibility: not all types of applications can be written in
+Amber. But this is not as bad a problem as it might sounds, because Amber is designed not only to
+create complete applications, but also 
+
+provided It has a decidedly mathematical flavor,
+(##provides a high level data model together with features typical of database query languages##) and in
+some ways it's closer to a specification language than a third-generation programming language.
+Unlike most specification languages though it's meant to be useful for everyday programming.
+
+An important point about Amber is that, altough you can create complete programs with it, it is
+primarily designed to complement your programming language of choice, not to replace it. From an Amber
+specification you can generate C/C++, Java and C# code that you can easily include in your project.
+The generated code is fast, thread-safe, highly parallel and supports all the ACID (Atomicity, Consistency,
+Isolation and Durability) properties normally associated with relational databases.
+
+What is Amber suited for? Well, Amber is a general purpose language, and it's only limited (being a
+pure functional language) in its ability to perform I/O. But its unusual features make it particularly
+suited for creating in-process databases. If you need to store your data in a database, but you don't
+want to use an SQL DBMS, either because it's too slow, or because its data model is not flexible
+enought, or because you want to be able to write the logic of your program without having to convert
+the data from the relational model (INTO THAT OF THE) to the host language, or because you want to have more
+control on how data is stored, or just because you want to take advantage of the extra features that it offers,
+then Amber might be for you.
+
+Also, you may want to give it a try if you just like to program in a languange that is both high-level
+and useful in practice. THERE ISN'T MUCH AROUND IN THAT REGARD. We personally like Mathematica, Matlab
+for numerical computation and, of course, Lisp (if you can stomach the syntax), but no(T) much else
+we are aware of.
+
+We hope you like the overall approach (enjoy the PRESENTATION), even if you decide not to use it (Amber).
+For any querIES, suggestionS or bug reportS please contact us at amber-lang@gmail.com.
+
+
+A brief introduction to functional programming
+
+  Many readers new to Amber are likely to come from (a background with) some object-oriented language,
+  and are probably not familiar at all with functional programming. This section provides a brief
+  introduction to it. It highlights the differences between imperative and fuctional programming, and
+  the advantages and limitations of the latter. Even readers familiar with others functional languages
+  might want to have a look at it, as Amber's approach is somewhat unusual.
+
+
+Anatomy of an Amber program
+
+  Amber does away with the traditional concept of program as a "running process" in favor of a completely
+  different (program) methaphor. This is the source of many strenghts, but also some limitations. This
+  section explains how an Amber program is structured, what its strengths and weaknesses are, and how to
+  work around it limitations.
+
+  (WHAT STRENGTHS AND WEAKNESSES THIS APPROACH HAS)
+  (WHAT THE STRENGTHS AND WEAKNESSES OF THIS APPROACH ARE)
+  (WHAT ARE THE STRENGTHS AND WEAKNESSES OF THIS APPROACH)
+
+The data model
+
+  This is Amber's most distinctive feature, and its real raison d'être. To the best of my knowledge,
+  no other language offers anything comparable. Amber is designed around the notion that a good data
+  representation formalism (NOT JUST THE FORMALISM BUT ALSO THE PRACTICE) is crucial to the developement
+  of high-quality software, and borrows many ideas, OPPORTUNAMENTE ADATTATE, from database systems.
+
+
+--------------------------------------------------------------------------------
+
+Most programming languages/ENVIROMENTS in use nowadays all follow the same "execution model".
+Execution starts from a "main" procedure (which A SUA VOLTA (IN TURNS) calls other subroutines) and
+continues until it reaches the end of it. The program is, in a way, always "active". It is either
+executing some instruction, or waiting the end of an I/O request it has just performed. This
+is probably the most natural way to write batch applications. But it's not the only possible one
+when it comes to event-driven ones, applications, that is, that wait idle (or semi-idle) until
+an event occurs. These events can be of the most varied types, such as keyboard or mouse input for
+a GUI application, or a request from a client for server-side ones. When an event arrives, the
+application reads the request, and modifies its state accordingly. It also usually executes some
+I/O actions and in some cases returns a response to the client from which the event originated.
+For this applications, the top-level structure of the program is usually as follows: there is
+first an initialization phase, followed by a loop where the events are received and processed
+accordingly. The loop is exited when a special "exit" message is received, and finally the shutdown
+of the application is performed. In pseudo-C code, the "main" procedure becomes something like this:
+
+  void main()
+  {
+    set_up();
+    
+    for ( ; ; )
+    {
+      Msg msg = get_next_msg();
+      
+      if (is_exit_msg(msg))
+        break;
+      
+      process_msg(msg);
+    }
+    
+    shutdown();
+  }
+
+Amber has been designed with this type of applications in mind (that doesn't mean, though, that it's
+the only type of application it can generate), and programs coded in it have a different "execution model".
+We are now going to see how that works in detail (BAD). The discussion is going to be rather abstract initially,
+so if you find it a bit difficult to follow, please just be patient. Everything is going to make sense eventually.
+IT GOING TO BE USEFUL TO REMEMBER THE MOST COMMON USE CASE FOR AMBER PROGRAMS: A SERVER PROGRAM THAT RECEIVES
+MESSAGES FROM A NUMBER OF CLIENTS.
+
+When an amber program starts it's just "idle": there's no code being executed, no call stack, and no
+instruction pointer. The only property that a program has at this stage is its state. The start state
+is specified explicitly by the programmer (let's call the start state s0 from now on). A program waits
+until a message arrives (let's call it m0). When that happens then a programmer-specified function (the
+transition function) is invoked. This function (let's call if f(...)) takes two arguments, the current
+state of the program and the message that has just arrived, and returns an object that becomes the new
+state of the program (let's call this new state s1). Then it starts waiting for the next message (let's
+call it m1), an so on. Here I think a picture is worth a thousand words (BAD):
+
+       m0        m1        m2        m3
+  s0 -----> s1 -----> s2 -----> s3 -----> ...                   si+1 = f(si, mi)
+
+So, the program starts in state s0, and upon receiving the first message (m0) it switches to state s1
+(where s1 = f(s0, m0)), where it waits for the second message (m1) and upon receiving it it transits (????) to
+state s2, and so on.
+
+There are two important things to point out (NOTICE) here. The first is that Amber is a pure functional
+language. That means that the function f(...) that calculates the new state does do any I/O, nor it has
+any side-effects. More importantly, this function is deterministic: its result (the new state) is determined
+exclusively by the previouse state and the message, and nothing else. Which means that if the program is run
+twice, and it receives the same sequence of messages, it will behave in exactly the same way, that is, it
+will go through exactly the same sequence of states.
+
+The second important thing to specifies is what happens if the function f(...) fails (if it throws an
+unhandled exception). In this case, nothing happens. Then message is discarded and the program state stays
+the same as it was before receiving the message. It's as if the message had never arrived.
+
+The execution model also supports another type of message, that from now on I'll be calling "query".
+As the name implies, queries are sent to an Amber program when a client needs some information about
+the state of the program. Upon receiving a query, the program executes another user-specified function,
+the "query function", that from now on we'll be INDICHEREMO CON g(...). As expected, this function takes
+two parameters, the current state of the program and the query itself, and the object it returns is passed
+back to the client that sent the query. The state of the program is not modified. Just like the transition
+function f(), the query function g() is deterministic: given a certain message and a certain query, the
+client will always get the same result. If the function fails, the client simply receives an error message.
+
+So, TO RECAP, a client can send a server Amber program either a message or a query. A message will cause the program
+to change its state, but no data will be returned to the client. A query, on the other hand, will return a
+result to the client, but it won't cause any state transition in the server. We'll see later why we have
+this distinction, and how we can take advantage of it.
+
+
+
+
+
+
+
+
+In this type of application
+There's also a very common type of application that are normally CALLED event-driven applications
+
+
+--------------------------------------------------------------------------------
+
+, as the Amber (?) take on functional programming is unusual in many ways.

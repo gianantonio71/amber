@@ -1,0 +1,42 @@
+typedef(
+  name: type_symbol(point),
+  type(
+    union_type(
+      [
+        term_type(
+          root: symbol(point),
+          type(
+            set_type(
+              [
+                {
+                  type(
+                    term_type(
+                      root: symbol(x),
+                      type(
+                        set_type(
+                          [{type: type_ref(type_symbol: rat)}]
+                        )
+                      )
+                    )
+                  )
+                },
+                {
+                  type(
+                    term_type(
+                      root: symbol(y),
+                      type(
+                        set_type(
+                          [{type: type_ref(type_symbol: rat)}]
+                        )
+                      )
+                    )
+                  )
+                }
+              ]
+            )
+          )
+        )
+      ]
+    )
+  )
+)

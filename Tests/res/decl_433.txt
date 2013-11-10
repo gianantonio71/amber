@@ -1,0 +1,270 @@
+syn_fn_def(
+  name: fn_symbol(syn_fndef_to_fndefs),
+  params: [
+    (type: type_ref(type_symbol(synfndef)), var: var(fndef)),
+    (
+      type: set_type(nonempty: false, elem_type: type_ref(type_symbol(synsgn))),
+      var: var(named_params)
+    )
+  ],
+  local_fns: [
+    syn_fn_def(
+      name: fn_symbol(mk_fndef),
+      params: [
+        (type: type_ref(type_symbol(synfndef)), var: var(fndef)),
+        (type: type_ref(type_symbol(fnsymbol)), var: var(fn_name)),
+        (type: type_ref(type_symbol(fnsymbol)), var: var(outer_fn)),
+        (
+          type: set_type(nonempty: false, elem_type: type_ref(type_symbol(synsgn))),
+          var: var(named_params)
+        ),
+        (
+          type: set_type(
+            nonempty: false,
+            elem_type: type_ref(type_symbol(basicuntypedsgn))
+          ),
+          var: var(lfns)
+        )
+      ],
+      local_fns: [],
+      expr: tag_obj_expr(
+        obj: map_expr(
+          {
+            (value: const_or_var(fn_name), key: object(name)),
+            (
+              value: accessor(expr: const_or_var(fndef), field: object(params)),
+              key: object(params)
+            ),
+            (
+              value: fn_call(
+                name: fn_symbol(syn_sgns_to_named_params),
+                params: [const_or_var(named_params)],
+                named_params: []
+              ),
+              key: object(named_params)
+            ),
+            (
+              value: accessor(expr: const_or_var(fndef), field: object(res_type)),
+              cond: accessor_test(expr: const_or_var(fndef), field: object(res_type)),
+              key: object(res_type)
+            ),
+            (
+              value: fn_call(
+                name: fn_symbol(desugar_expr),
+                params: [
+                  accessor(expr: const_or_var(fndef), field: object(expr)),
+                  set_comp(
+                    sel_exprs: [accessor_test(expr: const_or_var(p), field: object(var))],
+                    source: [
+                      in_clause(
+                        src: fn_call(
+                          name: fn_symbol(set),
+                          params: [accessor(expr: const_or_var(fndef), field: object(params))],
+                          named_params: []
+                        ),
+                        ptrn: var_ptrn(name: var(p))
+                      )
+                    ],
+                    expr: accessor(expr: const_or_var(p), field: object(var))
+                  )
+                ],
+                named_params: [
+                  syn_fn_def(
+                    name: fn_symbol(named_params),
+                    params: [],
+                    local_fns: [],
+                    expr: set_comp(
+                      sel_exprs: [],
+                      source: [
+                        in_clause(
+                          src: const_or_var(named_params),
+                          ptrn: var_ptrn(name: var(np))
+                        )
+                      ],
+                      expr: tag_obj_expr(
+                        obj: fn_call(
+                          name: fn_symbol(untag),
+                          params: [accessor(expr: const_or_var(np), field: object(name))],
+                          named_params: []
+                        ),
+                        tag: object(named_par)
+                      )
+                    )
+                  ),
+                  syn_fn_def(
+                    name: fn_symbol(local_fns),
+                    params: [],
+                    local_fns: [],
+                    expr: const_or_var(lfns)
+                  ),
+                  syn_fn_def(
+                    name: fn_symbol(curr_outer_fn),
+                    params: [],
+                    local_fns: [],
+                    expr: const_or_var(outer_fn)
+                  )
+                ]
+              ),
+              key: object(expr)
+            )
+          }
+        ),
+        tag: object(fn_def)
+      ),
+      res_type: type_ref(type_symbol(fndef))
+    ),
+    syn_fn_def(
+      name: fn_symbol(syn_sgns_to_named_params),
+      params: [
+        (
+          type: set_type(nonempty: false, elem_type: type_ref(type_symbol(synsgn))),
+          var: var(syn_sgns)
+        )
+      ],
+      local_fns: [],
+      expr: map_comp(
+        sel_exprs: [],
+        source: [
+          in_clause(src: const_or_var(syn_sgns), ptrn: var_ptrn(name: var(ss)))
+        ],
+        value_expr: if_expr(
+          else: tag_obj_expr(
+            obj: map_expr(
+              {
+                (
+                  value: accessor(expr: const_or_var(ss), field: object(params)),
+                  key: object(in_types)
+                ),
+                (
+                  value: accessor(expr: const_or_var(ss), field: object(res_type)),
+                  key: object(out_type)
+                )
+              }
+            ),
+            tag: object(cls_type)
+          ),
+          branches: [
+            (
+              expr: accessor(expr: const_or_var(ss), field: object(res_type)),
+              cond: eq(
+                left: accessor(expr: const_or_var(ss), field: object(params)),
+                right: seq_expr(head: [])
+              )
+            )
+          ]
+        ),
+        key_expr: tag_obj_expr(
+          obj: fn_call(
+            name: fn_symbol(untag),
+            params: [accessor(expr: const_or_var(ss), field: object(name))],
+            named_params: []
+          ),
+          tag: object(named_par)
+        )
+      ),
+      res_type: map_type(
+        value_type: type_ref(type_symbol(exttype)),
+        key_type: union_type(
+          {
+            tag_type(
+              obj_type: type_ref(type_symbol(atom)),
+              tag_type: symb_type(object(named_par))
+            )
+          }
+        )
+      )
+    )
+  ],
+  expr: do_expr(
+    [
+      assignment_stmt(
+        value: set_comp(
+          sel_exprs: [],
+          source: [
+            in_clause(
+              src: fn_call(
+                name: fn_symbol(set),
+                params: [
+                  accessor(expr: const_or_var(fndef), field: object(local_fns))
+                ],
+                named_params: []
+              ),
+              ptrn: var_ptrn(name: var(lfd))
+            )
+          ],
+          expr: fn_call(
+            name: fn_symbol(untyped_sgn),
+            params: [const_or_var(lfd)],
+            named_params: []
+          )
+        ),
+        var: var(lfns)
+      ),
+      assignment_stmt(
+        value: fn_call(
+          name: fn_symbol(mk_fndef),
+          params: [
+            const_or_var(fndef),
+            accessor(expr: const_or_var(fndef), field: object(name)),
+            accessor(expr: const_or_var(fndef), field: object(name)),
+            const_or_var(named_params),
+            const_or_var(lfns)
+          ],
+          named_params: []
+        ),
+        var: var(main_fn)
+      ),
+      assignment_stmt(
+        value: set_comp(
+          sel_exprs: [],
+          source: [
+            in_clause(
+              src: fn_call(
+                name: fn_symbol(set),
+                params: [
+                  accessor(expr: const_or_var(fndef), field: object(local_fns))
+                ],
+                named_params: []
+              ),
+              ptrn: var_ptrn(name: var(fd))
+            )
+          ],
+          expr: fn_call(
+            name: fn_symbol(mk_fndef),
+            params: [
+              const_or_var(fd),
+              tag_obj_expr(
+                obj: map_expr(
+                  {
+                    (
+                      value: accessor(expr: const_or_var(fndef), field: object(name)),
+                      key: object(outer)
+                    ),
+                    (
+                      value: accessor(expr: const_or_var(fd), field: object(name)),
+                      key: object(inner)
+                    )
+                  }
+                ),
+                tag: object(nested_fn_symbol)
+              ),
+              accessor(expr: const_or_var(fndef), field: object(name)),
+              const_or_var(named_params),
+              const_or_var(lfns)
+            ],
+            named_params: []
+          )
+        ),
+        var: var(loc_fns)
+      ),
+      return_stmt(
+        fn_call(
+          name: op_symbol(amp),
+          params: [set_expr({const_or_var(main_fn)}), const_or_var(loc_fns)],
+          named_params: []
+        )
+      )
+    ]
+  ),
+  res_type: set_type(nonempty: false, elem_type: type_ref(type_symbol(fndef)))
+)

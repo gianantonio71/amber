@@ -1,0 +1,79 @@
+typedef(
+  type: union_type(
+    {
+      symb_type(object(unique_int)),
+      tag_type(
+        obj_type: type_ref(type_symbol(intexpr)),
+        tag_type: symb_type(object(minus))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(get_int_val))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(get_set_size))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(get_seq_len))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(get_map_size))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(val1)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(val2)
+            )
+          }
+        ),
+        tag_type: symb_type(object(add))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(val1)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(val2)
+            )
+          }
+        ),
+        tag_type: symb_type(object(mult))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(val1)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(val2)
+            )
+          }
+        ),
+        tag_type: symb_type(object(idiv))
+      )
+    }
+  ),
+  name: type_symbol(natintop)
+)

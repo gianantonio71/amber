@@ -1,0 +1,18 @@
+syn_fn_def(
+  name: fn_symbol(all),
+  params: [
+    (
+      type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(bool))),
+      var: var(s)
+    )
+  ],
+  local_fns: [],
+  expr: not(
+    fn_call(
+      name: fn_symbol(in),
+      params: [object(false), const_or_var(s)],
+      named_params: []
+    )
+  ),
+  res_type: type_ref(type_symbol(bool))
+)

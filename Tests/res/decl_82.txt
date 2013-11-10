@@ -1,0 +1,49 @@
+syn_fn_def(
+  name: fn_symbol(dupl_elems),
+  params: [
+    (
+      type: seq_type(nonempty: false, elem_type: type_var(t)),
+      var: var(s)
+    )
+  ],
+  local_fns: [],
+  expr: do_expr(
+    [
+      assignment_stmt(value: set_expr({}), var: var(r)),
+      for_stmt(
+        body: [
+          if_stmt(
+            else: [],
+            branches: [
+              (
+                cond: and(
+                  left: eq(left: const_or_var(e1), right: const_or_var(e2)),
+                  right: neq(left: const_or_var(i1), right: const_or_var(i2))
+                ),
+                body: [
+                  assignment_stmt(
+                    value: fn_call(
+                      name: op_symbol(amp),
+                      params: [
+                        const_or_var(r),
+                        set_expr({const_or_var(e1), const_or_var(e2)})
+                      ],
+                      named_params: []
+                    ),
+                    var: var(r)
+                  )
+                ]
+              )
+            ]
+          )
+        ],
+        loops: [
+          seq_iter(var: var(e1), values: const_or_var(s), idx_var: var(i1)),
+          seq_iter(var: var(e2), values: const_or_var(s), idx_var: var(i2))
+        ]
+      ),
+      return_stmt(const_or_var(r))
+    ]
+  ),
+  res_type: set_type(nonempty: false, elem_type: type_var(t))
+)

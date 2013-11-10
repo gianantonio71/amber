@@ -1,0 +1,19 @@
+typedef(
+  type: union_type(
+    {
+      symb_type(object(type_any)),
+      symb_type(object(atom_type)),
+      type_ref(type_symbol(typevar)),
+      type_ref(type_symbol(symbtype)),
+      type_ref(type_symbol(inttype)),
+      type_ref(type_symbol(typeref)),
+      type_ref(type_symbol(settype)),
+      type_ref(type_symbol(seqtype)),
+      type_ref(type_symbol(maptype)),
+      type_ref(type_symbol(tupletype)),
+      type_ref(type_symbol(tagtype)),
+      type_ref(type_symbol(uniontype))
+    }
+  ),
+  name: type_symbol(type)
+)

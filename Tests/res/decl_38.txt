@@ -1,0 +1,29 @@
+syn_fn_def(
+  name: fn_symbol(at),
+  params: [
+    (
+      type: seq_type(nonempty: true, elem_type: type_var(t)),
+      var: var(seq)
+    ),
+    (type: type_ref(type_symbol(nat)), var: var(idx)),
+    (type: type_var(t), var: var(default))
+  ],
+  local_fns: [],
+  expr: if_expr(
+    else: const_or_var(default),
+    branches: [
+      (
+        expr: builtin_call(name: at, params: [const_or_var(seq), const_or_var(idx)]),
+        cond: fn_call(
+          name: op_symbol(lower),
+          params: [
+            const_or_var(idx),
+            builtin_call(name: len, params: [const_or_var(seq)])
+          ],
+          named_params: []
+        )
+      )
+    ]
+  ),
+  res_type: type_var(t)
+)

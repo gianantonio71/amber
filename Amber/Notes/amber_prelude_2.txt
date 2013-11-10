@@ -1,0 +1,263 @@
+BOOL      = true, false;
+
+NAT       = 0, succ(NAT);
+NZ_NAT    = 1, succ(NZ_NAT);
+NEG_INT   = minus(NZ_NAT);
+INT       = NAT, NEG_INT;
+NZ_INT    = NZ_NAT, NEG_INT;
+
+RAT       = rat(num: INT, den: NZ_NAT);
+
+POINT     = point(x: RAT, y: RAT);
+
+ANY       = {*};
+FAILURE   = {_|_};
+SYMBOL    = {_};
+
+SEQ       = empty, seq(first: ANY, rest: SEQ);
+SET       = empty, set(ANY+);
+MULTISET  = empty, mset(entry(element: ANY, instances: NZ_NAT)*);
+BIN_TREE  = empty, leaf(ANY), node(value: ANY, left: BIN_TREE, right: BIN_TREE);
+
+SEQ[T]       = empty, seq(first: T, rest: SEQ[T]);
+SET[T]       = empty, set(T*);
+MULTISET[T]  = empty, mset(entry(element: T, instances: NZ_NAT)*);
+BIN_TREE[T]  = empty, leaf(T), node(value: T, left: BIN_TREE[T], right: BIN_TREE[T]);
+
+CHAR      = lowercase(LETTER), uppercase(LETTER), DIGIT, PUNCTUATION;
+
+--------------------------------------------------------------
+
+at(empty_seq, NAT) = !!;
+at(seq(first: $f, rest: $r), 0) = $f;
+as(seq(first: $f, rest: $r), succ(NAT $n)) = at($r, $n);
+
+at([], NAT) = !!;
+at([$f | $r], 0) = $f;
+as([$f | $r], succ(NAT $n)) = at($r, $n);
+
+--------------------------------------------------------------
+
+not(true)  = false;
+not(false) = true;
+
+and(true, true)      = true;
+and(false, BOOL $b)  = false;
+and(BOOL $b, false)  = false;
+
+or(false, false)     = false;
+or(true, BOOL $b)    = true;
+or(BOOL $b, true)    = true;
+
+if(true,  ANY $uv, ANY $dv)  = $uv;
+if(false, ANY $dv, ANY $uv)  = $uv;
+
+? not(and(false, true)) == true;
+? not(not(and(true, true))) == true;
+? if(not(and(false, true)), 0, 1) == 0;
+? if(not(and(true, true)), 0, 2) == 2;
+
+--------------------------------------------------------------
+
+minus(zero) = zero;
+minus(minus(INT $n)) = $n;
+
+? minus(minus(0)) == 0;
+? minus(minus(minus(1))) == -1;
+
+sum(NAT, NAT)    -> NAT;
+sum(NZ_NAT, NAT) -> NZ_NAT;
+sum(NAT, NZ_NAT) -> NZ_NAT;
+sum(INT, INT)    -> INT;
+
+--- var N N1 N2 : NAT;
+--- var P P1 P2 : NAT;
+--- var M : INT;
+--- var NG : NEG_INT;
+
+--- sum(0, M)                       = M;
+--- sum(M, 0)                       = M;
+--- sum(succ(N), P)                 = sum(N, succ(P));
+--- sum(minus(succ(N1)), succ(N2))  = sum(minus(N1), N2);
+--- sum(P, NG)                      = sum(NG, P);
+--- sum(minus(P1), minus(P2))       = minus(sum(P1, P2));
+
+
+--- sum(0, $M)                        = $M;
+--- sum($M, 0)                        = $M;
+--- sum(succ($N), $P)                 = sum($N, succ($P));
+--- sum(minus(succ($N1)), succ($N2))  = sum(minus($N1), $N2);
+--- sum($P, $NG)                      = sum($NG, $P);
+--- sum(minus($P1), minus($P2))       = minus(sum($P1, $P2));
+
+--- var $n $n1 $n2 : NAT;
+--- var $p $p1 $p2 : NAT;
+--- var $m : INT;
+--- var $ng : NEG_INT;
+
+--- sum(0, $m)                        = $m;
+--- sum($m, 0)                        = $m;
+--- sum(succ($n), $p)                 = sum($n, succ($p));
+--- sum(minus(succ($n1)), succ($n2))  = sum(minus($n1), $n2);
+--- sum($p, $ng)                      = sum($ng, $p);
+--- sum(minus($p1), minus($p2))       = minus(sum($p1, $p2));
+
+
+sum(zero, INT $n)                         = $n;
+sum(INT $n, zero)                         = $n;
+sum(succ(NAT $n1), NZ_NAT $n2)            = sum($n1, succ($n2));
+sum(minus(succ(NAT $n1)), succ(NAT $n2))  = sum(minus($n1), $n2);
+sum(NZ_NAT $n1, NEG_INT $n2)              = sum($n2, $n1);
+sum(minus(NZ_NAT $n1), minus(NZ_NAT $n2)) = minus(sum($n1, $n2));
+
+? sum(0, 8) == 8;
+? sum(5, 0) == 5;
+? sum(4, 7) == 11;
+? sum(-3, 9) == 6;
+? sum(12, -14) == -2;
+? sum(-8, 5) == -3;
+? sum(7, -2) == 5;
+? sum(-3, -2) == -5;
+
+difference(INT $n1, INT $n2) = sum($n1, minus($n2));
+
+? difference(15, 3) == 12;
+? difference(4, 7) == -3;
+? difference(-2, 3) == -5;
+? difference(-1, -5) == 4;
+
+product(INT, INT) -> INT;
+product(NAT, NAT) -> NAT;
+
+product(zero, INT $n)            = zero;
+
+product(succ(NAT $n1), NAT $n2)  = sum($n2, product($n1, $n2));
+product(minus(NAT $n1), INT $n2) = minus(product($n1, $n2));
+product(NAT $n1, minus(INT $n2)) = minus(product($n1, $n2));
+
+? product(3, 5)   == 15;
+? product(2, -4)  == -8;
+? product(-3, 2)  == -6;
+? product(-4, -3) == 12;
+? product(0, 6)   == 0;
+? product(0, -2)  == 0;
+? product(9, 0)   == 0;
+? product(-11, 0) == 0;
+
+--------------------------------------------------------------
+
+--- class EMPLOYEE;
+--- extend EMPLOYEE with manager(...);
+
+--- fact(NAT $n) =
+--- {
+---   NAT $f = 1;
+---   for ($i: range(1, $n))
+---     $f = $i * $f;
+---   return $f;
+--- }
+
+--- fact(NAT $n) =
+---   NAT $f = 1;
+---   for ($i: 1..$n)
+---     $f = $i * $f;;
+---   return $f;
+
+--- fact(NAT n) =
+---   NAT f = 1;
+---   for (i: 1..n)
+---     f = i * f;
+---   return f;
+
+fact(NAT n):
+  NAT f = 1;
+  for (i: 1..n)
+    f = i * f;;
+  return f;
+
+--- fact(NAT N) =
+---   NAT F = 1;
+---   for (I: 1..N)
+---     F = I * F;
+---   return F;
+
+
+--------------------------------------------------------------
+
+SYMBOL      = {_};
+
+VARIABLE    = var(SYMBOL);
+
+TERM        = SYMBOL, term(label(SYMBOL) repetitions(LB_INT[2])? branch(TERM)+);
+
+EXPRESSION  = SYMBOL, VARIABLE, term(label(SYMBOL) branch(EXPRESSION)+);
+
+SING_TYPE   = singleton(SYMBOL);
+
+CARD        = required, optional, any, multiple;
+
+PROD_TYPE   = prod_type(label(SYMBOL) branch(card(CARD) type(TYPE))+);
+
+UNION_TYPE  = union(TYPE+);
+
+TYPE        = SING_TYPE, PROD_TYPE, UNION_TYPE;
+
+TYPE        = singleton(SYMBOL),
+              product(label(SYMBOL) branch(card(CARD) type(TYPE))+),
+              union(TYPE+);
+
+TYPE        = singleton(SYMBOL),
+              product(label(SYMBOL) branch(card(CARD) type(self))+),
+              union(self+);
+
+SELF_OR_PRE_REC_TYPE = self, PRE_REC_TYPE;
+
+PRE_REC_TYPE  = product(
+                  label(SYMBOL)
+                  branch(card(required) type(SELF_OR_PRE_REC_TYPE))
+                  branch(card(required) type(PRE_REC_TYPE))*
+                  branch(card(CARD) type(TYPE))*
+                );
+
+REC_TYPE    = rec_type(start(TYPE) recursion(PRE_REC_TYPE));
+
+TYPE        = SING_TYPE, PROD_TYPE, UNION_TYPE, REC_TYPE;
+
+
+
+
+/*
+type UNIT         = unit;
+
+type BOOL         = true, false;
+type LOGIC_3V     = BOOL, unknown;
+
+type NAT          = zero, succ(NAT);
+type NZ_NAT       = succ(NAT);
+
+type NEG_INT      = minus(NZ_NAT);
+
+type INT          = NAT, NEG_INT;
+type NZ_INT       = NZ_NAT, NEG_INT;
+
+type RAT          = INT, rat(num: INT, den: succ(NZ_NAT));
+
+type POINT        = point(x: RAT, y: RAT);
+
+type ANY          = {*};
+
+type NE_SEQ       = seq(first: ANY, rest: SEQ);
+type SEQ          = empty_seq, NE_SEQ;
+
+type SEQ          = empty_seq, seq(first: ANY, rest: SEQ);
+type NE_SEQ       = seq(first: ANY, rest: SEQ);
+
+type SET          = set(ANY*);
+type NE_SET       = set(ANY+);
+
+type MSET         = mset((item: ANY, insts: NZ_NAT)*);
+type NE_MSET      = mset((item: ANY, insts: NZ_NAT)+);
+
+---type NE_BIN_TREE  = leaf, leaf(ANY), node(value: ANY, left: BIN_TREE, right: BIN_TREE);
+---type BIT_TREE     = empty_tree, NE_BIN_TREE;
+*/

@@ -1,0 +1,379 @@
+void main(char *, char **)
+{
+  int ticks[64];
+  
+  ticks[0] = get_tick_count();
+
+  char *str = load_text_file("res\\decl_num.txt");
+  int count = atoi(str);
+  delete [] str;
+  
+  int *decls = new int[count];
+  for (int i=0 ; i < count ; i++)
+  {
+    char fname[1024];
+    sprintf(fname, "res\\decl_%02d.txt", i);
+    str = load_text_file(fname);
+    decls[i] = parse_amber_obj(str);
+    delete [] str;
+  }
+  
+  int uprg = make_seq(decls, count);
+  ticks[1] = get_tick_count();
+  fprintf(stderr, "AST loaded                   %7d\n", ticks[1]-ticks[0]);
+  
+  int syn_prg = fn_finish_parsing_job(uprg);
+  ticks[2] = get_tick_count();
+  fprintf(stderr, "Parsing job finished         %7d\n", ticks[2]-ticks[1]);
+  
+  int errs = fn_user_errors(syn_prg);
+  if (!is_empty_set(errs))
+  {
+    print_amber_obj(errs);
+    return; 
+  }
+  ticks[3] = get_tick_count();
+  fprintf(stderr, "Well formedness check passed %7d\n", ticks[3]-ticks[2]);
+
+  
+  int prg = fn_rem_syntax(syn_prg);
+  ticks[4] = get_tick_count();
+  fprintf(stderr, "Syntax removed               %7d\n", ticks[4]-ticks[3]);
+  
+  int is_wf = fn_is_well_formed(prg);
+  if (is_wf != symb_true)
+  {
+    fputs("Internal compiler error\n", stderr);
+    return;
+  }
+  ticks[5] = get_tick_count();
+  fprintf(stderr, "Consistency check passed     %7d\n", ticks[5]-ticks[4]);
+  
+  int llprg = fn_gen_code(prg);
+  ticks[6] = get_tick_count();
+  fprintf(stderr, "Code generated               %7d\n", ticks[6]-ticks[5]);
+  
+  int c_code = fn_compile_to_c(llprg);
+  ticks[7] = get_tick_count();
+  fprintf(stderr, "C code generated             %7d\n", ticks[7]-ticks[6]);
+
+  int body   = accessor(c_code, symb_body);
+  int header = accessor(c_code, symb_header);
+
+  FILE *fp = fopen("out.h", "w");
+  print_amber_strs(header, fp);
+  fclose(fp);
+  
+  str = load_text_file("header.cpp");
+  fp = fopen("out.cpp", "w");  
+  fputs(str, fp);
+  delete [] str;
+  print_amber_strs(body, fp);
+  fclose(fp);  
+  
+  ticks[8] = get_tick_count();
+
+  fprintf(stderr, "C code printed               %7d\n", ticks[8] - ticks[7]);
+  fprintf(stderr, "Total time elapsed:          %7d\n", ticks[7] - ticks[0]);
+
+  getchar();
+}
+
+void main(char *, char **)
+{
+  const char *fname = "..\\res\\decl_00.txt";
+  //const char *fname = "..\\res\\decl_68.txt";
+  //const char *fname = "..\\res\\decl_384.txt";
+  //const char *fname = "..\\res\\decl_414.txt";
+
+  //char *buff = "typedef("
+  //             "  name: type_symbol(bool),"
+  //             "  type("
+  //             "    union_type("
+  //             "      [singleton(symbol: true), singleton(symbol: false)]"
+  //             "    )"
+  //             "  )"
+  //             ")";
+  char *buff = "abcd"; //"typedef ( { singleton ( symbol: true ) , singleton ( symbol: false ) } ) ";
+  Obj bytes = c_to_amber(buff, strlen(buff));
+
+
+  //puts("---------");
+  //Obj str = fn_main();
+  //puts("---------");
+  //bool valid = is_valid(str);
+  //puts("---------");
+  //print_amber_str(str);
+  //puts("---------");
+  //release(str);
+  //puts("---------");
+
+
+
+
+
+  //int size;
+  //char *buff = load_file(fname, size);
+  //Obj bytes = c_to_amber(buff, size);
+  //delete [] buff;
+
+  int ticks[20];
+  memset(ticks, 0, sizeof(ticks));
+
+  //bool is_valid_seq(Obj seq);
+
+  ////Obj str = fn_to_text(symb_true);
+  //Obj str = to_str(symb_true);
+
+  //
+  //bool valid = is_valid_seq(unwrap(str));
+  //int len = length(str);
+  //print_amber_str(str);
+
+
+  ticks[0]      = get_tick_count();
+  Obj tokens    = fn_tokenize(bytes);
+  ticks[1]      = get_tick_count();
+  //Obj str       = fn_to_text(tokens);
+  Obj parse_res = fn_parse_obj(tokens);
+  ticks[2]      = get_tick_count();
+  Obj str       = fn_to_text(unwrap(parse_res));
+  ticks[3]      = get_tick_count();
+
+  //print_amber_obj(unwrap(parse_res));
+
+  ////int str_40    = fn_to_text(obj, to_obj(40));
+  //int str       = fn_to_text(unwrap(parse_res));
+  //printf("%d\n", get_int_val(fn_length(str)));
+  //printf("%d\n", strlen(amber_to_c(unwrap(str))));
+  
+  //print_amber_str(str);
+
+  ////assert obj = _obj_(fname);
+  ////assert obj = unwrap(parse_obj(tokenize(unwrap(str_40))));
+  ////assert obj = unwrap(parse_obj(tokenize(unwrap(str))));
+
+  //puts("\n\nAbout to release all objects...");
+  //fflush(stdout);
+  
+  release(bytes);
+  release(tokens);
+  release(parse_res);
+  release(str);
+  //release(tokens);
+  //release(parse_res);
+  //release(str);
+
+  ////printf("Lexing terminated, time elapsed %d\n", ticks_2 - ticks_1);
+
+  //printf("\n\nDone. Heap used %d bytes\n", sizeof(int)*fake_heap_used);
+  printf("Time elapsed: %d\n", ticks[2] - ticks[0]);
+  printf("  Lexing:   %d\n", ticks[1] - ticks[0]);
+  printf("  Parsing:  %d\n", ticks[2] - ticks[1]);
+  //printf("  Printing: %d\n", ticks[3] - ticks[2]);
+  //printf("Number of live objects: %d\n", num_of_live_objs);
+
+  //for (int i=0 ; i < sizeof(size_counters)/sizeof(int) ; i++)
+  //  printf("%d\n", size_counters[i]);
+
+  extern int num_of_live_objs;
+  printf("Number of live objects: %d\n", num_of_live_objs);
+
+  getchar();
+}
+
+
+
+void main(char *, char **)
+{
+  Obj sum = fn_main();
+  printf("Sum: %d\n", get_int_val(sum));
+  release(sum);
+  extern int num_of_live_objs;
+  printf("Number of live objects: %d\n", num_of_live_objs);
+}
+
+
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+Obj c_to_amber(const char *bytes, int len)
+{
+  int nb16 = nblocks16(len*sizeof(Obj));
+  Obj *elems = (Obj *) new_obj(nb16);
+  for (int i=0 ; i < len ; i++)
+    elems[i] = to_obj(bytes[i]);
+  Obj res = make_seq(elems, len);
+  delete_obj(elems, nb16);
+  return res;
+}
+
+Obj c_to_amber(const char *str)
+{
+  return make_term(symb_string, make_set(c_to_amber(str, strlen(str))));
+}
+
+char *amber_to_c(Obj bytes)
+{
+  Seq *seq = get_seq_ptr(bytes);
+  int len = seq->length;
+  
+  char *buff = new char[len+1];
+  
+  SeqIter it;
+  init(it, bytes);
+  
+  for (int i=0 ; !is_out_range(it) ; i++)
+  {
+    Obj ch_obj = get_curr_obj(it);
+    int ch = get_int_val(ch_obj);
+    assert(ch >= 0 && ch <= 255);
+    buff[i] = (char) ch;
+    next(it);
+  }
+
+  buff[len] = '\0';
+  
+  return buff;
+}
+
+Obj unwrap(Obj obj)
+{
+  Obj set_obj = get_inner_set(obj);
+  Set *set = get_set_ptr(set_obj);
+  assert(set->size == 1);
+  Obj res = set->elements[0];
+  release(set_obj);
+  return res;
+}
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+void print_amber_str(int amber_str, FILE *fp=stdout)
+{
+  char *str = amber_to_c(unwrap(amber_str));
+  fputs(str, fp);
+  putc('\n', fp);
+  delete [] str;
+}
+
+void print_amber_strs(int amber_strs, FILE *fp=stdout)
+{
+  while (amber_strs != symb_empty_seq)
+  {
+    print_amber_str(accessor(amber_strs, symb_head), fp);
+    amber_strs = accessor(amber_strs, symb_tail);  
+  }
+}
+
+int indent_delta(char ch)
+{
+  if (ch == '(' || ch == '[' || ch == '{')
+    return 1;
+    
+  if (ch == ')' || ch == ']' || ch == '}')
+    return -1;
+  
+  return 0;
+}
+
+
+void print_amber_obj(int amber_obj)
+{
+  int amber_str = fn_to_text(amber_obj);
+  char *str = amber_to_c(unwrap(amber_str));
+  release(amber_str);
+
+  //putchar('\n');
+  //puts(str);
+
+  putchar('\n');
+
+  int len = strlen(str);
+  
+  int indent = 0;
+  for (int i=0 ; i < len ; i++)
+  {
+    char ch = str[i];
+    
+    int dind = indent_delta(ch);
+    
+    if (dind == 0)
+    {
+      putchar(ch);
+      if (ch == ',')
+      {
+        putchar('\n');
+        for (int j=0 ; j < indent ; j++)
+          printf("  ");
+        assert(str[i+1] == ' ');
+        i++;
+      }
+    }  
+
+    if (dind == 1)
+    {
+      int loc_ind = 1;
+
+      for (int j=1 ; j < 60 && i+j < len ; j++)
+      {
+        loc_ind += indent_delta(str[i+j]);
+        assert(loc_ind >= 0);
+        if (loc_ind == 0)
+        {
+          for (int k=0 ; k <= j ; k++)
+            putchar(str[i+k]);
+          i += j;
+          break;                  
+        }
+      }
+      
+      if (loc_ind > 0)
+      {
+        indent++;
+        putchar(ch);
+        putchar('\n');
+        for (int j=0 ; j < indent ; j++)
+          printf("  ");
+      }
+    }
+
+    if (dind == -1)
+    {
+      indent--;
+      putchar('\n');
+      for (int j=0 ; j < indent ; j++)
+        printf("  ");
+      putchar(ch);
+    }  
+  }
+
+  putchar('\n');
+  delete [] str;
+}
+
+int parse_amber_obj(const char *str)
+{
+  int bytes     = c_to_amber(str);
+  int tokens    = fn_tokenize(unwrap(bytes));
+  int parse_res = fn_parse_obj(tokens);
+  int obj       = fn_unwrap(parse_res);
+
+  //print_amber_obj(bytes);
+  //print_amber_obj(tokens);
+  //print_amber_obj(parse_res);
+  //print_amber_obj(obj);
+
+  //puts("---------------------------------------");
+
+  //getchar();
+  
+  release(bytes);
+  release(tokens);
+  release(parse_res);
+  
+  return obj;
+}
+

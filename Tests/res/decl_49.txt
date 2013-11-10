@@ -1,0 +1,21 @@
+syn_fn_def(
+  name: fn_symbol(subseq),
+  params: [
+    (
+      type: seq_type(nonempty: false, elem_type: type_var(t)),
+      var: var(seq)
+    ),
+    (type: type_ref(type_symbol(nat)), var: var(first)),
+    (type: type_ref(type_symbol(nat)), var: var(count))
+  ],
+  local_fns: [],
+  expr: builtin_call(
+    name: slice,
+    params: [
+      const_or_var(seq),
+      const_or_var(first),
+      const_or_var(count)
+    ]
+  ),
+  res_type: seq_type(nonempty: false, elem_type: type_var(t))
+)

@@ -1,0 +1,68 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(type)),
+              optional: true,
+              label: object(res_type)
+            ),
+            (
+              type: type_ref(type_symbol(expr)),
+              optional: false,
+              label: object(expr)
+            ),
+            (
+              type: type_ref(type_symbol(fnsymbol)),
+              optional: false,
+              label: object(name)
+            ),
+            (
+              type: seq_type(
+                nonempty: false,
+                elem_type: tuple_type(
+                  {
+                    (
+                      type: tag_type(
+                        obj_type: type_ref(type_symbol(atom)),
+                        tag_type: symb_type(object(var))
+                      ),
+                      optional: true,
+                      label: object(var)
+                    ),
+                    (
+                      type: type_ref(type_symbol(exttype)),
+                      optional: true,
+                      label: object(type)
+                    )
+                  }
+                )
+              ),
+              optional: false,
+              label: object(params)
+            ),
+            (
+              type: map_type(
+                value_type: type_ref(type_symbol(exttype)),
+                key_type: union_type(
+                  {
+                    tag_type(
+                      obj_type: type_ref(type_symbol(atom)),
+                      tag_type: symb_type(object(named_par))
+                    )
+                  }
+                )
+              ),
+              optional: false,
+              label: object(named_params)
+            )
+          }
+        ),
+        tag_type: symb_type(object(fn_def))
+      )
+    }
+  ),
+  name: type_symbol(fndef)
+)

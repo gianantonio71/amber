@@ -1,0 +1,923 @@
+
+
+--------------------------------------------------------------------------------------------
+
+
+local variables
+  - scalar only (for now)
+  - var(Atom) for user-defined variables
+  - unique_var(Nat) for compiler-generated hidden variables
+
+positional function parameters
+  - both scalar and closure variables
+  - fn_par(Nat) and, if specified by the user, var(Atom) for scalar variables
+  - WHAT ABOUT CLOSURES?
+
+named function parameters
+  - both scalar and closure variables
+  - named_par(Atom) for scalar variables
+  - WHAT ABOUT CLOSURES?
+
+global functions/constants
+  - both scalar and functions
+  - fn_symbol for both functions and constants
+  
+fn_par(Nat), var(Atom)       fn_cls_par(Nat), cls_var(Nat)
+
+named_par(Atom)              named_cls_par(Atom)
+
+
+Right now, local variables and scalar positional parameters are accessed the same way, so they may use the same identifiers.
+
+WHAT ABOUT HIGHER-ORDER POSITIONAL PARAMETERS?
+
+Named function parameters are, at the moment, accessed differently. Does this need to continue?
+I don't know, so it's safer to use different identifiers
+
+named_par(Atom) / fn_par(Atom)
+named_cls_par(name: Atom, arity: NzNat)
+
+global function/constants are fine as they are.
+
+--------------------------------------------------------------------------------------------
+
+z = P0;                 set_var(value: fn_par(0), var: var(z)),
+w = N0;                 set_var(value: cls_ext_par(0), var: var(w)),
+I0 = 0;                 set_ivar(value: 0, var: ivar(0)),
+VV0[I0] = w;            set_var(value: var(w), var: evar(id: 0, idx: ivar(0))),
+add_ref(VV0[I0]);       add_ref(evar(id: 0, idx: ivar(0))),
+I0 = I0 + 1;            set_ivar(value: add(val1: ivar(0), val2: 1), var: ivar(0)),
+VV0[I0] = z;            set_var(value: var(z), var: evar(id: 0, idx: ivar(0))),
+add_ref(VV0[I0]);       add_ref(evar(id: 0, idx: ivar(0))),
+I0 = I0 + 1;            set_ivar(value: add(val1: ivar(0), val2: 1), var: ivar(0)),
+V1 = mk_seq(VV0, I0);   mk_seq(var: lvar(1), size: ivar(0), elems: vvar(size: 2, id: 0)),
+return V1;              ret_val(lvar(1))
+
+
+            
+x = P0;                     set_var(value: fn_par(0), var: var(x)),
+V0 = p;                     set_var(value: named_par(p), var: lvar(0)),
+add_ref(V0);                add_ref(lvar(0)),
+return V0;                  ret_val(lvar(0))
+
+x = P0;                     set_var(value: fn_par(0), var: var(x)),
+                            var_scope(
+let (p = :yes)                name: named_par(p),
+                              body: [
+  V0 = foo(x);                  call_proc(name: fn_symbol(foo), params: [var(x)], var: lvar(0))
+                              ],
+                              new_value: object(yes)
+;                           ),
+return V0;                  ret_val(lvar(0))
+
+
+
+bar(x) = foo(x; p = :yes);
+
+x = P0;               set_var(value: fn_par(0), var: var(x)),
+                      var_scope(
+let (p = :yes)          name: named_par(p),
+                        body: [
+  V0 = foo(x);            call_proc(name: fn_symbol(foo), params: [var(x)], var: lvar(0))
+                        ],
+;                       new_value: object(yes)
+                      ),
+return V0;            ret_val(lvar(0))
+
+
+      expr: do_expr(
+        [
+          let_stmt(
+            body: [assignment_stmt(value: named_par(p), var: var(y))],
+            asgnms: (named_par(p) => var(x))
+          ),
+          return_stmt(var(y))
+        ]
+      )
+      
+--------------------------------------------------------------------------------------------
+
+THIS IS A GOOD EXAMPLE OF EXTENDING TYPES.
+
+type SynUnionType       = union_type([SynType+]);
+
+type SynType : Type
+  - union_type(),
+  + union_type([SynType+]);
+
+--------------------------------------------------------------------------------------------
+
+obj = (l -> f(l) : l <- labels);
+obj = (l <- labels : f(l));
+
+--------------------------------------------------------------------------------------------
+
+CHECK: the number of patterns in a try case must be the same as the number of source
+       expression. check both at level 1 and 2
+
+cc0.cmd gets stuck in an infinite loop
+
+//## I SHOULD LEAVE THE ptrn BRANCH OPTIONAL, TO ALLOW DETECTION OF A FREE VARIABLE IN A TRY STATEMENT
+ptrn_var(name: Var, ptrn: SynPtrn),
+
+--------------------------------------------------------------------------------------------
+
+bug with select: "var: fn_bres" was interpreted as "var(fn_bres)" which caused a HUGE bug
+because BoolVar was either "var(Atom)" or "fn_bres"
+
+bool_proc_def(
+  arity: 1,
+  name: memb_test(type_id: type_symbol(any)),
+  body: [set_bvar(value: true, var: fn_bres), ret_val(fn_bres)]
+)
+bool_proc_def(
+  arity: 1,
+  name: memb_test(type_id: type_symbol(any)),
+  body: [set_bvar(value: true, var: fn_bres), ret_val(fn_bres)]
+)
+
+[fn_bres, var(fn_bres)]
+
+--------------------------------------------------------------------------------------------
+
+at the moment this doesn't compile:
+
+  <expr> where f(_) = expr;
+
+--------------------------------------------------------------------------------------------
+
+there should be a better way to write something like this:
+
+  if expr.sel_expr? then expr.sel_expr else symbol{true} end
+
+for example:
+
+  if_exists(expr, :sel_expr, symbol{true})
+
+
+--------------------------------------------------------------------------------------------
+
+switch case inspect match select
+
+--------------------------------------------------------------------------------------------
+
+context Pattern
+  
+  up scalar_vars = {}, union($*);
+  up vector_vars = {}, union($*);
+  
+  var_ptrn():
+    scalar_vars = default & {v};
+  
+  split_ptrn():
+    scalar_vars = default & {self.var1, self.var2};
+  
+  term_ptrn(root: Var, ...):
+    scalar_vars = default & (self.root);
+  
+  PtrnBranch:
+    scalar_vars = if self.card = :required then default else {} end;
+    vector_vars = default & if self.card = :required then {} else default.scalar_vars end;
+    assert default.vector_vars = {};
+
+end
+
+--------------------------------------------------------------------------------------------
+
+allow type definitions that are local to functions?
+
+--------------------------------------------------------------------------------------------
+
+in the multicase if expression it should be possible to omit the else
+clause, in that case if no branch were taken the expression would just fail
+
+--------------------------------------------------------------------------------------------
+
+sequence literals should have conditional elements as well
+
+  [e1, e2 if c2, e3]
+
+would it be reasonable to extend this to function calls as well?
+
+f(x, y if c)
+
+--------------------------------------------------------------------------------------------
+
+//##############################################################################
+//######## THE SELECT/REPLACE OPERATION MUST NOT MATCH AT THE TOP LEVEL ########
+//##############################################################################
+
+--------------------------------------------------------------------------------------------
+
+a set comprehension statement should be able to generate more than one object at every iteraction
+
+--------------------------------------------------------------------------------------------
+
+class Shape
+  area(Shape)                     -> Float,
+  bounding_rect(Shape)            -> Rect,
+  traslate(Shape, Rat dx, Rat dy) -> Shape;
+
+instance Circle, Rect, Exagon : Shape;
+
+--------------------------------------------------------------------------------------------
+
+SOME DEAD PARSING CODE:
+
+  try_branch_fun:
+      patterns '=' expr                                       {$$ = mk_seq(mk_try_branch($1, $3));              }
+    ; 
+
+  try_branch_proc:
+      patterns '=' stmts                                      {$$ = mk_seq(mk_try_branch($1, $3));              }
+    ; 
+
+  try_branch:
+      try_branch_fun ','
+    | try_branch_proc
+    ;
+
+  try_branches:
+      try_branch
+    | try_branches try_branch
+    ;
+
+  try_branch_func:
+      patterns '=' expr                                       {$$ = mk_try_branch($1, $3);                      }
+    ;
+
+  try_branch_proc:
+    | patterns '{' stmts '}'                                  {$$ = mk_try_branch($1, mk_expr_do($3));          }
+    ;
+
+  try_branches_c:
+      try_branches_b ','
+    ;
+
+  try_branches_b:
+      try_branch_func
+    | try_branches_a try_branch_func
+    | try_branches_c try_branch_func
+    ;
+
+  try_branches_a:
+      try_branch_proc
+    | try_branches_a try_branch_proc
+    | try_branches_c try_branch_proc 
+    ;
+      
+  try_branches:
+      try_branches_a
+    | try_branches_b
+    ;
+
+--------------------------------------------------------------------------------------------
+
+POSSIBLE SYNTAX:
+
+  for (i1 = 0 .. l-2, i2 = i1+1 .. l-1 ; l := length(int_ts))
+
+  for (i1 = 0 ; i < len(v) ; i++)
+    v[i] = ...;
+
+--------------------------------------------------------------------------------------------
+
+BUG FIX:
+
+replace type_id(id: id) in t       //## BIG BUG HERE: USING type_id(id: id) ref
+with if has_key(no_ref_types, id)  //## THE VARIABLE id WASN'T MATCHED
+       then no_ref_types[id]
+       else type_id{id: id};       // BAD
+end
+
+--------------------------------------------------------------------------------------------
+
+Add
+
+  select ... in ... if ... end
+
+--------------------------------------------------------------------------------------------
+
+  //| expr "if" expr ';'                                      {$$ = mk_stmt_return_cond($1, $3);           }
+  //| ntltype pid ":=" expr ';'                               {$$ = mk_stmt_assignment($1, $2, $4);        }
+  //| pid '[' exprs ']' ":=" expr ';'                         {$$ = mk_stmt_assignment_($1, $3, $6);       }
+  //| pid '!' pid ":=" expr ';'                               {$$ = mk_stmt_assignment_($1, $3, $6);       }
+  //| pid '!' pid '[' exprs ']' ":=" expr ';'                 {$$ = mk_stmt_assignment_($1, $3, $6);       }
+  //| pids_dot ":=" expr ';'                                  {$$ = mk_stmt_assignment($1, $3);            }
+  //| pids_dot '[' exprs ']' ":=" expr ';'                    {$$ = mk_stmt_assignment($1, $3);            }
+
+--------------------------------------------------------------------------------------------
+  
+Extension to map literals:
+
+  [k1 -> v1, k2 -> v2 if c2]
+
+--------------------------------------------------------------------------------------------
+
+THINK ABOUT PATTERNS LIKE THESE:
+
+  f(g(x*)*)
+  f(g(x)*)
+
+--------------------------------------------------------------------------------------------
+Why not allow nested type names?
+
+  Pattern.Branch
+  Type.Branch
+
+--------------------------------------------------------------------------------------------
+
+the root @ set operator does not accept an expression for root
+
+--------------------------------------------------------------------------------------------
+
+Problems with set comprehension:
+
+  if I want a pattern to match all elements of a set, how can I statically make sure?
+  I can accidentaly include an existing variable in a pattern, thinking I'm creating a new one
+
+--------------------------------------------------------------------------------------------
+
+What could be a more general form for the set for/if pair, that allowed for existential
+and universal qualification, counting instances and nested set comprehensions?
+
+--------------------------------------------------------------------------------------------
+
+This is not as efficient as it should be. I should not be forced
+to go through all elements
+
+  size({x : x <- s ; is_something(x)}) > 1
+
+--------------------------------------------------------------------------------------------
+
+An example of macro:
+
+  Nat f(Nat n) = sum(m, 1, n-1, f(n, m));
+
+  Nat f(Nat n) = sum(int_range(1, n-1) ; m => f(n, m));
+
+  Nat f(Nat n) = sum([1..n-1] ; f(n, $));
+
+  Nat f(Nat n) = sum(1, n-1 ; f(n, $));
+
+instead of:
+  
+	intw f(int n)
+	{
+	  intw res = 0;
+	  
+	  for (int m=1 ; m <= n-1 ; m++)
+	    res += f(n, m);
+
+	  return res;
+	}
+
+--------------------------------------------------------------------------------------------
+
+With type difference, I could write:
+
+  type UnionType      = union_type(Type - <type_any, UnionType>+);
+  type CompositeType  = Type - LeafType;
+
+instead of:
+
+  type UnionType      = union_type(<atom_type, empty_set_type, SinglType, IntType, SetType, TermType, RecType, SelfSetType>+);
+  type CompositeType  = SetType, SelfSetType, TermType, UnionType, RecType;
+
+--------------------------------------------------------------------------------------------
+
+Possible shortcut:
+
+  {TermType <- types}
+
+instead of
+
+  {t : TermType t <- types}
+
+--------------------------------------------------------------------------------------------
+Any better way to do this?
+
+  {unwrap(r) : r <- select TypeRef in stype end}
+  {st.index : st <- select SelfSetType in inner_type end}
+
+like this, for example:
+
+  refs := select type_ref(r) => r in stype end;
+  refs := select r from type_ref(r) in stype end;
+
+  refs := «select: r from: type_ref(r) in: stype»;
+
+  refs := [select: r from: type_ref(r) in: stype];
+  refs := (select: r from: type_ref(r) in: stype);
+  refs := <select: r from: type_ref(r) in: stype>;
+  
+--------------------------------------------------------------------------------------------
+
+In an expression like this, the duplicate elimination must be done in the "outer" clause,
+it's more efficient that way
+
+  [v -> {k : [v, k] <- expanded} : [v, _] <- expanded];
+
+--------------------------------------------------------------------------------------------
+
+big bug in try expressions: variables that are already bound are not sustituted
+inside the pattern. a new variable is bound instead (but how is that possible?
+there should be a conflict in the Env class)
+
+--------------------------------------------------------------------------------------------
+
+(type: ???, card(b.card) if b.card?)
+
+would be nicer like this
+
+(type: ???, card: b.card if b.card?)
+
+--------------------------------------------------------------------------------------------
+
+find a way to split a set/sequence in many parts without doing multiple passes over it
+
+--------------------------------------------------------------------------------------------
+
+Current way to do it:
+	{ptd.type : ptd <- ptds ; ptd.name = type_name, length(ptd.params) = n_params};
+	{d.type : d <- tds}
+
+a shorter one:
+	type from ptds if name = type_name, length(params) = n_params   
+	type from tds
+
+--------------------------------------------------------------------------------------------
+
+now:
+    par_type  := only_element({d.type : d <- par_typedefs ; d.name = type_name, length(d.params) = n_params});
+
+alternatives:
+    {par_type} ?= {d.type : d <- par_typedefs ; d.name = type_name, length(d.params) = n_params};
+    {par_type} <- {d.type : d <- par_typedefs ; d.name = type_name, length(d.params) = n_params};
+    {par_type} := {d.type : d <- par_typedefs ; d.name = type_name, length(d.params) = n_params};
+
+    par_type   := (d.type : d <- par_typedefs ; d.name = type_name, length(d.params) = n_params);
+
+--------------------------------------------------------------------------------------------
+
+About wrapping functions, there might be a good example with the functions used for parsing,
+if I wanted to merge C++ and Amber parse tree generation
+
+Also, if I were to define strings like this,
+
+type String = str([Nat*]);
+type Char   = char(Nat);
+
+how could I make all the array functions work for String also?
+Some kind of conversion from string to array of (Char or Nat?) MIGHT work for parameters,
+but what about return values? Not always conversion would make sense, I guess...
+
+--------------------------------------------------------------------------------------------
+
+  'In' clause for multisets:
+  
+    [e -> m] <- ms
+  
+  instead of:
+  
+    [e, m] <- ms.*
+   
+--------------------------------------------------------------------------------------------
+
+  [0 : x <- 0..n]
+
+--------------------------------------------------------------------------------------------
+
+  Is there any way to make a sequence of statements an expression?
+  
+--------------------------------------------------------------------------------------------
+
+experiments with syntax for signatures:
+
+  Set[TypeSymbol], Set[<[TypeSymbol, Set[TypeSymbol]]>] -> Set[<[TypeSymbol, Set[TypeSymbol]]>]
+
+  next_step(rs, map) = rs & union({refs : r <- rs, [r, refs] <- map});
+
+  errors(prg) : SYN_PRG -> SET[SYN_ERR]
+
+--------------------------------------------------------------------------------------------
+
+An expression like this should be legal...
+
+  {td : td <- tds, td.name <- curr_step}
+
+--------------------------------------------------------------------------------------------
+
+DEAD CODE:
+    
+    ex_sgn_errs := {
+                      undef_fn(name: fn, arity: a) if not %fn_is_def(fn, length(ps), impl_params),
+                      ex_sgn_err(name: fn, arity: a) if (not ex_sgn_ok)};
+    
+    
+    {true : 
+
+    (name: FN_SYMBOL, arity: NAT, impl_sgn: SET[FN_SNG]);
+
+
+
+
+    fn_call(name: fn, params: ps)  = union({errors(p, vs) : p <- set(ps)}) &
+                                          {undef_fn(name: fn, arity: length(ps))
+                                              if not %fn_is_def(fn, length(ps), impl_params)};
+  
+             type_is_def(BASIC_TYPE_SYMBOL t)                = in(t, types);
+             par_type_is_def(BASIC_TYPE_SYMBOL t, NZ_NAT a) = in([t, a], ptypes);
+             impl_params                                      = {};
+             env_sgns                                         = all_fns;
+
+             ex_pars_are_ok(FN_SYMBOL s, NAT a, SET[PAIR[FN_SYMBOL, NAT]] ips)
+               req_ips := only_element({ss : [s, a, ss] <- all_fns);
+               return subset(ips, req_ips);
+             end
+
+
+--------------------------------------------------------------------------------------------
+
+    fn_errs := is union({errors(fn) : fn <- ub.fn_defs})
+                with
+                  fn_is_def(FN_SYMBOL s, NAT a)                   = %fn_is_def(s, a) or in([s, a], new_fns);
+                  // These could and should be eliminated...
+                  type_is_def(BASIC_TYPE_SYMBOL s)                 = %type_is_def(s);
+                  par_type_is_def(BASIC_TYPE_SYMBOL s, NZ_NAT a)  = %par_type_is_def(s, a);                  
+                end;
+
+--------------------------------------------------------------------------------------------
+
+(term_or_fn_call(root: r, subexprs: ses) <- src => decide_term_or_fn(r, ses))
+
+--------------------------------------------------------------------------------------------
+
+// THINK ABOUT PATTERNS LIKE THESE:
+//   aaa(bbb(v*)*)
+//   aaa(bbb(v)*)
+// SEE testcases_fn_defs[4]
+
+--------------------------------------------------------------------------------------------
+
+what would be a good symbol for set intersection and difference?
+
+--------------------------------------------------------------------------------------------
+
+sometimes in a try expression it is useful to handle a few cases
+and to use a default for the others. but this pattern is dangerous
+if new alternatives are added, because the expression "automatically"
+assigns the default value to the new alternative, and that's probably
+a bug. also with the default clause when you look at the expression
+you don't have as clear a perception of what's going on, compare to the
+case when you explicitly list all alternatives. Any solutions?
+
+--------------------------------------------------------------------------------------------
+
+SYNTACTIC SUGAR:
+
+  vs & {s.var, s.idx_var if s.idx_var?}
+
+INSTEAD OF:
+
+  union(vs, if s.?.idx_var then {s.var, s.idx_var} else {s.var} end);
+    
+OR SET COMPREHENSION...
+
+--------------------------------------------------------------------------------------------
+
+For optional set elements:
+
+  {e1, e2 if c2, e3, e4, e5 if c5, ...}
+
+--------------------------------------------------------------------------------------------
+
+my_label@SYN_EXPR(...)
+
+--------------------------------------------------------------------------------------------
+
+should '::' have a higher precedence than 'not'?
+
+not (t :: SYN_TYPE)
+
+not t :: SYN_TYPE
+
+
+--------------------------------------------------------------------------------------------
+
+I need these "traverse and replace" operators, one bottom-up and the other top-down
+  and maybe also one that asserts (statically) that the traversal order doesn't matter
+
+Also "traverse and accumulate" operators could come in handy
+
+--------------------------------------------------------------------------------------------
+The parser failed to catch this error:
+
+  prod_type(bs+) = ...;
+
+it should have been:
+
+  prod_type($bs+) = ...;  
+
+--------------------------------------------------------------------------------------------
+
+when <expr> : <type> then <expr> else <expr> end
+
+if <expr> = <expr> [; ...] else <expr> ; 
+if <expr> : <expr> [; ...] else <expr> ; 
+
+try (<expr> [, ...])
+  <ptrn> [, ...] = <expr>;
+  ...
+end
+
+--------------------------------------------------------------------------------------------
+
+Would be nice to have set comprehension like this, with the ability to use
+in a branch a variable defined in another
+	
+	return all({subset(sb, tb) : [tb, sbs] <- matches /\ sb <- sbs});
+
+possible shorthands:
+
+	prod_type(b : b <- {replace_self(rb, t) : rb <- rbs} \/ b <- bs);
+
+	prod_type union({replace_self(rb, t) : rb <- rbs}, bs);
+	
+	prod_type ^ union({replace_self(rb, t) : rb <- rbs}, bs);
+
+
+	prod_type({replace_self(rb, t) : rb <- rbs} & bs);
+	
+	prod_type (^) {replace_self(<<rbs>>, t)} & bs;
+
+	prod_type : {replace_self(<<rbs>>, t)} & bs;
+
+
+--------------------------------------------------------------------------------------------
+
+Maybe it would be a good thing to replace the syntax:
+
+	{type: TYPE, card: NSTD_CARD?}
+	{type: type_any, card: required}
+
+with
+
+	(type: TYPE, card: NSTD_CARD?)
+	(type: type_any, card: required)
+
+--------------------------------------------------------------------------------------------
+
+Open issues:
+
+	How should an 'if/then/else/end' statement behave if the condition is an error?
+		Should it take the false branch, or pass on the error?
+
+	same goes for and/or/not operators and equality tests
+
+--------------------------------------------------------------------------------------------
+
+if (bs1 :: <(type: :type_any, card: NSTD_CARD?)>)
+	return false;;
+
+if (size(bs1) == 1 and only_element(bs1).type == :type_any)
+	return false;;
+
+--------------------------------------------------------------------------------------------
+
+possible syntax for vector operations:
+
+	v1 (*) v2
+
+	v1 [*] v2
+	v1 [[*]] v2
+
+	v1 .* v2
+
+see SAC (Single Assignment C)
+
+--------------------------------------------------------------------------------------------
+
+there should be a way to access the subterms of a product type (or a wrapped product type)
+without doing any pattern matching. Also, there should be a way to access the ONLY subterm.
+
+example:
+	
+	union_type.*		// Accessing all elements
+	union_type.!		// Accessing the only one
+
+BUT ISN'T THIS JUST A SPECIAL CASE OF THE "UNLABELLING" OPERATION?
+
+--------------------------------------------------------------------------------------------
+
+is apply(bs) with f(b) = cardinality(b) end
+
+is apply(bs) with f = cardinality end
+
+apply(bs : f(b) = cardinality(b))
+
+apply(bs : f = cardinality)
+
+apply(bs : cardinality(_))
+
+apply(bs : cardinality($))
+
+apply(bs : cardinality)
+
+--------------------------------------------------------------------------------------------
+
+eq(<symbol>, !!)	= false;		neq(<symbol>, !!)	= true;
+eq(!!, !!)				= true;			neq(!!, !!)				= false;
+															
+eq(<symbol>, !!)	= false;		neq(<symbol>, !!)	= true;
+eq(!!, !!)				= !!;				neq(!!, !!)				= !!;
+															
+eq(<symbol>, !!)	= !!;				neq(<symbol>, !!)	= !!;
+eq(!!, !!)				= !!;				neq(!!, !!)				= !!;
+
+--------------------------------------------------------------------------------------------
+
+[2]
+[]{(<<){2}, (>>){[]}}
+
+[->] 
+
+[a -> 2]
+[->]{
+	(->){
+		(<<){a},
+		(>>){2}
+	}
+}
+
+[]
+(->)
+{}
+
+--------------------------------------------------------------------------------------------
+
+//<:SYMBOL, VARIABLE:>
+//
+//{|SYMBOL, VARIABLE|}
+
+
+//type TYPE_PAR[T]					= T, PROD_TYPE_PAR[T], UNION_TYPE_PAR[T], REC_TYPE_PAR[T];
+//
+//type PROD_TYPE_PAR[T]			= prod_type(root: SYMBOL, branch(type: TYPE_PAR[T], card: NSTD_CARD?)+);
+//type UNION_TYPE_PAR[T]		= union_type(TYPE_PAR[T]+);
+//type REC_TYPE_PAR[T]      = rec_type(start: TYPE_PAR[T], recursion: PRE_REC_TYPE_PAR[T]);
+//
+//type PRE_REC_TYPE_PAR[T]	= WRAPPED_SELF, 
+//														prod_type(
+//														 root: SYMBOL,
+//														 branch(type: PRE_REC_TYPE_PAR[T])+,
+//														 branch(type: TYPE_PAR[T], card: NSTD_CARD?)*
+//														); 
+
+--------------------------------------------------------------------------------------------
+
+SOMETIMES I NEED TO "UNWRAP" A TYPE IN A LIST OR SOMETHING
+	I COULD:
+		ADD SOME FORM OF PATTERN MATCHING IN LIST COMPREHENSION (BUT SHOULD IT BE REQUIRED
+			TO MATCH ALL THE ITEMS IN THE LIST, OR SHOULD IT ALSO ACT AS A FILTER?).  
+		DEFINE A GENERIC UNWRAP FUNCTION
+
+--------------------------------------------------------------------------------------------
+
+	//	Could I leave it like this, with an expression (length(params)) inside the pattern?
+	pt := only_element({t : par_typedef(name: tn, par_count: length(params), type: t) <- tds});
+
+--------------------------------------------------------------------------------------------
+
+// Why doesn't it accept this?
+//type_ref_par(name: {|TYPE_SYMBOL, NAT|}, pars: SEQ[{|TYPE_SYMBOL, NAT|}]),
+
+--------------------------------------------------------------------------------------------
+
+A FUNCTION DEFINITION LIKE THIS HAS AT LEAST FOUR PROBLEMS:
+	FIRST, IT SHOULD NOT EXISTS AT ALL. THERE SHOULD BE A WAY TO TRAVERSE A GENERIC TREE
+	SECOND, ONLY THE FIRST SYMBOL IS PATTERN MATCHED, HAVING TO MATCH THE OTHERS IS JUST ANNOYING NOISE
+	THIRD, THE FIRST THREE CLAUSES HAVE THE SAME RIGHT-HAND SIDE EXPRESSION, THERE SHOULD BE A WAY TO COMBINE THEM
+	FORTH, IT SHOULD BE POSSIBLE TO MERGE THE TWO BRANCH CLAUSES, THEY'RE TOO SIMILAR
+
+expand(t, TYPE_SYMBOL self, SET expanded, SET tds):
+	:type_any,  _, _, _		= t;
+	:atom_type, _, _, _		= t;
+	:SING_TYPE, _, _, _		= t;
+
+	prod_type(root: s, {|branch(Any*)|} bs+), _, _, _ = mk_prod_type(s, {expand(b, self, expanded, tds) : b <- bs});
+	
+	union_type(ts+), _, _, _								= union_type(expand(x, self, expanded, tds) : x <- ts);
+
+	// Any way to avoid this repetition?
+	branch(type: bt), _, _, _								= branch(type: expand(bt, self, expanded, tds));
+	branch(type: bt, card: c), _, _, _			= branch(type: expand(bt, self, expanded, tds), card: c);
+	
+	type_ref(tn), _, _, _										= expand_type_ref(tn, self, expanded, tds);
+end
+
+--------------------------------------------------------------------------------------------
+
+
+easier syntax for set union?
+
+--------------------------------------------------------------------------------------------
+
+THERE MUST BE A BETTER WAY TO DO THIS...
+
+resolve_refs(
+	{x : x <- r},	// UGLY UGLY UGLY
+	{x : x <- u, not (x :: SYN_TYPEDEF or references_only_itself(x))},
+	union(
+		{x : x <- u, x :: SYN_TYPEDEF},
+		{resolve_self_refs(x) : x <- u, references_only_itself(x)}
+	)
+);
+
+A SLIGHTLY BETTER ONE:
+
+resolve_refs(
+	{r},
+	{x : x <- u, not (x :: SYN_TYPEDEF or references_only_itself(x))},
+	{
+		x : x <- u, x :: SYN_TYPEDEF;
+		resolve_self_refs(x) : x <- u, references_only_itself(x)
+	}
+);
+
+BUT A PROBLEM REMAINS HERE TOO: THE SET IS PARTITIONED IN THREE PARTS, BUT
+THIS IS DONE IN THREE SEPARATE PASSES OVER THE SET. IT'S UGLY AND INEFFICIENT
+	
+--------------------------------------------------------------------------------------------
+
+resolve_refs(SET s)
+{
+	todo := s;
+	done := {};
+	new  := {};
+	
+	do
+		done := union(done, new);
+		//new  := union({todo => ($$ :: SYN_TYPEDEF)}, {todo => references_only_itself -> resolve_self_refs});
+		new  := union(
+							filter(todo, [_ :: SYN_TYPEDEF]),
+							filter(todo, references_only_itself) => resolve_self_refs),
+							
+							//is filter(todo) with is_ok(x) = x :: SYN_TYPEDEF,
+							{x : x <- todo, x :: SYN_TYPEDEF},
+							{resolve_self_refs(x) : x <- todo, references_only_itself(x)}
+						);
+		todo := {x : x <- todo, not (x :: SYN_TYPEDEF or references_only_itself(x))};
+		
+		//todo := [x : x <- todo, not (x :: SYN_TYPEDEF or references_only_itself(x))];
+		[/10, 20, 30/]
+	while (new != {})
+	
+	if (todo != {})
+		return !!
+	
+	return done;
+}
+
+--------------------------------------------------------------------------------------------
+
+Invalid token: "t::TYPE" (line 194, column 66)
+
+--------------------------------------------------------------------------------------------
+
+THESE DON'T PARSE:
+	minus^3 ( succ ( zero ) )
+	succ^2(zero));
+
+--------------------------------------------------------------------------------------------
+
+WHAT'S A GOOD WAY TO SOLVE THIS WITHOUT USING THE only_element_or_default FUNCTION??
+I'D LIKE THIS:
+	= if typedef(name: n, tdef: t) <- es then t else type_ref(n) end;
+BUT THEN if WOULD NOT BE A NORMAL FUNCTION ANYMORE (OR WOULD IT?).
+
+substitute(ANY, SET[SYN_TYPEDEF] s) is
+
+	type_ref(n), {es*}	= only_element_or_default({{t : typedef(name: n, tdef: t) <- es}}, type_ref(n));
+	
+	//// UGLY UGLY UGLY
+	//if {{t : typedef(name: ns, tdef: t) <- es}} == {0}
+	//	then type_ref({t : typedef(name: n, tdef: t) <- es})
+	//	else type_ref(n)
+	//end;
+
+	//type_ref(n), {typedef(name: ns, tdef: _)*}	= if in(n, {ns})
+	//																									then type_ref({t : typedef(name: n, tdef: t) <- s})
+	//																									else type_ref(n)
+	//																								end;
+end
+
+--------------------------------------------------------------------------------------------
+
+
+  //| fnid '(' patterns ')' "->" type ':' '{' try_branches '}'                   {$$ = mk_fndef_switch($1, $3, $5);                }
+  //| fnid '(' patterns ')' "->" type ':' '{' try_branches "where" fndefs '}'    {$$ = mk_fndef_switch($1, $3, $5, $7);            }
+  //| fnid '(' patterns ')' "->" type ':' try_branches "end"                     {$$ = mk_fndef_switch($1, $3, $5);                }
+  //| fnid '(' patterns ')' "->" type ':' try_branches "where" fndefs "end"      {$$ = mk_fndef_switch($1, $3, $5, $7);            }
+  //| fnid '(' patterns ')' "->" type statements "end"                           {$$ = mk_fndef_proc($1, $3, $4);                  }
+  //| fnid '(' patterns ')' "->" type statements "where" fndefs "end"            {$$ = mk_fndef_proc($1, $3, $4, $6);              }

@@ -1,0 +1,767 @@
+typedef(
+  type: union_type(
+    {
+      symb_type(object(terminate)),
+      symb_type(object(no_op)),
+      symb_type(object(break_loop)),
+      symb_type(object(exit_block)),
+      tag_type(
+        obj_type: type_ref(type_symbol(streamvar)),
+        tag_type: symb_type(object(init_stream))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objvar)),
+        tag_type: symb_type(object(add_ref))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objvar)),
+        tag_type: symb_type(object(release))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(itvar)),
+        tag_type: symb_type(object(move_forward))
+      ),
+      tag_type(
+        obj_type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(instr))),
+        tag_type: symb_type(object(repeat))
+      ),
+      tag_type(
+        obj_type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(instr))),
+        tag_type: symb_type(object(execute_block))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(obj)
+            )
+          }
+        ),
+        tag_type: symb_type(object(print_obj))
+      ),
+      tag_type(
+        obj_type: union_type(
+          {
+            type_ref(type_symbol(objexpr)),
+            type_ref(type_symbol(boolexpr))
+          }
+        ),
+        tag_type: symb_type(object(ret_val))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(seq)
+            )
+          }
+        ),
+        tag_type: symb_type(object(rev_seq))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(value)
+            ),
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            )
+          }
+        ),
+        tag_type: symb_type(object(set_var))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(set)
+            )
+          }
+        ),
+        tag_type: symb_type(object(internal_sort))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(seq)
+            )
+          }
+        ),
+        tag_type: symb_type(object(seq_to_set))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(seq)
+            )
+          }
+        ),
+        tag_type: symb_type(object(seq_to_mset))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(intvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(value)
+            )
+          }
+        ),
+        tag_type: symb_type(object(set_ivar))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(boolvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(boolexpr)),
+              optional: false,
+              label: object(value)
+            )
+          }
+        ),
+        tag_type: symb_type(object(set_bvar))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(setitvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(src)
+            )
+          }
+        ),
+        tag_type: symb_type(object(get_set_iter))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(seqitvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(src)
+            )
+          }
+        ),
+        tag_type: symb_type(object(get_seq_iter))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(mapitvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(src)
+            )
+          }
+        ),
+        tag_type: symb_type(object(get_map_iter))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(list)
+            )
+          }
+        ),
+        tag_type: symb_type(object(list_to_seq))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(obj)
+            ),
+            (
+              type: type_ref(type_symbol(streamvar)),
+              optional: false,
+              label: object(stream)
+            )
+          }
+        ),
+        tag_type: symb_type(object(append))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(streamvar)),
+              optional: false,
+              label: object(stream)
+            )
+          }
+        ),
+        tag_type: symb_type(object(mk_set_from_stream))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(streamvar)),
+              optional: false,
+              label: object(stream)
+            )
+          }
+        ),
+        tag_type: symb_type(object(mk_seq_from_stream))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(left)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(right)
+            )
+          }
+        ),
+        tag_type: symb_type(object(join_seqs))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(value)
+            ),
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(size)
+            )
+          }
+        ),
+        tag_type: symb_type(object(mk_array))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(value)
+            ),
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(idx)
+            )
+          }
+        ),
+        tag_type: symb_type(object(set_at))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(seq)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(idx)
+            )
+          }
+        ),
+        tag_type: symb_type(object(get_at))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objfnname)),
+              optional: false,
+              label: object(name)
+            ),
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(objexpr))),
+              optional: false,
+              label: object(params)
+            )
+          }
+        ),
+        tag_type: symb_type(object(call_proc))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(var)),
+              optional: false,
+              label: object(cls_var)
+            ),
+            (
+              type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(objexpr))),
+              optional: false,
+              label: object(params)
+            )
+          }
+        ),
+        tag_type: symb_type(object(call_cls))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(map1)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(map2)
+            )
+          }
+        ),
+        tag_type: symb_type(object(merge_maps))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(obj)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(tag)
+            )
+          }
+        ),
+        tag_type: symb_type(object(mk_tagged_obj))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(size)
+            ),
+            (
+              type: type_ref(type_symbol(vecvar)),
+              optional: false,
+              label: object(elems)
+            )
+          }
+        ),
+        tag_type: symb_type(object(mk_set))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(size)
+            ),
+            (
+              type: type_ref(type_symbol(vecvar)),
+              optional: false,
+              label: object(elems)
+            )
+          }
+        ),
+        tag_type: symb_type(object(mk_seq))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(size)
+            ),
+            (
+              type: type_ref(type_symbol(vecvar)),
+              optional: false,
+              label: object(values)
+            ),
+            (
+              type: type_ref(type_symbol(vecvar)),
+              optional: false,
+              label: object(keys)
+            )
+          }
+        ),
+        tag_type: symb_type(object(mk_map))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(streamvar)),
+              optional: false,
+              label: object(key_stream)
+            ),
+            (
+              type: type_ref(type_symbol(streamvar)),
+              optional: false,
+              label: object(value_stream)
+            )
+          }
+        ),
+        tag_type: symb_type(object(mk_map_from_streams))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: union_type(
+                {
+                  tag_type(
+                    obj_type: type_ref(type_symbol(atom)),
+                    tag_type: symb_type(object(named_par))
+                  )
+                }
+              ),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(instr))),
+              optional: false,
+              label: object(body)
+            ),
+            (
+              type: type_ref(type_symbol(atomicexpr)),
+              optional: false,
+              label: object(new_value)
+            )
+          }
+        ),
+        tag_type: symb_type(object(var_scope))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(seq)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(len)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(idx_first)
+            )
+          }
+        ),
+        tag_type: symb_type(object(get_seq_slice))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(map)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(key)
+            ),
+            (
+              type: type_ref(type_symbol(boolvar)),
+              optional: true,
+              label: object(success_var)
+            )
+          }
+        ),
+        tag_type: symb_type(object(lookup))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objvar)),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(map)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(key)
+            ),
+            (
+              type: type_ref(type_symbol(boolvar)),
+              optional: true,
+              label: object(success_var)
+            )
+          }
+        ),
+        tag_type: symb_type(object(ext_lookup))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(boolexpr)),
+              optional: false,
+              label: object(cond)
+            ),
+            (
+              type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(instr))),
+              optional: false,
+              label: object(when_true)
+            ),
+            (
+              type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(instr))),
+              optional: false,
+              label: object(when_false)
+            )
+          }
+        ),
+        tag_type: symb_type(object(branch))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: union_type(
+                {
+                  tag_type(
+                    obj_type: type_ref(type_symbol(atom)),
+                    tag_type: symb_type(object(named_par))
+                  )
+                }
+              ),
+              optional: false,
+              label: object(var)
+            ),
+            (
+              type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(var))),
+              optional: false,
+              label: object(env)
+            ),
+            (
+              type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(instr))),
+              optional: false,
+              label: object(body)
+            ),
+            (
+              type: type_ref(type_symbol(clsdef)),
+              optional: false,
+              label: object(cls)
+            )
+          }
+        ),
+        tag_type: symb_type(object(cls_scope))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(val)
+            ),
+            (
+              type: seq_type(nonempty: true, elem_type: type_ref(type_symbol(instr))),
+              optional: true,
+              label: object(else)
+            ),
+            (
+              type: set_type(
+                nonempty: false,
+                elem_type: tuple_type(
+                  {
+                    (
+                      type: set_type(nonempty: true, elem_type: type_ref(type_symbol(symbobj))),
+                      optional: false,
+                      label: object(vals)
+                    ),
+                    (
+                      type: seq_type(nonempty: false, elem_type: type_ref(type_symbol(instr))),
+                      optional: false,
+                      label: object(instrs)
+                    )
+                  }
+                )
+              ),
+              optional: false,
+              label: object(cases)
+            )
+          }
+        ),
+        tag_type: symb_type(object(symbol_switch))
+      )
+    }
+  ),
+  name: type_symbol(instr)
+)

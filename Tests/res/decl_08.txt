@@ -1,0 +1,24 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(rat)),
+              optional: false,
+              label: object(x)
+            ),
+            (
+              type: type_ref(type_symbol(rat)),
+              optional: false,
+              label: object(y)
+            )
+          }
+        ),
+        tag_type: symb_type(object(point))
+      )
+    }
+  ),
+  name: type_symbol(point)
+)

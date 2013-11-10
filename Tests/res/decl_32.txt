@@ -1,0 +1,17 @@
+syn_fn_def(
+  name: op_symbol(lower_eq),
+  params: [
+    (type: type_ref(type_symbol(int)), var: var(a)),
+    (type: type_ref(type_symbol(int)), var: var(b))
+  ],
+  local_fns: [],
+  expr: or(
+    left: fn_call(
+      name: op_symbol(lower),
+      params: [const_or_var(a), const_or_var(b)],
+      named_params: []
+    ),
+    right: eq(left: const_or_var(a), right: const_or_var(b))
+  ),
+  res_type: type_ref(type_symbol(bool))
+)

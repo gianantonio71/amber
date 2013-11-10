@@ -1,0 +1,219 @@
+FIX: bool is_valid_rep_symbol(const string &s) is not used in the lexer...
+FIX: Invalid token: "root:symbol" (line 191, column 15)
+
+FIX:  any(type_symbol(any)) prints to :any(type_symbol: :any) instead of :any(type_symbol(:any))
+
+FIX: why are they not accepted by the parser?
+---at([ANY $e | [ANY] $s], 0)           = $e;
+---at([ANY $e | SEQ $s], succ(NAT $n))  = at($s, $n);
+
+type checks for type definitions:
+  no two types with the same name.
+  all type references must point to an existing typedef
+  
+  
+
+
+
+succ~10(zero)
+succ^10(zero)
+
+
+
+to speedup the process, sorting and duplicate elimination for the subterms could be done just in time
+
+syntactic sugar for pattern matching lists
+non-scalar variables, TYPE? $v, TYPE* $v, TYPE+ $v
+
+no compression of terms except for succ^N(zero) or N > 2 ???
+membership operator "::"
+explicit syntax for function symbols (@my_fn, !my_fn, #my_fn, %my_fn, my_fn@, my_fn!, my_fn#, my_fn%)
+there are also the keywords, such as "itself". what do they map to?
+variables of cardinality optional, any and multiple in matching patterns (and expressions)
+symbol type "{_}"
+error term "!!" propagation
+empty label for inner nodes and leaves :(subterm) and :()
+ellispis for pattern matching: "..."
+case-when-then expressions
+self/itself keywords (expressions)
+extend the dot notation to any kind of plain symbol, including keywords
+
+FIX: the list pattern matching expression may contain expression with a cardinality, but it shouldn't
+FIX: the <label: ...> pattern matching expression as well
+
+parametrized types
+imperative rules
+
+something like this: "[$element | $list]" ?
+it would be equivalent to "[$element] ++ $list"
+
+higher-order functions/rules???
+
+remove the $ prefix for variables ???
+
+type NEG_INT  = - NZ_NAT; ?????
+
+ambiguity when using label + cardinality in type definitions
+
+
+
+----------- DONE OR NEARLY DONE -----------
+
+loops in testcases
+fail if a function symbol cannot be reduced
+list comprehension expressions  [ 2*x | x <- [0..], x^2 > 3 ]
+"print" declaration
+!! expression
+arithmetic, logic and relational operators
+syntactic sugar for lists
+syntactic sugar for labels: term(label: subterm) or: term(label1: subterm1, label2: subterm2) 
+if-then-else expressions
+equality operator "==" for terms/expressions
+
+----------------------------------------------------------------
+
+THIS MALFORMED TERM PASSED THE PARSING FASE, INTERPRETING "pINT" AS "p INT". FIX! (NEEDS TWO DIFFERENT FIXES)
+sum(p0(zero) p1(pINT $n)) = $n;
+
+Do I need to terminate an if-then-else block with the "end" keyword?
+
+/*| "if" '(' expr ')' "then" '{' expr '}' "else" '{' expr '}'     { $$ = ast(EXPR, $1, $2, $4, $6 "expr 26"); }*/
+
+
+----------------------------------------------------------------
+
+ptype(
+    branches(SYN_SPTYPE)+     ->    branches(spt(...)), branches(spt(...))
+    branches: SYN_SPTYPE+     ->    branches(spt(...)), branches(spt(...))
+    branches(SYN_SPTYPE+)     ->    branches(spt(...), spt(...))
+)
+----------------------------------------------------------------
+
+'TermObj::is_number': function call missing argument list;
+use '&TermObj::is_number' to create a pointer to member
+
+----------------------------------------------------------------
+--- type TYPEDEF_AST = ast(
+---                      type: typedef,
+---                      label: TYPE_SYMBOL,
+---                      subnodes: AST_SEQ
+---                    );
+
+--- parse(TYPEDEF_AST $ast) = typedef(name: $ast.label, def: [parse($sn) | $sn <- $ast.subnodes]);
+
+parse(
+  ast(
+    type: typedef,
+    label: TYPE_SYMBOL $type_name,
+    subnodes: AST_SEQ $subnodes
+  )
+) = typedef(name: $type_name, def: [parse($sn) | $sn <- $subnodes]);
+
+
+--- type PRETYPE_AST = ast(
+---                      type: pretype,
+---                      label: plain_symbol(ANY $sid),
+---                      subnodes: AST_SEQ $subnodes
+---                    );
+
+--- parse(PRETYPE_AST $ast) = if $ast.subnodes == [] then
+---                             symbol($ast.label.plain_symbol) 
+---                           else
+---                             ptype(
+---                               root: symbol($ast.label.plain_symbol),
+---                               branches: [parse($sn) | $sn <- $ast.subnodes]
+---                             )
+---                           end; 
+
+parse(ast(
+        type: pretype,
+        label: plain_symbol(ANY $sid),
+        subnodes: AST_SEQ $subnodes
+      )
+     )  = if $subnodes == [] then
+            symbol($sid) 
+          else
+            ptype(
+              root: symbol($sid),
+              branches: [parse($sn) | $sn <- $subnodes]
+            )
+          end;
+
+----------------------------------------------------------------
+
+--- wrap($label, SYN_PTYPE $st) = case $label
+---                                 when nil_label      = $st,
+---                                 when question_mark  = optional($st),
+---                                 when star           = any($st),
+---                                 when plus           = multiple($st);
+
+wrap(nil_label,     SYN_PTYPE $st) = $st;
+wrap(question_mark, SYN_PTYPE $st) = optional($st);
+wrap(star,          SYN_PTYPE $st) = any($st);
+wrap(plus,          SYN_PTYPE $st) = multiple($st);
+
+----------------------------------------------------------------
+
+def parse
+  ast
+    type: typedef,
+    label: TYPE_SYMBOL $type_name,
+    subnodes: AST_SEQ $subnodes
+is
+  typedef
+    name: $type_name,
+    def: [parse($sn) | $sn <- $subnodes]
+end
+
+
+  
+def parse
+  ast
+    type: pretype,
+    label: plain_symbol(ANY $sid),
+    subnodes: AST_SEQ $subnodes
+is
+  if $subnodes == [] then
+    symbol($sid) 
+  else
+    ptype(root:symbol($sid), branches: [parse($sn) | $sn <- $subnodes])
+  end; 
+
+----------------------------------------------------------------
+
+Amber is a programming language that I designed out of frustration with
+both object-oriented languages (for being so horribly low-level) and
+functional ones (for being next to useless in practice). It borrows
+concepts from functional, equational and logic programming, and the
+relational model. Its aim is to make programs as short, elegant and
+bug-free as possible.
+
+Amber is not meant to be yet another research language, but to be
+immediately useful. Switching to an entirely new and young language,
+that does not have the libreries and the tool support of a mature one,
+is something that nobody could afford to do, no matter how good the
+language is. Therefore Amber has been designed to complement existing
+languages, not to replace them. While you can use it to build complete
+applications, Amber is much more useful as a code generator. From an
+Amber SPECIFICATION, you can generate C/C++, Java or C# code that you
+can easily include in your application. The generated code is fast,
+thread-safe, highly concurrent and exhibits all the ACID (Atomicity, Consistency, Isolation,
+Durability) properties tipically associated with relational databases.
+It also provides a deeply integrated query language. All these features
+make it especially useful to implement in-memory databases, but Amber
+IS GENERAL-PURPOSE and is not, BY ANY MEANS, limited to that.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,22 @@
+syn_fn_def(
+  name: fn_symbol(eval_exprs_and_add_to_map),
+  params: [
+    (type: type_ref(type_symbol(expr)), var: var(ke)),
+    (type: type_ref(type_symbol(expr)), var: var(ve)),
+    (type: type_ref(type_symbol(streamvar)), var: var(ksv)),
+    (type: type_ref(type_symbol(streamvar)), var: var(vsv))
+  ],
+  local_fns: [],
+  expr: tag_obj_expr(
+    obj: map_expr(
+      {
+        (value: const_or_var(ke), key: object(key_expr)),
+        (value: const_or_var(ve), key: object(value_expr)),
+        (value: const_or_var(ksv), key: object(key_stream_var)),
+        (value: const_or_var(vsv), key: object(value_stream_var))
+      }
+    ),
+    tag: object(eval_exprs_and_add_to_map)
+  ),
+  res_type: type_ref(type_symbol(finalmatchaction))
+)

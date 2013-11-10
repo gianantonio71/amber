@@ -1,0 +1,20 @@
+syn_fn_def(
+  name: op_symbol(amp),
+  params: [
+    (
+      type: set_type(nonempty: false, elem_type: type_var(t)),
+      var: var(s1)
+    ),
+    (
+      type: set_type(nonempty: false, elem_type: type_var(t)),
+      var: var(s2)
+    )
+  ],
+  local_fns: [],
+  expr: fn_call(
+    name: fn_symbol(union),
+    params: [const_or_var(s1), const_or_var(s2)],
+    named_params: []
+  ),
+  res_type: set_type(nonempty: false, elem_type: type_var(t))
+)

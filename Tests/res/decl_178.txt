@@ -1,0 +1,25 @@
+typedef(
+  type: union_type(
+    {
+      symb_type(object(empty_set_type)),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(bool)),
+              optional: false,
+              label: object(nonempty)
+            ),
+            (
+              type: type_ref(type_symbol(type)),
+              optional: false,
+              label: object(elem_type)
+            )
+          }
+        ),
+        tag_type: symb_type(object(set_type))
+      )
+    }
+  ),
+  name: type_symbol(settype)
+)

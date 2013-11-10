@@ -1,0 +1,94 @@
+syn_fn_def(
+  name: fn_symbol(special_subexprs),
+  params: [(type: type_ref(type_symbol(expr)), var: var(expr))],
+  local_fns: [],
+  expr: match_expr(
+    cases: [
+      case(
+        expr: set_expr(
+          {
+            cond_expr(
+              expr: accessor(expr: const_or_var(expr), field: object(sel_expr)),
+              cond: accessor_test(expr: const_or_var(expr), field: object(sel_expr))
+            )
+          }
+        ),
+        patterns: [
+          tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(ex_qual)))
+        ]
+      ),
+      case(
+        expr: set_expr(
+          {
+            accessor(expr: const_or_var(expr), field: object(expr)),
+            cond_expr(
+              expr: accessor(expr: const_or_var(expr), field: object(sel_expr)),
+              cond: accessor_test(expr: const_or_var(expr), field: object(sel_expr))
+            )
+          }
+        ),
+        patterns: [
+          tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(set_comp)))
+        ]
+      ),
+      case(
+        expr: set_expr(
+          {
+            accessor(expr: const_or_var(expr), field: object(value_expr)),
+            accessor(expr: const_or_var(expr), field: object(key_expr)),
+            cond_expr(
+              expr: accessor(expr: const_or_var(expr), field: object(sel_expr)),
+              cond: accessor_test(expr: const_or_var(expr), field: object(sel_expr))
+            )
+          }
+        ),
+        patterns: [
+          tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(map_comp)))
+        ]
+      ),
+      case(
+        expr: set_expr(
+          {
+            accessor(expr: const_or_var(expr), field: object(expr)),
+            cond_expr(
+              expr: accessor(expr: const_or_var(expr), field: object(sel_expr)),
+              cond: accessor_test(expr: const_or_var(expr), field: object(sel_expr))
+            )
+          }
+        ),
+        patterns: [
+          tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(seq_comp)))
+        ]
+      ),
+      case(
+        expr: set_expr(
+          {
+            accessor(expr: const_or_var(expr), field: object(expr)),
+            cond_expr(
+              expr: accessor(expr: const_or_var(expr), field: object(sel_expr)),
+              cond: accessor_test(expr: const_or_var(expr), field: object(sel_expr))
+            )
+          }
+        ),
+        patterns: [
+          tag_ptrn(
+            obj: type_ptrn(type_any),
+            tag: obj_ptrn(object(select_expr))
+          )
+        ]
+      ),
+      case(
+        expr: set_expr({accessor(expr: const_or_var(expr), field: object(expr))}),
+        patterns: [
+          tag_ptrn(
+            obj: type_ptrn(type_any),
+            tag: obj_ptrn(object(replace_expr))
+          )
+        ]
+      ),
+      case(expr: set_expr({}), patterns: [type_ptrn(type_any)])
+    ],
+    exprs: [fn_par(0)]
+  ),
+  res_type: set_type(nonempty: false, elem_type: type_ref(type_symbol(expr)))
+)

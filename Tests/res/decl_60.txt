@@ -1,0 +1,25 @@
+syn_fn_def(
+  name: fn_symbol(union),
+  params: [
+    (
+      type: set_type(nonempty: false, elem_type: type_var(t)),
+      var: var(s1)
+    ),
+    (
+      type: set_type(nonempty: false, elem_type: type_var(t)),
+      var: var(s2)
+    )
+  ],
+  local_fns: [],
+  expr: set_comp(
+    sel_exprs: [],
+    source: [
+      or_clause(
+        left: in_clause(src: const_or_var(s1), ptrn: var_ptrn(name: var(e))),
+        right: in_clause(src: const_or_var(s2), ptrn: var_ptrn(name: var(e)))
+      )
+    ],
+    expr: const_or_var(e)
+  ),
+  res_type: set_type(nonempty: false, elem_type: type_var(t))
+)

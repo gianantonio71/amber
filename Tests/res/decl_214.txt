@@ -1,0 +1,49 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(to_str))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(mapitvar)),
+        tag_type: symb_type(object(get_curr_key))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(mapitvar)),
+        tag_type: symb_type(object(get_curr_value))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(get_tag))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(get_inner_obj))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(to_symb))
+      ),
+      tag_type(
+        obj_type: union_type(
+          {
+            type_ref(type_symbol(setitvar)),
+            type_ref(type_symbol(seqitvar))
+          }
+        ),
+        tag_type: symb_type(object(get_curr_obj))
+      ),
+      tag_type(
+        obj_type: union_type(
+          {
+            type_ref(type_symbol(boolexpr)),
+            type_ref(type_symbol(intexpr))
+          }
+        ),
+        tag_type: symb_type(object(to_obj))
+      )
+    }
+  ),
+  name: type_symbol(natobjop)
+)

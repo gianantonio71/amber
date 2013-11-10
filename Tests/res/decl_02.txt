@@ -1,0 +1,1 @@
+typedef(type: union_type({integer}), name: type_symbol(int))

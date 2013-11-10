@@ -1,0 +1,105 @@
+syn_fn_def(
+  name: op_symbol(lower),
+  params: [
+    (type: type_ref(type_symbol(string)), var: var(str1)),
+    (type: type_ref(type_symbol(string)), var: var(str2))
+  ],
+  local_fns: [],
+  expr: do_expr(
+    [
+      assignment_stmt(
+        value: fn_call(
+          name: fn_symbol(length),
+          params: [const_or_var(str1)],
+          named_params: []
+        ),
+        var: var(len1)
+      ),
+      assignment_stmt(
+        value: fn_call(
+          name: fn_symbol(length),
+          params: [const_or_var(str2)],
+          named_params: []
+        ),
+        var: var(len2)
+      ),
+      assignment_stmt(
+        value: fn_call(
+          name: fn_symbol(min),
+          params: [const_or_var(len1), const_or_var(len2)],
+          named_params: []
+        ),
+        var: var(min_len)
+      ),
+      assignment_stmt(value: object(0), var: var(i)),
+      loop_stmt(
+        cond: fn_call(
+          name: op_symbol(lower),
+          params: [const_or_var(i), const_or_var(min_len)],
+          named_params: []
+        ),
+        body: [
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(brackets),
+              params: [const_or_var(str1), const_or_var(i)],
+              named_params: []
+            ),
+            var: var(ch1)
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(brackets),
+              params: [const_or_var(str2), const_or_var(i)],
+              named_params: []
+            ),
+            var: var(ch2)
+          ),
+          if_stmt(
+            else: [],
+            branches: [
+              (
+                cond: fn_call(
+                  name: op_symbol(lower),
+                  params: [const_or_var(ch1), const_or_var(ch2)],
+                  named_params: []
+                ),
+                body: [return_stmt(object(true))]
+              )
+            ]
+          ),
+          if_stmt(
+            else: [],
+            branches: [
+              (
+                cond: fn_call(
+                  name: op_symbol(greater),
+                  params: [const_or_var(ch1), const_or_var(ch2)],
+                  named_params: []
+                ),
+                body: [return_stmt(object(false))]
+              )
+            ]
+          ),
+          assignment_stmt(
+            value: fn_call(
+              name: op_symbol(plus),
+              params: [const_or_var(i), object(1)],
+              named_params: []
+            ),
+            var: var(i)
+          )
+        ],
+        skip_first: false
+      ),
+      return_stmt(
+        fn_call(
+          name: op_symbol(lower),
+          params: [const_or_var(len1), const_or_var(len2)],
+          named_params: []
+        )
+      )
+    ]
+  ),
+  res_type: type_ref(type_symbol(bool))
+)

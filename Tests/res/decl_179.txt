@@ -1,0 +1,25 @@
+typedef(
+  type: union_type(
+    {
+      symb_type(object(empty_map_type)),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(type)),
+              optional: false,
+              label: object(value_type)
+            ),
+            (
+              type: type_ref(type_symbol(type)),
+              optional: false,
+              label: object(key_type)
+            )
+          }
+        ),
+        tag_type: symb_type(object(map_type))
+      )
+    }
+  ),
+  name: type_symbol(maptype)
+)

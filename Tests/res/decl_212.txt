@@ -1,0 +1,154 @@
+typedef(
+  type: union_type(
+    {
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(is_symb))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(is_int))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(is_ne_set))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(is_ne_seq))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(is_ne_map))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(objexpr)),
+        tag_type: symb_type(object(is_tagged_obj))
+      ),
+      tag_type(
+        obj_type: type_ref(type_symbol(itvar)),
+        tag_type: symb_type(object(is_out_of_range))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(expr1)
+            ),
+            (
+              type: type_ref(type_symbol(objexpr)),
+              optional: false,
+              label: object(expr2)
+            )
+          }
+        ),
+        tag_type: symb_type(object(is_eq))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(boolexpr)),
+              optional: false,
+              label: object(expr1)
+            ),
+            (
+              type: type_ref(type_symbol(boolexpr)),
+              optional: false,
+              label: object(expr2)
+            )
+          }
+        ),
+        tag_type: symb_type(object(is_eq_bool))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(expr1)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(expr2)
+            )
+          }
+        ),
+        tag_type: symb_type(object(is_eq_int))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(expr1)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(expr2)
+            )
+          }
+        ),
+        tag_type: symb_type(object(is_gt))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(expr1)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(expr2)
+            )
+          }
+        ),
+        tag_type: symb_type(object(is_ge))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(expr1)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(expr2)
+            )
+          }
+        ),
+        tag_type: symb_type(object(is_lt))
+      ),
+      tag_type(
+        obj_type: tuple_type(
+          {
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(expr1)
+            ),
+            (
+              type: type_ref(type_symbol(intexpr)),
+              optional: false,
+              label: object(expr2)
+            )
+          }
+        ),
+        tag_type: symb_type(object(is_le))
+      )
+    }
+  ),
+  name: type_symbol(natboolop)
+)

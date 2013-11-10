@@ -1,0 +1,31 @@
+syn_fn_def(
+  name: fn_symbol(rand_sort_pairs),
+  params: [
+    (
+      type: map_type(value_type: type_var(tv), key_type: type_var(tk)),
+      var: var(map)
+    )
+  ],
+  local_fns: [],
+  expr: fn_call(
+    name: fn_symbol(rand_sort),
+    params: [
+      set_comp(
+        sel_exprs: [],
+        source: [
+          map_in_clause(
+            src: const_or_var(map),
+            value_ptrn: var_ptrn(name: var(v)),
+            key_ptrn: var_ptrn(name: var(k))
+          )
+        ],
+        expr: seq_expr(head: [const_or_var(k), const_or_var(v)])
+      )
+    ],
+    named_params: []
+  ),
+  res_type: seq_type(
+    nonempty: false,
+    elem_type: fixed_seq_type([type_var(tk), type_var(tv)])
+  )
+)

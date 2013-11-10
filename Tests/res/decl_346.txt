@@ -1,0 +1,14 @@
+syn_fn_def(
+  name: fn_symbol(and_then),
+  params: [
+    (type: type_ref(type_symbol(boolexpr)), var: var(e1)),
+    (type: type_ref(type_symbol(boolexpr)), var: var(e2))
+  ],
+  local_fns: [],
+  expr: fn_call(
+    name: fn_symbol(and_then),
+    params: [seq_expr(head: [const_or_var(e1), const_or_var(e2)])],
+    named_params: []
+  ),
+  res_type: type_ref(type_symbol(boolexpr))
+)

@@ -1,0 +1,7 @@
+syn_fn_def(
+  name: op_symbol(minus),
+  params: [(type: type_ref(type_symbol(int)), var: var(n))],
+  local_fns: [],
+  expr: builtin_call(name: neg, params: [const_or_var(n)]),
+  res_type: type_ref(type_symbol(int))
+)

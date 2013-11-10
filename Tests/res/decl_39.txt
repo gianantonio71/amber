@@ -1,0 +1,12 @@
+syn_fn_def(
+  name: fn_symbol(left),
+  params: [
+    (
+      type: fixed_seq_type([type_var(t1), type_var(t2)]),
+      var: var(s)
+    )
+  ],
+  local_fns: [],
+  expr: builtin_call(name: at, params: [const_or_var(s), object(0)]),
+  res_type: type_var(t1)
+)

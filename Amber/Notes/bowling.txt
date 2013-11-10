@@ -1,0 +1,83 @@
+module BOWLING
+  requires:
+    type BALL;
+    
+
+  begin:
+    type GAME = game(throws: SEQ[BALL]);
+
+    record_throw(GAME $g, BALL $b) = $g.throws := $g.throws ++ &b;
+
+  
+end;
+  
+
+class BOWLING: BALL, GAME_TYPE;
+
+instance BOWLING: INT[0, 10], {std_bowling};
+
+
+type BOWLING_GAME = game(
+                      throws: SEQ[BALL],
+                      type:   GAME_TYPE
+                    )
+                    where BOWLING: BALL, GAME_TYPE;
+
+record_throw(BOWLING_GAME $g, BALL $b):
+  $g.throws := $g.throws ++ &b;
+  return $g;
+
+scores(BOWLING_GAME $g):
+
+
+
+BOWLING_GAME[BT] =  game(
+                      throws: SEQ[BT],
+                      type:   ANY
+                    );
+
+
+record_throw[BT](BOWLING_GAME[BT] $g, BT $b) = $g.throws := $g.throws ++ &b;
+
+scores[BT](BOWLING_GAME[BT] $g):  [memo]
+  for ($i : range($g.throws))
+  
+
+---------------------------------------------------------------------------------
+
+type BALL = INT[0, 10];
+
+type BOWLING_GAME = bowling_game(throws: SEQ[BALL]);
+
+new_bowling_game = bowling_game(throws: []);
+
+using BOWLING_GAME $g:
+
+  record_throw(BALL $b):
+    $g.throws := $g.throws ++ &b;
+    return $g;
+
+  scores:
+    $scores = $num_of_rounds * [0];
+    $pos = 0;
+    
+    for ($i: 0..$rounds)
+      $scores[i] = score($g, $i, $pos);
+      $pos = round_length($g, $i, $pos);
+
+    return $scores;
+
+  memoize scores(BOWLING_GAME);
+  
+  
+
+
+
+
+
+
+
+
+  
+
+

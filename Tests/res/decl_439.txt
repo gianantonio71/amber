@@ -1,0 +1,82 @@
+syn_fn_def(
+  name: fn_symbol(gen_vars),
+  params: [(type: type_ref(type_symbol(expr)), var: var(expr))],
+  local_fns: [],
+  expr: match_expr(
+    cases: [
+      case(
+        expr: fn_call(
+          name: fn_symbol(new_vars),
+          params: [accessor(expr: const_or_var(expr), field: object(source))],
+          named_params: []
+        ),
+        patterns: [
+          tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(ex_qual)))
+        ]
+      ),
+      case(
+        expr: fn_call(
+          name: fn_symbol(new_vars),
+          params: [accessor(expr: const_or_var(expr), field: object(source))],
+          named_params: []
+        ),
+        patterns: [
+          tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(set_comp)))
+        ]
+      ),
+      case(
+        expr: fn_call(
+          name: fn_symbol(new_vars),
+          params: [accessor(expr: const_or_var(expr), field: object(source))],
+          named_params: []
+        ),
+        patterns: [
+          tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(map_comp)))
+        ]
+      ),
+      case(
+        expr: set_expr(
+          {
+            accessor(expr: const_or_var(expr), field: object(var)),
+            cond_expr(
+              expr: accessor(expr: const_or_var(expr), field: object(idx_var)),
+              cond: accessor_test(expr: const_or_var(expr), field: object(idx_var))
+            )
+          }
+        ),
+        patterns: [
+          tag_ptrn(obj: type_ptrn(type_any), tag: obj_ptrn(object(seq_comp)))
+        ]
+      ),
+      case(
+        expr: fn_call(
+          name: fn_symbol(new_vars),
+          params: [accessor(expr: const_or_var(expr), field: object(ptrn))],
+          named_params: []
+        ),
+        patterns: [
+          tag_ptrn(
+            obj: type_ptrn(type_any),
+            tag: obj_ptrn(object(select_expr))
+          )
+        ]
+      ),
+      case(
+        expr: fn_call(
+          name: fn_symbol(new_vars),
+          params: [accessor(expr: const_or_var(expr), field: object(ptrn))],
+          named_params: []
+        ),
+        patterns: [
+          tag_ptrn(
+            obj: type_ptrn(type_any),
+            tag: obj_ptrn(object(replace_expr))
+          )
+        ]
+      ),
+      case(expr: set_expr({}), patterns: [type_ptrn(type_any)])
+    ],
+    exprs: [fn_par(0)]
+  ),
+  res_type: set_type(nonempty: false, elem_type: type_ref(type_symbol(var)))
+)

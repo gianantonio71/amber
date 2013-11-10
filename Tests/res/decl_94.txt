@@ -1,0 +1,50 @@
+syn_fn_def(
+  name: fn_symbol(intermix),
+  params: [
+    (
+      type: seq_type(nonempty: false, elem_type: type_var(t)),
+      var: var(seq)
+    ),
+    (type: type_var(t), var: var(obj))
+  ],
+  local_fns: [],
+  expr: do_expr(
+    [
+      assignment_stmt(value: seq_expr(head: []), var: var(res)),
+      for_stmt(
+        body: [
+          if_stmt(
+            else: [],
+            branches: [
+              (
+                cond: neq(left: const_or_var(res), right: seq_expr(head: [])),
+                body: [
+                  assignment_stmt(
+                    value: seq_expr(head: [const_or_var(obj)], tail: const_or_var(res)),
+                    var: var(res)
+                  )
+                ]
+              )
+            ]
+          ),
+          assignment_stmt(
+            value: seq_expr(head: [const_or_var(x)], tail: const_or_var(res)),
+            var: var(res)
+          )
+        ],
+        loops: [
+          seq_iter(
+            var: var(x),
+            values: fn_call(
+              name: fn_symbol(reverse),
+              params: [const_or_var(seq)],
+              named_params: []
+            )
+          )
+        ]
+      ),
+      return_stmt(const_or_var(res))
+    ]
+  ),
+  res_type: seq_type(nonempty: false, elem_type: type_var(t))
+)

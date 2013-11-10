@@ -1,0 +1,19 @@
+syn_fn_def(
+  name: fn_symbol(untag),
+  params: [(var: var(x))],
+  local_fns: [],
+  expr: match_expr(
+    cases: [
+      case(
+        expr: const_or_var(obj),
+        patterns: [
+          tag_ptrn(
+            obj: var_ptrn(name: var(obj)),
+            tag: var_ptrn(name: var(tag))
+          )
+        ]
+      )
+    ],
+    exprs: [fn_par(0)]
+  )
+)
