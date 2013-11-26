@@ -9,9 +9,8 @@ type NegInt         = [*..-1] ;
 
 type Rat            = Int, rat(num: Int, den: [2..*]);
 
-type Any            = <*>;
 type Atom           = <+>;
-//type Any            = Atom, Int, Seq, Set, Map, TagObj
+type Any            = Atom, Int, Seq, Set, Map, TagObj;
 
 type Point          = point(x: Rat, y: Rat);
 
@@ -26,9 +25,18 @@ type NeSeq          = [Any+];
 
 type Tuple          = (Atom => Any);
 type Map            = (Any => Any);
+  
+type TagObj         = (Atom @ Any);
 
 type Char           = char(Nat);
 type String         = string([Nat*]);
+
+type Maybe[T]       = nil, just(T);
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Replace this with === or ~=
+Bool is_eq(T x, Maybe[T] maybe) = maybe == :just(x);
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -337,10 +345,11 @@ T* seq_union([(T*)*] sets) = union(set(sets));
 
 T2 op_[]((T1 => T2) map, T1 key) = only_element({val : #key => val <- map});
  
-//#### T2 lookup((T1 => T2) map, T1 key, T2 default) = only_element_or_def_if_empty({val : [!key, val] <- map}, default);
-//#### 
-//#### (T1 => T2) update((T1 => T2) map, (T1 => T2) diffs) = [k -> v : ([k, v] <- map, [k, _] </- diffs.*) \/
-//####                                                                  [k, v] <- diffs];
+T2 lookup((T1 => T2) map, T1 key, T2 default) = only_element_or_def_if_empty({val : #key => val <- map}, default);
+
+(T1 => T2) update((T1 => T2) map, (T1 => T2) diffs) = (k => v : (k => v <- map, k => _ </- diffs) \/ k => v <- diffs);
+
+Nat size((Any => Any) map) = size(keys(map));
 
 T1* keys((T1 => T2) map) = {k : k => _ <- map};
 
@@ -374,6 +383,11 @@ Bool has_key((T1 => T2) map, T1 key) = (? #key => _ <- map);
   all_keys := union({keys(m) : m <- maps});
   return (k => {m[k] : m <- maps ; has_key(m, k)} : k <- all_keys);
 }
+
+(T1 => T2) merge((T1 => T2)* maps) = (k => v : m <- maps, k => v <- m);
+
+(T1 => T2) remove_keys((T1 => T2) m, T1* ks) = (k => m[k] : k <- keys(m) - ks);
+
 
 //#### (T1 => T2) merge((T1 => T2)* maps):
 //####   {}          = [->],
@@ -441,7 +455,8 @@ untag(x): tag @ obj = obj;
     missing := all_refs - all_starts;
     
     return true if missing == {};
-    //print "------------------------------------------------------------------------------";
+    print "------------------------------------------------------------------------------";
+    print map;
     print missing;
     return false;
   };
