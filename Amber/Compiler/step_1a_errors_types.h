@@ -44,13 +44,15 @@ using
                                       if (type.tag_type :: <SymbType, SymbType+, atom_type>)
                                         tag_errs := {};
                                       else
-                                        tag_errs := :invalid_type_for_tag(type.tag_type);
+                                        tag_errs := {:invalid_type_for_tag(type.tag_type)};
                                       ;
                                       
                                       return tag_errs & type_wf_errors(type.obj_type);    
                                     },
 
-    union_type(ts)                = { nts := normalize_unions(ts);
+    union_type(ts)                = { assert size(ts) > 1;
+
+                                      nts := normalize_unions(ts);
 
                                       errs := union({type_wf_errors(t) : t <- nts});
                                       return errs if errs /= {};
@@ -75,7 +77,7 @@ using
       TypeVar,  _         = false,
       _,        TypeVar   = false, //## BAD
       IntType,  IntType   = true,
-      _,        _         = are_disjoint(partitions(t1), partitions(t2));
+      _,        _         = are_disjoint(syn_partitions(t1), syn_partitions(t2));
   }
 }
 

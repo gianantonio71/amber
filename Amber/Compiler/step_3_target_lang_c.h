@@ -643,7 +643,7 @@ using String typesymb2name(TypeSymbol)
     op_symbol(op)       = _str_(op),
     nested_fn_symbol()  = to_c_fn_name(fn_symb.outer) & "__" & to_c_fn_name(fn_symb.inner);
 
-  String to_c_fn_name(BoolFnName): memb_test(ts) = "is_" & typesymb2name(ts);
+  String to_c_fn_name(BoolFnName): memb_test(ts) = "is__" & typesymb2name(ts);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

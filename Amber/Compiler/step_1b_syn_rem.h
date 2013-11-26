@@ -1,4 +1,20 @@
 
+// type SynTypedef    = typedef(name: BasicTypeSymbol, type: SynType);
+
+// type SynParTypedef = par_typedef(name: BasicTypeSymbol, params: [TypeVar+], type: SynType);
+
+// type TypeName = type_name(symbol: BasicTypeSymbol, arity: Nat);
+
+(TypeName => SynType) create_type_map(SynTypedef* tdefs, SynParTypedef* par_tdefs)
+{
+  tdefs_map     := (type_name(symbol: td.name, arity: 0) => td.type : td <- tdefs);
+  par_tdefs_map := (type_name(symbol: td.name, arity: length(td.params)) => norm_params(td.type, td.params) : td <- par_tdefs);
+  return tdefs_map & par_tdefs_map;
+
+  SynType norm_params(SynType type, [TypeVar+] params) = replace type_var() v in type with :type_var(index_first(v, params)) end;
+}
+
+
 Program rem_syntax(SynPrg prg)
 {
   norm_prg := replace Type t in prg with norm_type(t) end;
@@ -9,7 +25,17 @@ Program rem_syntax(SynPrg prg)
   fndefs    := {d : SynFnDef d <- decls};
   ublocks   := {d : SynUsingBlock d <- decls};
 
-  inst_tdefs := create_type_map(norm_prg);
+  type_map := create_type_map(tdefs, par_tdefs);
+  
+  print "Type map created";
+  // print type_map;
+
+  norm_type_map := normalize_references(type_map);
+
+  print "Type map normalized";
+  // print norm_type_map;
+  
+  fail;
   
   desugared_fndefs := union({syn_fndef_to_fndefs(fd, {}) : fd <- fndefs});
   
@@ -19,7 +45,7 @@ Program rem_syntax(SynPrg prg)
                               }
                             );
 
-  return program(tdefs: inst_tdefs, fndefs: desugared_fndefs & desugared_block_fndefs);
+  return program(fndefs: desugared_fndefs & desugared_block_fndefs);
 }
 
 //  nps    := closures & set([if arity(fd) == 0 then :named_par(untag(fd.name)) else untyped_sgn(fd) end : fd <- stmt.asgnms]); //## BAD BAD BAD

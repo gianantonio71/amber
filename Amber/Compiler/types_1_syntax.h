@@ -1,6 +1,47 @@
 //## IT WOULD BE USEFUL TO HAVE SYNTACTIC PATTERNS, WITH TUPLE PATTERNS AS SEQUENCES RATHER THAN SETS
 
-type SynType       = Type;
+type BasicTypeSymbol  = type_symbol(Atom);
+type ParTypeSymbol    = par_type_symbol(symbol: BasicTypeSymbol, params: [SynType+]); //## BAD BAD BAD
+type TypeSymbol       = BasicTypeSymbol, ParTypeSymbol;
+
+//## THIS TWO TYPEDEFS ARE HERE ONLY TEMPORARILY
+type TypeName = type_name(symbol: BasicTypeSymbol, arity: Nat);
+
+///////////////////////////////////////////////////////////////////////////////
+
+type SynType    = atom_type,
+                  SymbType,
+                  IntType,
+                  SynTypeVar,
+                  SynTypeRef,
+                  SynSetType,
+                  SynSeqType,
+                  SynMapType,
+                  SynTupleType,
+                  SynTagType,
+                  SynUnionType,
+                  SynRecType;
+
+type SynTypeVar   = type_var(<Nat, Atom>);
+
+type SynTypeRef   = type_ref(TypeSymbol);
+
+type SynSeqType   = empty_seq_type, seq_type(elem_type: SynType, nonempty: Bool), fixed_seq_type([SynType+]);
+
+type SynSetType   = empty_set_type, set_type(elem_type: SynType, nonempty: Bool);
+
+type SynMapType   = empty_map_type, map_type(key_type: SynType, value_type: SynType);
+
+type SynTupleType = tuple_type((label: SymbObj, type: SynType, optional: Bool)+);
+
+type SynTagType   = tag_type(tag_type: <SymbType, SymbType+, atom_type, SynTypeRef>, obj_type: SynType);
+
+type SynUnionType = union_type(SynType+);
+
+type SynRecType   = self, rec_type(SynType); //## NOT SURE ABOUT THIS - NEW
+
+
+/////////////////////////////////////////////////////////////////////////////////////
 
 type SynTypedef    = typedef(name: BasicTypeSymbol, type: SynType);
 
@@ -44,11 +85,9 @@ type SynExpr = object(<Atom, Int>),
                do_expr([SynStmt+]),
 
                select_expr(type: SynType, src_expr: SynExpr),
-               retrieve_expr(expr: SynExpr, ptrn: Pattern, src_expr: SynExpr, cond: SynExpr?),
-               replace_expr(expr: SynExpr, src_expr: SynExpr, ptrn: Pattern),
+               retrieve_expr(expr: SynExpr, ptrn: SynPtrn, src_expr: SynExpr, cond: SynExpr?),
+               replace_expr(expr: SynExpr, src_expr: SynExpr, ptrn: SynPtrn),
 
-               //is_expr(expr: SynExpr, type: SynType),
-               //where_expr(expr: SynExpr, fndefs: [SynFnDef+]),
                let_expr(expr: SynExpr, stmts: [SynStmt+]);
 
 
@@ -61,15 +100,23 @@ type SynCondExpr  = cond_expr(expr: SynExpr, cond: SynExpr);
 
 type SynSubExpr   = SynExpr, SynCondExpr;
 
-type SynClause    = in_clause(ptrn: Pattern, src: SynExpr),
-                    not_in_clause(ptrn: Pattern, src: SynExpr),
-                    map_in_clause(key_ptrn: Pattern, value_ptrn: Pattern, src: SynExpr),
-                    map_not_in_clause(key_ptrn: Pattern, value_ptrn: Pattern, src: SynExpr),
+type SynPtrn      = ptrn_any,
+                    obj_ptrn(LeafObj),  //## TO LIMIT IT TO SYMBOL/INTEGER?
+                    type_ptrn(SynType),
+                    ext_var_ptrn(Var),
+                    var_ptrn(name: Var, ptrn: SynPtrn?),
+                    tuple_ptrn(fields: (label: SymbObj, ptrn: SynPtrn)+, is_open: Bool),
+                    tag_ptrn(tag: <obj_ptrn(SymbObj), var_ptrn(name: Var)>, obj: SynPtrn);
+
+type SynClause    = in_clause(ptrn: SynPtrn, src: SynExpr),
+                    not_in_clause(ptrn: SynPtrn, src: SynExpr),
+                    map_in_clause(key_ptrn: SynPtrn, value_ptrn: SynPtrn, src: SynExpr),
+                    map_not_in_clause(key_ptrn: SynPtrn, value_ptrn: SynPtrn, src: SynExpr),
                     eq_clause(var: Var, expr: SynExpr),
                     and_clause([SynClause+]),
                     or_clause(left: SynClause, right: SynClause);
 
-type SynCase      = case(patterns: [Pattern+], expr: SynExpr);  //## CHANGE
+type SynCase      = case(patterns: [SynPtrn+], expr: SynExpr);  //## CHANGE
 
 type SynStmt      = assignment_stmt(var: Var, value: SynExpr),
                     return_stmt(SynExpr),
@@ -98,8 +145,8 @@ type SynFnDef       = syn_fn_def(
 
 type SynSgn         = syn_sgn(
                         name:     FnSymbol,
-                        params:   [Type*],
-                        res_type: Type
+                        params:   [SynType*],
+                        res_type: SynType
                       );
 
 type SynUsingBlock  = using_block(

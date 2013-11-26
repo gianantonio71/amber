@@ -2,11 +2,10 @@
 //## ARE THEY REALLY NEEDEED? AND WOULD IT BE ANY USEFUL TO CREATE THE
 //## SAME INSTANTIATIONS BUT WITH THE TYPE VARIABLES REPLACED BY ANY?
 
-(TypeSymbol => SynType) create_type_map(SynPrg prg)
+(TypeSymbol => SynType) create_syn_type_map(SynPrg prg)
 {
   tdef_map     := (td.name => td.type : SynTypedef td <- set(untag(prg)));
   par_tdef_map := inst_req_par_types(prg);
-  
   return tdef_map & par_tdef_map;
 }
 

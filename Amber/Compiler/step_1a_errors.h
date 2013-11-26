@@ -10,7 +10,8 @@ type TDefUserErr  = undef_type_name(BasicTypeSymbol),
                     undef_par_type_name(name: BasicTypeSymbol, arity: NzNat),
                     undef_type_var(TypeVar),
                     //incompatible_types_in_set_type(SynType++),
-                    incompatible_types_in_union_type(SynType++);
+                    incompatible_types_in_union_type(SynType++),
+                    invalid_type_for_tag(SynType);
 
 //:rep_labels_in_map(SymbObj*)
 
@@ -89,7 +90,9 @@ UserErr* wf_errors(SynPrg prg)
                    untyped_sgn(fd, set(ub.signatures))
                  };
 
-  inst_tdefs  := create_type_map(prg);
+  //## BUG BUG BUG: I HAVE TO CHECK THAT THERE ARE NO TYPE UNIONS WITH JUST ONE ELEMENT BEFORE CALLING CREATE_TYPE_MAP
+
+  inst_tdefs  := create_syn_type_map(prg);
   
   dup_tdef_errs := for (td1 <- tdefs, td2 <- tdefs)
                      if (td1 /= td2 and td1.name == td2.name)
@@ -187,7 +190,7 @@ using (TypeSymbol => SynType) typedefs
     // Types are supposed to have already passed the "no direct ref cycles" test
     //## IMPLEMENT THE ABOVE TEST
 
-    Bool are_part_compatible(SynType t1, SynType t2) = are_disjoint(partitions(t1), partitions(t2));
+    Bool are_part_compatible(SynType t1, SynType t2) = are_disjoint(syn_partitions(t1), syn_partitions(t2));
 
     //Bool are_part_compatible(SynType t1, SynType t2):
       //IntType,  IntType   = separated(t1, t2),

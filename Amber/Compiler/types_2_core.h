@@ -6,30 +6,21 @@ type LeafObj    = object(<Atom, Int>);
 
 ///////////////////////////////////////////////////////////////////////////////
 
-type BasicTypeSymbol  = type_symbol(Atom);
-type ParTypeSymbol    = par_type_symbol(symbol: BasicTypeSymbol, params: [Type+]);
-type TypeSymbol       = BasicTypeSymbol, ParTypeSymbol;
-
-///////////////////////////////////////////////////////////////////////////////
-
-type Type       = type_any,
-                  atom_type,
+type Type       = atom_type,
                   SymbType,
                   IntType,
-                  TypeRef,
                   TypeVar,
                   SetType,
                   SeqType,
                   MapType,
                   TupleType,
                   TagType,
-                  UnionType;
+                  UnionType,
+                  RecType;
 
 type SymbType   = symb_type(SymbObj);
 
 type IntType    = integer, low_ints(max: Int), high_ints(min: Int), int_range(min: Int, size: NzNat);
-
-type TypeRef    = type_ref(TypeSymbol);
 
 type TypeVar    = type_var(Atom);
 
@@ -41,10 +32,11 @@ type MapType    = empty_map_type, map_type(key_type: Type, value_type: Type);
 
 type TupleType  = tuple_type((label: SymbObj, type: Type, optional: Bool)+);
 
-                  //## THE FIELD tag_type SHOULD BE OF TYPE <SymbType, SymbType+, atom_type>
-type TagType    = tag_type(tag_type: Type, obj_type: Type);
+type TagType    = tag_type(tag_type: <SymbType, SymbType+, atom_type>, obj_type: Type);
 
 type UnionType  = union_type(Type+);
+
+type RecType    = self, rec_type(Type);
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -62,7 +54,7 @@ type FnSymbol = fn_symbol(Atom),
                 op_symbol(Operator),
                 nested_fn_symbol(outer: FnSymbol, inner: FnSymbol); //## BAD BAD
 
-type Var      = var(Atom), fn_par(Nat), named_par(Atom), unique_var(Nat); //## NEW BAD BAD BAD
+type Var      = var(Atom), fn_par(Nat), named_par(Atom), unique_var(Nat); //## BAD BAD BAD
 
 type CondExpr = cond_expr(expr: Expr, cond: Expr);
 
@@ -80,7 +72,7 @@ type Expr     = LeafObj, //## UPDATE ALL REFERENCES
                 //## CAN LOCAL FUNCTIONS HAVE NAMED PARAMETERS? IT WOULDN'T MAKE MUCH SENSE,
                 //## BUT THE DATA STRUCTURE AND THE SYNTAX ALLOW IT. MAKE SURE IT'S CHECHED
                 //## IN THE WELL-FORMEDNESS CHECKING LAYER.
-                fn_call(name: FnSymbol, params: [ExtExpr*], named_params: (<named_par(Atom)> => ExtExpr)), //## NEW BAD BAD
+                fn_call(name: FnSymbol, params: [ExtExpr*], named_params: (<named_par(Atom)> => ExtExpr)), //## BAD BAD
                 cls_call(name: Var, params: [Expr*]),  //## NEW --- RENAME name: TO var:
                 builtin_call(name: BuiltIn, params: [Expr*]), //## CAN A BUILTIN HAVE NO ARGUMENTS?
 
@@ -105,8 +97,6 @@ type Expr     = LeafObj, //## UPDATE ALL REFERENCES
 
                 select_expr(expr: Expr, ptrn: Pattern, src_expr: Expr, cond: Expr?),
                 replace_expr(expr: Expr, src_expr: Expr, ptrn: Pattern);
-                
-                //, where_expr(expr: Expr, fndefs: (name: FnSymbol, vars: [<Var, nil>*], body: Expr)+); //## SHOULD BE NAMED expr, NOT body
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -122,10 +112,7 @@ type Pattern  = obj_ptrn(LeafObj),  //## TO LIMIT IT TO SYMBOL/INTEGER?
                 type_ptrn(Type),
                 ext_var_ptrn(Var),
                 var_ptrn(name: Var, ptrn: Pattern?),
-                //## FIELDS SHOULD BE A MAP FROM LABELS TO PATTERNS
-                //## THIS WOULD CAUSE PROBLEMS AT LEVEL 1 THOUGH
-                //## AND I WOULD NEED A NON-EMPTY MAP TYPE
-                tuple_ptrn(fields: (label: SymbObj, ptrn: Pattern)+, is_open: Bool),
+                tuple_ptrn(fields: (SymbObj => Pattern), is_open: Bool),  // I WOULD NEED A NON-EMPTY MAP TYPE HERE //## NEW
                 tag_ptrn(tag: <obj_ptrn(SymbObj), var_ptrn(name: Var)>, obj: Pattern);
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -145,7 +132,7 @@ type Statement  = assignment_stmt(var: Var, value: Expr),// type: Type?),
                   loop_stmt([Statement+]),
                   foreach_stmt(var: Var, idx_var: Var?, values: Expr, body: [Statement+]),
                   for_stmt(var: Var, start_val: Expr, end_val: Expr, body: [Statement+]),
-                  let_stmt(asgnms: (<named_par(Atom)> => ExtExpr), body: [Statement+]), //## NEW BAD BAD
+                  let_stmt(asgnms: (<named_par(Atom)> => ExtExpr), body: [Statement+]), //## BAD BAD
                   break_stmt,
                   fail_stmt,
                   assert_stmt(Expr),
@@ -162,13 +149,14 @@ type Statement  = assignment_stmt(var: Var, value: Expr),// type: Type?),
 type FnDef      = fn_def(
                     name:         FnSymbol,
                     params:       [(var: var(Atom)?, type: ExtType?)*], //## BAD BAD
-                    named_params: (<named_par(Atom)> => ExtType), //## NEW BAD BAD THIS DOESN'T ALLOW FOR IMPLICIT PARAMETER WITH THE SAME NAME BUT DIFFERENT ARITIES. ALSO THE TYPE IS TOO LOOSE. INCLUDE A CHECK IN THE WELL-FORMEDNESS CHECKING LAYER
+                    //## BAD BAD THIS DOESN'T ALLOW FOR IMPLICIT PARAMETER WITH THE SAME NAME BUT DIFFERENT ARITIES.
+                    //## ALSO THE TYPE IS TOO LOOSE. INCLUDE A CHECK IN THE WELL-FORMEDNESS CHECKING LAYER
+                    named_params: (<named_par(Atom)> => ExtType),
                     res_type:     Type?,
                     expr:         Expr
                     //impl_env: Signature*,
                   );
 
 type Program    = program(
-                    tdefs:  (TypeSymbol => Type),
                     fndefs: FnDef*
                   );

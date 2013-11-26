@@ -1,2 +1,1 @@
-..\Amber\Compiler\prelude.h
 tests.h

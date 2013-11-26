@@ -93,11 +93,19 @@ Var* syn_new_vars(SynStmt stmt):
 
 Var* syn_new_vars([<SynStmt, SynClause>*] objs) = seq_union([syn_new_vars(obj) : obj <- objs]);
 
+Var* syn_new_vars(SynPtrn ptrn):
+  :ptrn_any       = {},
+  obj_ptrn()      = {},
+  type_ptrn()     = {},
+  ext_var_ptrn()  = {},
+  var_ptrn()      = {ptrn.name} & if ptrn.ptrn? then syn_new_vars(ptrn.ptrn) else {} end,
+  tuple_ptrn()    = union({syn_new_vars(f.ptrn) : f <- ptrn.fields}),
+  tag_ptrn()      = syn_new_vars(ptrn.tag) & syn_new_vars(ptrn.obj);
 
 Var* syn_new_vars(SynClause clause):
-  in_clause()           = new_vars(clause.ptrn),
+  in_clause()           = syn_new_vars(clause.ptrn),
   not_in_clause()       = {},
-  map_in_clause()       = new_vars(clause.key_ptrn) & new_vars(clause.value_ptrn),
+  map_in_clause()       = syn_new_vars(clause.key_ptrn) & syn_new_vars(clause.value_ptrn),
   map_not_in_clause()   = {},
   eq_clause()           = {clause.var},
   and_clause(cs)        = seq_union([syn_new_vars(c) : c <- cs]),

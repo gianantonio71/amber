@@ -1,0 +1,4 @@
+..\Amber\Compiler\prelude.h
+..\Amber\Compiler\types_1_syntax.h
+..\Amber\Compiler\types_2_core.h
+..\Amber\Compiler\types_3_proc.h

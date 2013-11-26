@@ -8,26 +8,33 @@ testcases x := main; end
 
 main =
 {
-  //k  := :named_par(:typesymb2name);
-  //it := :type_ref(:type_symbol(:typesymbol));
-  //ot := :type_ref(:type_symbol(:string));
-  //its := [it];
-  //v  := cls_type(in_types: its, out_type: ot);
-  //m  := (k => v);
-  //
-  //print k :: <named_par(Atom)>;
-  //print it :: Type;
-  //print ot :: Type;
-  //print its :: [Type+];
-  //
-  //print v :: ExtExpr;
-  //
-  //print m :: (<named_par(Atom)> => ExtExpr);
-  //print m :: <(<named_par(Atom)> => ExtExpr)>;
-  //
-  //print untyped_sgns(m);
-  //return nil;
 
+  // m := (
+  //   type_name(symbol: :type_symbol(:list), arity: 1) => :union_type(
+  //     {
+  //       :symb_type(:object(:nil_list)),
+  //       tag_type(
+  //         tag_type: :symb_type(:object(:list)),
+  //         obj_type: :tuple_type(
+  //           {
+  //             (label: :object(:head), type: :type_var(0), optional: false),
+  //             (
+  //               label: :object(:tail),
+  //               type: :type_ref(
+  //                 par_type_symbol(symbol: :type_symbol(:list), params: [:type_var(0)])
+  //               ),
+  //               optional: false
+  //             )
+  //           }
+  //         )
+  //       )
+  //     }
+  //   )
+  // );
+
+  // print replace type_ref(s) in m with :self end;
+  // return nil;
+  
 
   count := _obj_("res\\decl_num.txt");
   print count;
@@ -53,19 +60,20 @@ main =
 
     
   syn_prg := :prg(all_decls);
-
   print "AST loaded";
   
   //print syn_prg;
   
-  //errs := wf_errors(syn_prg);
-  //print errs;
+  errs := wf_errors(syn_prg);
+  print "Checked program for errors";
+  print errs;
   ////return nil;
   
   //if (size(errs) > 1)
   //  return nil;
   //;
 
+  print "Removing syntax";
   prg := rem_syntax(syn_prg);
   print "Syntax removed";
 
