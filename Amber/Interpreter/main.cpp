@@ -4,57 +4,6 @@
 #include "win32_interface.h"
 
 
-//#include <list>
-//
-//
-//bool CanDoRansom(list<string> newspaper, list<string> note)
-//{
-//  map<string, int> wf;
-//  
-//  for (list<string>::iterator it = newspaper.begin() ; it != newspaper.end() ; it++)
-//  {
-//    int count = 0;
-//    if (wf.find(*it) != wf.end())
-//      count = wf[*it];
-//    wf[*it] = count;
-//  }
-//  
-//  
-//  for (list<string>::iterator it = note.begin() ; it != note.end() ; it++)
-//  {
-//    if (wf.find(*it) == wf.end() || wf[*it] == 0)
-//      return false;
-//    
-//    wf[*it] = count - 1;
-//  }
-//
-//  return true;
-//}
-//
-//
-//
-//
-//bool CanDoRansom(list<string> newspaper, list<string> note)
-//{
-//  map<string, int> wf;
-//  
-//  for (list<string>::iterator it = newspaper.begin() ; it != newspaper.end() ; it++)
-//    wf[*it]++;
-//  
-//  for (list<string>::iterator it = note.begin() ; it != note.end() ; it++)
-//    if (wf[*it] == 0)
-//      return false;
-//    else
-//      wf[*it]--;
-//
-//  return true;
-//}
-//
-
-
-
-
-
 
 string to_str(TokenType t)
 {
@@ -137,7 +86,13 @@ void main(int argc, char **argv)
 
     int line_num = 0;
 		ifstream ifs(src_files[i].c_str(), ifstream::in);
-			
+
+    if (ifs.fail())
+    {
+      cout << "Cannot open file " << src_files[i] << endl;
+      return;
+    }
+    			
 		while (!ifs.eof())
 		{
 			string s;
@@ -266,17 +221,3 @@ obj get_token(unsigned int idx, char *str, int &line, int &col)
     
 	return obj(new Token(t.str, t.start_line, t.start_col, t.filename));
 }
-
-
-
-
-
-
-
-
-
-
-
-//repl_expr
-//gather_expr
-//retr_expr

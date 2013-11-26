@@ -75,6 +75,7 @@ obj mk_type_fixed_seq(obj pretypes);
 obj mk_type_set(obj elem_type, bool nonempty);
 obj mk_type_map(obj key_type, obj value_type);
 obj mk_type_tuple(obj lab_types);
+obj mk_type_tagged_obj(obj tag_type, obj obj_type);
 obj mk_pretype_type(obj type);
 obj mk_pretype_empty_set();
 obj mk_pretype_empty_seq();

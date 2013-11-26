@@ -324,7 +324,6 @@ ntltype:
   | tvar                                          {$$ = mk_type_var($1);                            }
   | tname '[' types ']'                           {$$ = mk_type_ref($1, $3);                        }
   | '<' pretypes '>'                              {$$ = mk_type_inline($2);                         }
-  | '<' '*' '>'                                   {$$ = mk_type_any();                              }
   | '<' '+' '>'                                   {$$ = mk_type_symb();                             }
   
   | '[' '*' ".." '*' ']'                          {$$ = mk_type_int();                              }
@@ -341,6 +340,8 @@ ntltype:
   
   | '(' type "=>" type ')'                        {$$ = mk_type_map($2, $4);                        }
   | '(' labtypes ')'                              {$$ = mk_type_tuple($2);                          }
+
+  | '(' ntltype '@' type ')'                      {$$ = mk_type_tagged_obj($2, $4);                 }
   ;
 
 pretype:

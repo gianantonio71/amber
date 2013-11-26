@@ -941,6 +941,11 @@ obj mk_type_tuple(obj lab_types)
   return obj(new TupleType(ks, ts, os));
 }
 
+obj mk_type_tagged_obj(obj tag_type, obj obj_type)
+{
+  return ::obj(new TagType(unbox<Type>(tag_type), unbox<Type>(obj_type)));
+}
+
 obj mk_pretype_type(obj type)
 {
   return type;

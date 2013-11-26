@@ -540,7 +540,7 @@ Term mk_ptrn_num(Term num)
 
 Term mk_ptrn_jolly()
 {
-  return tagged_obj("type_ptrn", symbol_obj("type_any"));
+  return symbol_obj("ptrn_any");
 }
 
 Term mk_ptrn_expr(Term var)
@@ -598,12 +598,10 @@ Term mk_type_ref(Term name, Term type_pars)
 
 Term mk_type_inline(Term pretypes)
 {
-  return tagged_obj("union_type", seq_to_set(pretypes));
-}
-
-Term mk_type_any()
-{
-  return symbol_obj("type_any");
+  if (pretypes.size() > 1)
+    return tagged_obj("union_type", seq_to_set(pretypes));
+  else
+    return pretypes.item(0);
 }
 
 Term mk_type_symb()
@@ -666,6 +664,11 @@ Term mk_type_map(Term key_type, Term value_type)
 Term mk_type_tuple(Term lab_types)
 {
   return tagged_obj("tuple_type", seq_to_set(lab_types));
+}
+
+Term mk_type_tagged_obj(Term tag_type, Term obj_type)
+{
+  return tagged_map("tag_type", "tag_type", tag_type, "obj_type", obj_type);
 }
 
 Term mk_pretype_type(Term type)

@@ -163,7 +163,7 @@ void MapExclClause::generate(Env &ext_env, Env &in_env, vector<Env> &out_envs, L
 	
 	int size = t.size();
 	for (int i=0 ; i < size ; i++)
-		if (kp->matches(t.item(i), in_env, e, false) && vp->matches(t.item(i), in_env, e, false))
+		if (kp->matches(t.get_key(i), in_env, e, false) && vp->matches(t.get_value(i), in_env, e, false))
 			return;
 
 	out_envs.push_back(in_env);

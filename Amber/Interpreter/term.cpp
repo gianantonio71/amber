@@ -104,8 +104,15 @@ void sort(term_v &terms, vector<int> &sorted_idxs, bool no_dups)
 		int cw = get_weight(keys[start]);
 
 		int count = 1;
-		while (start + count < n && get_weight(keys[start+count]) == cw)
+		//while (start + count < n && get_weight(keys[start+count]) == cw)
+		//	count++;
+		while (start + count < n)
+		{
+		  int nw = get_weight(keys[start+count]);
+		  if (nw != cw)
+		    break;
 			count++;
+		}
 
 		if (count == 1)
 		{
@@ -497,9 +504,10 @@ int AmberSeq::compare_same_type(AmberObj &other)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-AmberSet::AmberSet(term_v &es) : AmberObj(::get_weight(es)), elems(es)
+AmberSet::AmberSet(term_v &es) : AmberObj(0), elems(es)
 {
-  sort(elems);
+  sort(elems, true);
+  weight = ::get_weight(elems);
 }
 
 
