@@ -1,9 +1,0 @@
-typedef(
-  type: union_type(
-    {
-      type_ref(type_symbol(basictypesymbol)),
-      type_ref(type_symbol(partypesymbol))
-    }
-  ),
-  name: type_symbol(typesymbol)
-)

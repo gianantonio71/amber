@@ -1,6 +1,0 @@
-syn_fn_def(
-  name: fn_symbol(reverse),
-  params: [(type: type_ref(type_symbol(seq)), var: var(seq))],
-  local_fns: [],
-  expr: builtin_call(name: rev, params: [const_or_var(seq)])
-)

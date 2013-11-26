@@ -1,4 +1,0 @@
-typedef(
-  type: union_type({high_ints(min: 1)}),
-  name: type_symbol(nznat)
-)

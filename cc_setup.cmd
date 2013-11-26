@@ -1,1 +1,0 @@
-"C:\Programmi\Microsoft Visual Studio 9.0\Common7\Tools\vsvars32.bat"

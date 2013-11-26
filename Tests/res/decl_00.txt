@@ -1,4 +1,0 @@
-typedef(
-  type: union_type({symb_type(object(true)), symb_type(object(false))}),
-  name: type_symbol(bool)
-)

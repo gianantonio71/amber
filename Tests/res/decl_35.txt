@@ -1,9 +1,0 @@
-syn_fn_def(
-  name: op_symbol(brackets),
-  params: [
-    (type: type_ref(type_symbol(seq)), var: var(seq)),
-    (type: type_ref(type_symbol(nat)), var: var(idx))
-  ],
-  local_fns: [],
-  expr: builtin_call(name: at, params: [const_or_var(seq), const_or_var(idx)])
-)
